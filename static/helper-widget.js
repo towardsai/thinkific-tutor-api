@@ -25,6 +25,7 @@
     messages: [],
     firstMessageSent: false,
     visitorId: visitorId(),
+    requestId: 0,
   };
 
   var root = document.createElement("div");
@@ -45,8 +46,10 @@
     ".brand-mark{width:32px;height:32px;border-radius:8px;background:#182235;color:#fff;display:flex;align-items:center;justify-content:center;font:800 12px/1 system-ui}",
     ".title{font:750 15px/1.2 system-ui;color:#182235;letter-spacing:0}",
     ".subtitle{font:600 12px/1.25 system-ui;color:#64748b;max-width:285px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:3px}",
-    ".iconbtn{width:34px;height:34px;flex:0 0 auto;border:0;border-radius:9px;background:#eef3f8;color:#475569;cursor:pointer;font:800 20px/1 system-ui}",
+    ".actions{display:flex;align-items:center;gap:8px;flex:0 0 auto}",
+    ".iconbtn{width:34px;height:34px;flex:0 0 auto;border:0;border-radius:9px;background:#eef3f8;color:#475569;cursor:pointer;font:800 20px/1 system-ui;display:flex;align-items:center;justify-content:center}",
     ".iconbtn:hover{background:#e2eaf3;color:#182235}",
+    ".iconbtn svg{width:17px;height:17px;display:block}",
     ".msgs{flex:1;overflow:auto;padding:16px;background:#fff;display:flex;flex-direction:column;gap:12px}",
     ".msg{max-width:88%;padding:11px 13px;border-radius:11px;font:400 14px/1.48 system-ui;overflow-wrap:anywhere}",
     ".user{align-self:flex-end;background:#182235;color:#fff;border-bottom-right-radius:4px}",
@@ -80,7 +83,7 @@
     "  <section class='panel hidden' data-panel aria-label='Towards AI helper chat'>",
     "    <header class='head'>",
     "      <div class='brand'><div class='brand-mark'>TA</div><div><div class='title'>Towards AI Helper</div><div class='subtitle' data-subtitle></div></div></div>",
-    "      <button class='iconbtn' data-close aria-label='Minimize helper' title='Minimize'>&minus;</button>",
+    "      <div class='actions'><button class='iconbtn' data-reset aria-label='Restart conversation' title='Restart conversation'><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M3 3v6h6' fill='none' stroke='currentColor' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'/><path d='M3.8 13.1a8 8 0 1 0 2.3-7.2L3 9' fill='none' stroke='currentColor' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'/></svg></button><button class='iconbtn' data-close aria-label='Minimize helper' title='Minimize'>&minus;</button></div>",
     "    </header>",
     "    <div class='msgs' data-msgs><div class='meta'>Choose a starter prompt.</div><div class='prompts' data-prompts></div></div>",
     "    <form class='form hidden' data-form>",
@@ -94,6 +97,7 @@
   var wrap = shadow.querySelector("[data-wrap]");
   var bubble = shadow.querySelector("[data-bubble]");
   var panel = shadow.querySelector("[data-panel]");
+  var resetBtn = shadow.querySelector("[data-reset]");
   var closeBtn = shadow.querySelector("[data-close]");
   var form = shadow.querySelector("[data-form]");
   var input = shadow.querySelector("[data-input]");
@@ -330,9 +334,34 @@
     form.classList.toggle("hidden", !state.firstMessageSent);
   }
 
+  function resetConversation() {
+    state.requestId += 1;
+    state.threadId = "";
+    state.messages = [];
+    state.firstMessageSent = false;
+    state.streaming = false;
+    input.value = "";
+    input.style.height = "auto";
+    sendBtn.disabled = false;
+    input.disabled = false;
+    msgs.innerHTML = "";
+    var meta = document.createElement("div");
+    meta.className = "meta";
+    meta.textContent = "Choose a starter prompt.";
+    msgs.appendChild(meta);
+    prompts.classList.remove("hidden");
+    msgs.appendChild(prompts);
+    renderPrompts();
+    showInput();
+    setBusy(false);
+    msgs.scrollTop = 0;
+    input.focus();
+  }
+
   function send(text, selectedPrompt) {
     text = safeString(text).trim();
     if (!text || state.streaming) return;
+    var requestId = ++state.requestId;
     appendMessage("user", text);
     state.messages.push({ role: "user", content: text });
     setBusy(true);
@@ -350,8 +379,9 @@
         history: state.messages.slice(0, -1).slice(-8),
         context: contextPayload(),
       }),
-    })
+      })
       .then(function (response) {
+        if (requestId !== state.requestId) return null;
         if (!response.ok) {
           if (response.status === 429) {
             throw new Error("The helper is rate limited right now. Please try again later.");
@@ -361,6 +391,7 @@
         return response.json();
       })
       .then(function (payload) {
+        if (requestId !== state.requestId || !payload) return;
         state.threadId = payload.threadId || state.threadId;
         loading.classList.remove("empty");
         loading.innerHTML = renderMarkdown(payload.answer || "I could not answer that.");
@@ -370,10 +401,12 @@
         showInput();
       })
       .catch(function (error) {
+        if (requestId !== state.requestId) return;
         loading.classList.remove("empty");
         loading.innerHTML = renderMarkdown(error.message || "Something went wrong.");
       })
       .finally(function () {
+        if (requestId !== state.requestId) return;
         setBusy(false);
         input.value = "";
         input.style.height = "auto";
@@ -398,6 +431,7 @@
   bubble.addEventListener("click", function () {
     setOpen(true);
   });
+  resetBtn.addEventListener("click", resetConversation);
   closeBtn.addEventListener("click", function () {
     setOpen(false);
   });

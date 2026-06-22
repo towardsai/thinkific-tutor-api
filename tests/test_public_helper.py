@@ -134,6 +134,12 @@ def test_helper_config_and_widget_are_served_from_shared_app() -> None:
     assert "isSignedIn" in widget.text
     assert "payload.sources" not in widget.text
     assert "sourceWrap" not in widget.text
+    assert "data-reset" in widget.text
+    assert "Restart conversation" in widget.text
+    assert "function resetConversation()" in widget.text
+    assert 'state.threadId = "";' in widget.text
+    assert "state.messages = [];" in widget.text
+    assert "state.firstMessageSent = false;" in widget.text
     assert 'event.key === "Enter"' in widget.text
     assert "!event.shiftKey" in widget.text
     assert 'form.dispatchEvent(new Event("submit"' in widget.text

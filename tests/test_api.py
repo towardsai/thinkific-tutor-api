@@ -113,6 +113,11 @@ def test_widget_serves_course_player_gating_script() -> None:
     assert "displayUrl(rawUrl)" in response.text
     assert "CoursePlayerV2" in response.text
     assert "/api/thinkific/resolve" in response.text
+    assert "data-reset" in response.text
+    assert "Restart conversation" in response.text
+    assert "function resetConversation()" in response.text
+    assert 'state.threadId = "";' in response.text
+    assert "state.messages = [];" in response.text
     assert 'event.key === "Enter"' in response.text
     assert "!event.shiftKey" in response.text
     assert 'form.dispatchEvent(new Event("submit"' in response.text

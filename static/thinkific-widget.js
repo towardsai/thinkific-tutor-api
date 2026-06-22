@@ -25,6 +25,7 @@
     messages: [],
     streaming: false,
     resolveAbort: null,
+    requestId: 0,
   };
 
   var root = document.createElement("div");
@@ -45,8 +46,10 @@
     ".brand-mark{width:32px;height:32px;border-radius:8px;background:#182235;color:#fff;display:flex;align-items:center;justify-content:center;font:800 12px/1 system-ui}",
     ".title{font:750 15px/1.2 system-ui;color:#182235;letter-spacing:0}",
     ".lesson{font:600 12px/1.25 system-ui;color:#64748b;max-width:285px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:3px}",
-    ".iconbtn{width:34px;height:34px;flex:0 0 auto;border:0;border-radius:9px;background:#eef3f8;color:#475569;cursor:pointer;font:800 20px/1 system-ui}",
+    ".actions{display:flex;align-items:center;gap:8px;flex:0 0 auto}",
+    ".iconbtn{width:34px;height:34px;flex:0 0 auto;border:0;border-radius:9px;background:#eef3f8;color:#475569;cursor:pointer;font:800 20px/1 system-ui;display:flex;align-items:center;justify-content:center}",
     ".iconbtn:hover{background:#e2eaf3;color:#182235}",
+    ".iconbtn svg{width:17px;height:17px;display:block}",
     ".msgs{flex:1;overflow:auto;padding:16px;background:#fff;display:flex;flex-direction:column;gap:12px}",
     ".msg{max-width:88%;padding:11px 13px;border-radius:11px;font:400 14px/1.48 system-ui;overflow-wrap:anywhere}",
     ".user{align-self:flex-end;background:#182235;color:#fff;border-bottom-right-radius:4px}",
@@ -78,7 +81,7 @@
     "  <section class='panel hidden' data-panel aria-label='AI tutor chat'>",
     "    <header class='head'>",
     "      <div class='brand'><div class='brand-mark'>TA</div><div><div class='title'>Towards AI Tutor</div><div class='lesson' data-lesson></div></div></div>",
-    "      <button class='iconbtn' data-close aria-label='Minimize tutor' title='Minimize'>&minus;</button>",
+    "      <div class='actions'><button class='iconbtn' data-reset aria-label='Restart conversation' title='Restart conversation'><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M3 3v6h6' fill='none' stroke='currentColor' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'/><path d='M3.8 13.1a8 8 0 1 0 2.3-7.2L3 9' fill='none' stroke='currentColor' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'/></svg></button><button class='iconbtn' data-close aria-label='Minimize tutor' title='Minimize'>&minus;</button></div>",
     "    </header>",
     "    <div class='msgs' data-msgs><div class='meta'>Ask about this lesson.</div></div>",
     "    <form class='form' data-form>",
@@ -92,6 +95,7 @@
   var wrap = shadow.querySelector("[data-wrap]");
   var bubble = shadow.querySelector("[data-bubble]");
   var panel = shadow.querySelector("[data-panel]");
+  var resetBtn = shadow.querySelector("[data-reset]");
   var closeBtn = shadow.querySelector("[data-close]");
   var form = shadow.querySelector("[data-form]");
   var input = shadow.querySelector("[data-input]");
@@ -479,6 +483,18 @@
       .slice(-12);
   }
 
+  function resetConversation() {
+    state.requestId += 1;
+    state.threadId = "";
+    state.messages = [];
+    state.streaming = false;
+    sendBtn.disabled = false;
+    input.value = "";
+    input.style.height = "42px";
+    renderMessages();
+    input.focus();
+  }
+
   function parseSseFrames(buffer, onFrame) {
     var boundary;
     while ((boundary = buffer.indexOf("\n\n")) >= 0) {
@@ -511,6 +527,7 @@
 
   async function sendQuestion(question) {
     if (state.streaming || !question.trim() || !state.context) return;
+    var requestId = ++state.requestId;
     state.streaming = true;
     sendBtn.disabled = true;
     addMessage("user", question);
@@ -529,6 +546,7 @@
           context: state.context,
         }),
       });
+      if (requestId !== state.requestId) return;
       if (!response.ok || !response.body) {
         var errorText = "The tutor is not available for this lesson.";
         try {
@@ -547,6 +565,7 @@
         if (chunk.done) break;
         buffer += decoder.decode(chunk.value, { stream: true });
         buffer = parseSseFrames(buffer, function (data) {
+          if (requestId !== state.requestId) return;
           if (data === "[DONE]") return;
           try {
             handleStreamPart(JSON.parse(data), assistantText);
@@ -554,8 +573,10 @@
         });
       }
     } catch (_error) {
+      if (requestId !== state.requestId) return;
       setLastAssistantContent("The tutor connection failed. Please try again.");
     } finally {
+      if (requestId !== state.requestId) return;
       state.streaming = false;
       sendBtn.disabled = false;
       input.focus();
@@ -565,6 +586,7 @@
   bubble.addEventListener("click", function () {
     setOpen(true);
   });
+  resetBtn.addEventListener("click", resetConversation);
   closeBtn.addEventListener("click", function () {
     setOpen(false);
   });
