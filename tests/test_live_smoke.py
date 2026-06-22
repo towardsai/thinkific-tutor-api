@@ -102,6 +102,9 @@ def test_live_health_and_widget_latency() -> None:
     assert health.json() == {"status": "ok"}
     assert health_seconds <= max_seconds("LIVE_SMOKE_MAX_HEALTH_SECONDS", 120)
     assert widget.status_code == 200
+    assert "Ask the tutor" in widget.text
+    assert "Towards AI Tutor" in widget.text
+    assert "renderMarkdown" in widget.text
     assert "CoursePlayerV2" in widget.text
     assert "/api/thinkific/resolve" in widget.text
     assert widget_seconds <= max_seconds("LIVE_SMOKE_MAX_WIDGET_SECONDS", 30)
