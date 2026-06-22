@@ -37,8 +37,8 @@ helper_visitor_limiter = FixedWindowRateLimiter(
 )
 helper_ip_limiter = FixedWindowRateLimiter(
     (
-        RateLimit("helper_ip_per_minute", helper_settings.rate_limit_per_minute, 60),
-        RateLimit("helper_ip_per_day", helper_settings.rate_limit_per_day, 24 * 60 * 60),
+        RateLimit("helper_ip_per_minute", helper_settings.ip_rate_limit_per_minute, 60),
+        RateLimit("helper_ip_per_day", helper_settings.ip_rate_limit_per_day, 24 * 60 * 60),
     )
 )
 helper_global_limiter = FixedWindowRateLimiter(
@@ -205,6 +205,8 @@ def helper_config() -> dict[str, Any]:
         "rateLimits": {
             "perMinute": helper_settings.rate_limit_per_minute,
             "perDay": helper_settings.rate_limit_per_day,
+            "ipPerMinute": helper_settings.ip_rate_limit_per_minute,
+            "ipPerDay": helper_settings.ip_rate_limit_per_day,
         },
         "monitoring": {
             "opikEnabled": opik_ready,

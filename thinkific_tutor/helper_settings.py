@@ -63,10 +63,16 @@ class HelperSettings:
         default_factory=lambda: _int_env("HELPER_MAX_HISTORY_TURNS", 8)
     )
     rate_limit_per_minute: int = field(
-        default_factory=lambda: _int_env("HELPER_RATE_LIMIT_PER_MINUTE", 3)
+        default_factory=lambda: _int_env("HELPER_RATE_LIMIT_PER_MINUTE", 8)
     )
     rate_limit_per_day: int = field(
-        default_factory=lambda: _int_env("HELPER_RATE_LIMIT_PER_DAY", 20)
+        default_factory=lambda: _int_env("HELPER_RATE_LIMIT_PER_DAY", 50)
+    )
+    ip_rate_limit_per_minute: int = field(
+        default_factory=lambda: _int_env("HELPER_IP_RATE_LIMIT_PER_MINUTE", 60)
+    )
+    ip_rate_limit_per_day: int = field(
+        default_factory=lambda: _int_env("HELPER_IP_RATE_LIMIT_PER_DAY", 300)
     )
     rate_limit_global_per_minute: int = field(
         default_factory=lambda: _int_env("HELPER_GLOBAL_RATE_LIMIT_PER_MINUTE", 120)

@@ -384,7 +384,7 @@
         if (requestId !== state.requestId) return null;
         if (!response.ok) {
           if (response.status === 429) {
-            throw new Error("The helper is rate limited right now. Please try again later.");
+            throw new Error("The helper is taking a quick breather. Please try again in a moment.");
           }
           throw new Error("The helper is unavailable on this page.");
         }
