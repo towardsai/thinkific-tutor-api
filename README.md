@@ -36,6 +36,32 @@ Thinkific Course Player
   -> Gemini 2.5 Flash
 ```
 
+## Public Sales Helper
+
+This same deployment also serves a separate signed-out sales helper for public
+academy/TowardsAI.net pages:
+
+```html
+<script
+  src="https://towardsai-tutors-thinkific-tutor-api.hf.space/helper-widget.js"
+  data-api-base="https://towardsai-tutors-thinkific-tutor-api.hf.space"
+  defer
+></script>
+```
+
+It uses `/api/helper/config` and `/api/helper/chat`, not the lesson-tutor
+routes. The helper:
+
+- Shows only on public sitemap-discoverable pages.
+- Hides when a visitor appears signed in.
+- Forces the first message to one of the configured starter prompts.
+- Answers only course, bundle, mentorship, free-resource, book, or B2B training
+  questions.
+- Refuses coupon codes and redirects persistent discount requests to
+  `louis@towardsai.net`.
+- Uses Gemini 2.5 Flash, hard public rate limits, and Opik project
+  `towards-ai-helper`.
+
 ## Local setup
 
 ```bash
@@ -77,9 +103,20 @@ Add this to Thinkific **Settings -> Code & Analytics -> Site Footer Code**:
 ></script>
 ```
 
+For public signed-out pages, add the helper snippet too:
+
+```html
+<script
+  src="https://YOUR-DEPLOYED-API/helper-widget.js"
+  data-api-base="https://YOUR-DEPLOYED-API"
+  defer
+></script>
+```
+
 The widget stays hidden unless it detects Thinkific `CoursePlayerV2` lesson
 events and the API confirms the course maps to one of the tutor course sources.
 It minimizes back to the bottom-right bubble when the student closes the panel.
+The helper widget has separate signed-out/public-page gating.
 
 ## Course mapping
 
@@ -149,6 +186,16 @@ THINKIFIC_DISABLE_KB=true
 THINKIFIC_RETRIEVAL_BUDGET=24000
 THINKIFIC_RATE_LIMIT_PER_MINUTE=6
 THINKIFIC_RATE_LIMIT_PER_DAY=120
+```
+
+Public helper defaults:
+
+```bash
+HELPER_MODEL=gemini-2.5-flash
+HELPER_RATE_LIMIT_PER_MINUTE=3
+HELPER_RATE_LIMIT_PER_DAY=20
+HELPER_GLOBAL_RATE_LIMIT_PER_MINUTE=120
+HELPER_OPIK_PROJECT_NAME=towards-ai-helper
 ```
 
 `THINKIFIC_DISABLE_KB=true` keeps only vector/BM25 retrieval enabled and removes

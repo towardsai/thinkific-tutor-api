@@ -30,6 +30,7 @@ COURSE_URL_TO_SOURCE = {
     "https://academy.towardsai.net/courses/agent-engineering": "agentic_ai_engineering",
 }
 THINKIFIC_HEADERS = {"Origin": "https://academy.towardsai.net"}
+HELPER_FIRST_PROMPT = "I want help deciding which course to take."
 
 
 def require_live_base_url() -> str:
@@ -111,6 +112,32 @@ def test_live_health_and_widget_latency() -> None:
     assert "CoursePlayerV2" in widget.text
     assert "/api/thinkific/resolve" in widget.text
     assert widget_seconds <= max_seconds("LIVE_SMOKE_MAX_WIDGET_SECONDS", 30)
+
+
+@pytest.mark.live
+def test_live_helper_config_and_widget_latency() -> None:
+    base_url = require_live_base_url()
+
+    widget, widget_seconds = timed_request(
+        "GET", f"{base_url}/helper-widget.js", timeout=120
+    )
+    config, config_seconds = timed_request(
+        "GET", f"{base_url}/api/helper/config", timeout=120
+    )
+
+    assert widget.status_code == 200
+    assert "Towards AI Helper" in widget.text
+    assert "Choose a starter prompt" in widget.text
+    assert "isSignedIn" in widget.text
+    assert widget_seconds <= max_seconds("LIVE_SMOKE_MAX_WIDGET_SECONDS", 30)
+    assert config.status_code == 200
+    payload = config.json()
+    assert HELPER_FIRST_PROMPT in payload["forcedPrompts"]
+    assert "/courses/agent-engineering" in payload["allowedPathsByHost"][
+        "academy.towardsai.net"
+    ]
+    assert payload["monitoring"]["opikProject"] in {"", "towards-ai-helper"}
+    assert config_seconds <= max_seconds("LIVE_SMOKE_MAX_CONFIG_SECONDS", 30)
 
 
 @pytest.mark.live
@@ -206,3 +233,35 @@ def test_live_chat_streams_non_empty_answer(
     assert not error
     assert text.strip()
     assert first_text_seconds <= max_seconds("LIVE_SMOKE_MAX_FIRST_TEXT_SECONDS", 90)
+
+
+@pytest.mark.live
+@pytest.mark.skipif(
+    not RUN_LIVE_CHAT,
+    reason="RUN_LIVE_CHAT_SMOKE is not enabled",
+)
+def test_live_helper_chat_returns_concise_answer() -> None:
+    base_url = require_live_base_url()
+    response, elapsed = timed_request(
+        "POST",
+        f"{base_url}/api/helper/chat",
+        json={
+            "query": HELPER_FIRST_PROMPT,
+            "selectedPrompt": HELPER_FIRST_PROMPT,
+            "visitorId": "github-action-helper-smoke",
+            "context": {
+                "url": "https://academy.towardsai.net/courses/agent-engineering",
+                "pageTitle": "Agent course",
+                "signedIn": False,
+            },
+        },
+        headers=THINKIFIC_HEADERS,
+        timeout=120,
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["answer"].strip()
+    assert len(payload["answer"]) < 1400
+    assert payload["sources"]
+    assert elapsed <= max_seconds("LIVE_SMOKE_MAX_HELPER_CHAT_SECONDS", 90)

@@ -14,6 +14,8 @@ from fastapi.staticfiles import StaticFiles
 
 from .bootstrap import ensure_ai_tutor_importable, repo_root
 from .course_mapper import build_augmented_query, resolve_lesson_context
+from .helper_router import router as helper_router
+from .helper_settings import helper_settings
 from .monitoring import OpikTurnMonitor
 from .rate_limiter import FixedWindowRateLimiter, RateLimit
 from .schemas import ChatTurnIn, ResolveRequest, ThinkificChatRequest
@@ -42,11 +44,12 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_origins(),
+    allow_origins=sorted({*settings.cors_origins(), *helper_settings.cors_origins()}),
     allow_credentials=False,
     allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
 )
+app.include_router(helper_router)
 
 
 @app.middleware("http")

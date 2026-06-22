@@ -23,3 +23,7 @@ jobs:
       - name: Widget check
         run: |
           curl --fail --show-error --silent --max-time 60 "$SPACE_BASE_URL/widget.js" | grep -q "Towards AI Tutor"
+
+      - name: Helper widget check
+        run: |
+          curl --fail --show-error --silent --max-time 60 "$SPACE_BASE_URL/helper-widget.js" | grep -q "Towards AI Helper"
