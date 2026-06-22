@@ -214,3 +214,95 @@ class OpikTurnMonitor:
                     "type": "RuntimeError",
                     "message": _truncate(error_message, 1000),
                 }
+
+
+@dataclass(slots=True)
+class OpikRateLimitMonitor:
+    resolved: ResolvedLesson
+    user_query: str
+    limit_name: str
+    retry_after_seconds: int
+    rate_key: str
+    client_ip: str
+    scope: str
+    origin: str = ""
+    referer: str = ""
+    configured: Settings = settings
+    opik_module: Any | None = None
+
+    @property
+    def enabled(self) -> bool:
+        return bool(self.configured.opik_enabled and self.configured.opik_api_key)
+
+    def flush(self) -> None:
+        if not self.enabled:
+            return
+
+        opik = self.opik_module or _import_opik()
+        if opik is None:
+            return
+
+        try:
+            _configure_opik(opik, self.configured)
+            self._write_span(opik)
+        except Exception:
+            logger.warning("Failed to write Opik tutor rate-limit trace.", exc_info=True)
+
+    def _write_span(self, opik: Any) -> None:
+        query = _truncate(self.user_query, self.configured.opik_max_text_chars)
+        span_kwargs = {
+            "name": "thinkific_tutor_rate_limit",
+            "type": "general",
+            "input": {
+                "query": query,
+                "course": self.resolved.source_label,
+                "lesson": self.resolved.lesson_title,
+            },
+            "output": {
+                "blocked": True,
+                "reason": "rate_limited",
+            },
+            "metadata": _compact_dict(
+                {
+                    "status": "rate_limited",
+                    "bot": "thinkific-course-tutor",
+                    "scope": self.scope,
+                    "limit_name": self.limit_name,
+                    "retry_after_seconds": self.retry_after_seconds,
+                    "rate_key": self.rate_key,
+                    "client_ip": self.client_ip,
+                    "course_source_key": self.resolved.source_key,
+                    "course_source_label": self.resolved.source_label,
+                    "course_url": self.resolved.course_url,
+                    "current_url": self.resolved.current_url,
+                    "course_id": self.resolved.course_id,
+                    "course_title": self.resolved.course_title,
+                    "chapter_id": self.resolved.chapter_id,
+                    "chapter_title": self.resolved.chapter_title,
+                    "lesson_id": self.resolved.lesson_id,
+                    "lesson_title": self.resolved.lesson_title,
+                    "lesson_kind": self.resolved.lesson_kind,
+                    "student_id": self.resolved.student_id,
+                    "origin": self.origin,
+                    "referer": self.referer,
+                }
+            ),
+            "tags": [
+                "thinkific",
+                "course-tutor",
+                "rate-limit",
+                self.scope,
+                self.limit_name,
+                self.resolved.source_key,
+            ],
+            "project_name": self.configured.opik_project_name,
+            "model": self.configured.model_name,
+            "provider": "rate_limiter",
+            "flush": True,
+        }
+
+        with opik.start_as_current_span(**span_kwargs) as span:
+            span.error_info = {
+                "type": "RateLimitExceeded",
+                "message": f"{self.limit_name} exceeded",
+            }

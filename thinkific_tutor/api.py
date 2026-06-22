@@ -13,10 +13,10 @@ from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 
 from .bootstrap import ensure_ai_tutor_importable, repo_root
-from .course_mapper import build_augmented_query, resolve_lesson_context
+from .course_mapper import ResolvedLesson, build_augmented_query, resolve_lesson_context
 from .helper_router import router as helper_router
 from .helper_settings import helper_settings
-from .monitoring import OpikTurnMonitor
+from .monitoring import OpikRateLimitMonitor, OpikTurnMonitor
 from .rate_limiter import FixedWindowRateLimiter, RateLimit
 from .schemas import ChatTurnIn, ResolveRequest, ThinkificChatRequest
 from .settings import settings
@@ -157,17 +157,44 @@ def _rate_key(request: Request, payload: ThinkificChatRequest, student_id: str) 
 def _check_rate_limits(
     request: Request,
     payload: ThinkificChatRequest,
-    student_id: str,
+    resolved: ResolvedLesson,
 ) -> None:
     global_result = global_limiter.check("global")
     if not global_result.allowed:
+        _flush_rate_limit_monitor_later(
+            OpikRateLimitMonitor(
+                resolved=resolved,
+                user_query=payload.query,
+                limit_name=global_result.limit_name,
+                retry_after_seconds=global_result.retry_after_seconds,
+                rate_key="global",
+                client_ip=_client_ip(request),
+                scope="global",
+                origin=request.headers.get("origin", ""),
+                referer=request.headers.get("referer", ""),
+            )
+        )
         raise HTTPException(
             status_code=429,
             detail=f"Global rate limit exceeded: {global_result.limit_name}",
             headers={"Retry-After": str(global_result.retry_after_seconds)},
         )
-    student_result = student_limiter.check(_rate_key(request, payload, student_id))
+    rate_key = _rate_key(request, payload, resolved.student_id)
+    student_result = student_limiter.check(rate_key)
     if not student_result.allowed:
+        _flush_rate_limit_monitor_later(
+            OpikRateLimitMonitor(
+                resolved=resolved,
+                user_query=payload.query,
+                limit_name=student_result.limit_name,
+                retry_after_seconds=student_result.retry_after_seconds,
+                rate_key=rate_key,
+                client_ip=_client_ip(request),
+                scope="student",
+                origin=request.headers.get("origin", ""),
+                referer=request.headers.get("referer", ""),
+            )
+        )
         raise HTTPException(
             status_code=429,
             detail=f"Rate limit exceeded: {student_result.limit_name}",
@@ -186,6 +213,24 @@ def _flush_monitor_later(monitor: OpikTurnMonitor, error_message: str = "") -> N
             done.result()
         except Exception:
             logger.warning("Background Opik monitor flush failed.", exc_info=True)
+
+    task.add_done_callback(log_failure)
+
+
+def _flush_rate_limit_monitor_later(monitor: OpikRateLimitMonitor) -> None:
+    if not monitor.enabled:
+        return
+
+    task = asyncio.create_task(asyncio.to_thread(monitor.flush))
+
+    def log_failure(done: asyncio.Task) -> None:
+        try:
+            done.result()
+        except Exception:
+            logger.warning(
+                "Background Opik rate-limit monitor flush failed.",
+                exc_info=True,
+            )
 
     task.add_done_callback(log_failure)
 
@@ -265,7 +310,7 @@ async def chat(request: Request, payload: ThinkificChatRequest) -> StreamingResp
             status_code=403,
             detail="Tutor is only available from a mapped Thinkific course lesson.",
         )
-    _check_rate_limits(request, payload, resolved.student_id)
+    _check_rate_limits(request, payload, resolved)
     augmented_query = build_augmented_query(payload.query, resolved)
     chat_request = _chat_request(
         payload,

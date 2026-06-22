@@ -216,6 +216,10 @@ The repo has two layers of monitoring:
   resolution.
 - Optional Opik tracing records each completed chat turn with course, lesson,
   student id, model, token usage, estimated cost, latency, and answer status.
+  Rate-limit rejections are tracked too: filter for the `rate-limit` tag or
+  span names `thinkific_tutor_rate_limit` and `towards_ai_helper_rate_limit`.
+  Their metadata includes `limit_name`, `scope`, `retry_after_seconds`, and
+  either `student_id` or `visitor_key`.
 
 Enable Opik with:
 

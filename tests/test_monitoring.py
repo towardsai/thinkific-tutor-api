@@ -5,8 +5,11 @@ from types import SimpleNamespace
 from typing import Any
 
 import thinkific_tutor.monitoring as monitoring
+import thinkific_tutor.helper_monitoring as helper_monitoring
 from thinkific_tutor.course_mapper import ResolvedLesson
-from thinkific_tutor.monitoring import OpikTurnMonitor
+from thinkific_tutor.helper_monitoring import HelperRateLimitMonitor
+from thinkific_tutor.helper_settings import helper_settings
+from thinkific_tutor.monitoring import OpikRateLimitMonitor, OpikTurnMonitor
 from thinkific_tutor.settings import settings
 
 
@@ -154,3 +157,93 @@ def test_opik_monitor_is_noop_until_enabled() -> None:
 
     assert fake_opik.configure_calls == []
     assert fake_opik.spans == []
+
+
+def test_opik_rate_limit_monitor_writes_blocked_span() -> None:
+    monitoring._OPIK_CONFIGURED_FOR = None
+    fake_opik = FakeOpik()
+    configured = replace(
+        settings,
+        opik_enabled=True,
+        opik_api_key="opik-test-key",
+        opik_workspace="towards-ai",
+        opik_project_name="towards-ai-thinkific-tutor",
+    )
+    monitor = OpikRateLimitMonitor(
+        resolved=resolved_lesson(),
+        user_query="Why did this stop?",
+        limit_name="per_minute",
+        retry_after_seconds=42,
+        rate_key="thinkific-user:student-1",
+        client_ip="203.0.113.10",
+        scope="student",
+        origin="https://academy.towardsai.net",
+        configured=configured,
+        opik_module=fake_opik,
+    )
+
+    monitor.flush()
+
+    assert fake_opik.configure_calls
+    span = fake_opik.spans[0]
+    assert span.kwargs["name"] == "thinkific_tutor_rate_limit"
+    assert span.kwargs["type"] == "general"
+    assert span.kwargs["project_name"] == "towards-ai-thinkific-tutor"
+    assert span.kwargs["provider"] == "rate_limiter"
+    assert span.kwargs["output"] == {"blocked": True, "reason": "rate_limited"}
+    assert span.kwargs["metadata"]["status"] == "rate_limited"
+    assert span.kwargs["metadata"]["bot"] == "thinkific-course-tutor"
+    assert span.kwargs["metadata"]["limit_name"] == "per_minute"
+    assert span.kwargs["metadata"]["retry_after_seconds"] == 42
+    assert span.kwargs["metadata"]["student_id"] == "thinkific-user:student-1"
+    assert span.kwargs["metadata"]["lesson_title"] == "Intro"
+    assert "page_text" not in span.kwargs["metadata"]
+    assert "rate-limit" in span.kwargs["tags"]
+    assert span.error_info == {
+        "type": "RateLimitExceeded",
+        "message": "per_minute exceeded",
+    }
+
+
+def test_helper_rate_limit_monitor_writes_blocked_span() -> None:
+    helper_monitoring._OPIK_CONFIGURED_FOR = None
+    fake_opik = FakeOpik()
+    configured = replace(
+        helper_settings,
+        opik_enabled=True,
+        opik_api_key="opik-test-key",
+        opik_workspace="towards-ai",
+        opik_project_name="towards-ai-helper",
+    )
+    monitor = HelperRateLimitMonitor(
+        query="I want to find mentors",
+        current_url="https://academy.towardsai.net/",
+        selected_prompt="I want to find mentors",
+        visitor_key="visitor:test",
+        client_ip="203.0.113.20",
+        limit_name="helper_per_minute",
+        retry_after_seconds=31,
+        scope="visitor",
+        configured=configured,
+        opik_module=fake_opik,
+    )
+
+    monitor.flush()
+
+    assert fake_opik.configure_calls
+    span = fake_opik.spans[0]
+    assert span.kwargs["name"] == "towards_ai_helper_rate_limit"
+    assert span.kwargs["type"] == "general"
+    assert span.kwargs["project_name"] == "towards-ai-helper"
+    assert span.kwargs["provider"] == "rate_limiter"
+    assert span.kwargs["output"] == {"blocked": True, "reason": "rate_limited"}
+    assert span.kwargs["metadata"]["status"] == "rate_limited"
+    assert span.kwargs["metadata"]["bot"] == "public-sales-helper"
+    assert span.kwargs["metadata"]["limit_name"] == "helper_per_minute"
+    assert span.kwargs["metadata"]["retry_after_seconds"] == 31
+    assert span.kwargs["metadata"]["visitor_key"] == "visitor:test"
+    assert "rate-limit" in span.kwargs["tags"]
+    assert span.error_info == {
+        "type": "RateLimitExceeded",
+        "message": "helper_per_minute exceeded",
+    }

@@ -21,7 +21,7 @@ from .helper_catalog import (
     retrieve,
     sources_from_pages,
 )
-from .helper_monitoring import HelperMonitor
+from .helper_monitoring import HelperMonitor, HelperRateLimitMonitor
 from .helper_schemas import HelperChatRequest, HelperChatResponse, HelperSourceOut
 from .helper_settings import helper_settings
 from .rate_limiter import FixedWindowRateLimiter, RateLimit
@@ -90,6 +90,13 @@ def _rate_key(request: Request, payload: HelperChatRequest) -> str:
 def check_helper_rate_limits(request: Request, payload: HelperChatRequest) -> None:
     global_result = helper_global_limiter.check("global")
     if not global_result.allowed:
+        _schedule_helper_rate_limit_monitor(
+            request,
+            payload,
+            limit_name=global_result.limit_name,
+            retry_after_seconds=global_result.retry_after_seconds,
+            scope="global",
+        )
         raise HTTPException(
             status_code=429,
             detail=f"Global rate limit exceeded: {global_result.limit_name}",
@@ -98,6 +105,13 @@ def check_helper_rate_limits(request: Request, payload: HelperChatRequest) -> No
 
     ip_result = helper_ip_limiter.check(_client_ip(request))
     if not ip_result.allowed:
+        _schedule_helper_rate_limit_monitor(
+            request,
+            payload,
+            limit_name=ip_result.limit_name,
+            retry_after_seconds=ip_result.retry_after_seconds,
+            scope="ip",
+        )
         raise HTTPException(
             status_code=429,
             detail=f"Rate limit exceeded: {ip_result.limit_name}",
@@ -106,6 +120,13 @@ def check_helper_rate_limits(request: Request, payload: HelperChatRequest) -> No
 
     visitor_result = helper_visitor_limiter.check(_rate_key(request, payload))
     if not visitor_result.allowed:
+        _schedule_helper_rate_limit_monitor(
+            request,
+            payload,
+            limit_name=visitor_result.limit_name,
+            retry_after_seconds=visitor_result.retry_after_seconds,
+            scope="visitor",
+        )
         raise HTTPException(
             status_code=429,
             detail=f"Rate limit exceeded: {visitor_result.limit_name}",
@@ -168,11 +189,11 @@ def _fallback_answer() -> str:
     )
 
 
-async def _flush_monitor(monitor: HelperMonitor) -> None:
+async def _flush_monitor(monitor: HelperMonitor | HelperRateLimitMonitor) -> None:
     await asyncio.to_thread(monitor.flush)
 
 
-def _schedule_monitor(monitor: HelperMonitor) -> None:
+def _schedule_monitor(monitor: HelperMonitor | HelperRateLimitMonitor) -> None:
     if not monitor.enabled:
         return
     task = asyncio.create_task(_flush_monitor(monitor))
@@ -184,6 +205,27 @@ def _schedule_monitor(monitor: HelperMonitor) -> None:
             logger.warning("Background Opik helper monitor flush failed.", exc_info=True)
 
     task.add_done_callback(log_failure)
+
+
+def _schedule_helper_rate_limit_monitor(
+    request: Request,
+    payload: HelperChatRequest,
+    *,
+    limit_name: str,
+    retry_after_seconds: int,
+    scope: str,
+) -> None:
+    monitor = HelperRateLimitMonitor(
+        query=payload.query.strip(),
+        current_url=payload.context.url,
+        selected_prompt=payload.selectedPrompt or payload.query.strip(),
+        visitor_key=_rate_key(request, payload),
+        client_ip=_client_ip(request),
+        limit_name=limit_name,
+        retry_after_seconds=retry_after_seconds,
+        scope=scope,
+    )
+    _schedule_monitor(monitor)
 
 
 @router.get("/helper-widget.js")

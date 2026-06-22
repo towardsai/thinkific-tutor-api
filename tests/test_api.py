@@ -200,6 +200,7 @@ def test_chat_endpoint_applies_rate_limit(monkeypatch) -> None:
     api.global_limiter = FixedWindowRateLimiter(
         (RateLimit("global_per_minute", 100, 60),)
     )
+    rate_limit_monitors = []
     course_url = next(iter(settings.course_url_source_map))
 
     async def fake_stream_chat(_chat_request) -> AsyncIterator[ChatEvent]:
@@ -209,6 +210,11 @@ def test_chat_endpoint_applies_rate_limit(monkeypatch) -> None:
         yield ChatEvent("message_completed", {"answer": "ok"})
 
     monkeypatch.setattr(api, "stream_chat", fake_stream_chat)
+    monkeypatch.setattr(
+        api,
+        "_flush_rate_limit_monitor_later",
+        lambda monitor: rate_limit_monitors.append(monitor),
+    )
     payload = {
         "query": "What is RAG?",
         "context": lesson_context(course_url, user_id="rate-limited-student"),
@@ -220,6 +226,12 @@ def test_chat_endpoint_applies_rate_limit(monkeypatch) -> None:
     assert first.status_code == 200
     assert second.status_code == 429
     assert int(second.headers["retry-after"]) > 0
+    assert len(rate_limit_monitors) == 1
+    assert rate_limit_monitors[0].limit_name == "per_minute"
+    assert rate_limit_monitors[0].scope == "student"
+    assert rate_limit_monitors[0].resolved.student_id == (
+        "thinkific-user:rate-limited-student"
+    )
 
 
 def test_thinkific_post_endpoints_require_allowed_browser_origin() -> None:

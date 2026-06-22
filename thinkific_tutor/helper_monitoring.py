@@ -131,3 +131,74 @@ class HelperMonitor:
                     "type": "RuntimeError",
                     "message": _truncate(self.error_message, 1000),
                 }
+
+
+@dataclass(slots=True)
+class HelperRateLimitMonitor:
+    query: str
+    current_url: str
+    selected_prompt: str
+    visitor_key: str
+    client_ip: str
+    limit_name: str
+    retry_after_seconds: int
+    scope: str
+    configured: HelperSettings = helper_settings
+    opik_module: Any | None = None
+
+    @property
+    def enabled(self) -> bool:
+        return bool(self.configured.opik_enabled and self.configured.opik_api_key)
+
+    def flush(self) -> None:
+        if not self.enabled:
+            return
+        opik = self.opik_module or _import_opik()
+        if opik is None:
+            return
+        try:
+            _configure_opik(opik, self.configured)
+            self._write_span(opik)
+        except Exception:
+            logger.warning("Failed to write Opik helper rate-limit trace.", exc_info=True)
+
+    def _write_span(self, opik: Any) -> None:
+        span_kwargs = {
+            "name": "towards_ai_helper_rate_limit",
+            "type": "general",
+            "input": {
+                "query": _truncate(self.query, self.configured.opik_max_text_chars),
+                "selected_prompt": self.selected_prompt,
+                "current_url": self.current_url,
+            },
+            "output": {
+                "blocked": True,
+                "reason": "rate_limited",
+            },
+            "metadata": {
+                "status": "rate_limited",
+                "bot": "public-sales-helper",
+                "scope": self.scope,
+                "limit_name": self.limit_name,
+                "retry_after_seconds": self.retry_after_seconds,
+                "visitor_key": self.visitor_key,
+                "client_ip": self.client_ip,
+                "current_url": self.current_url,
+            },
+            "tags": [
+                "towards-ai-helper",
+                "public-sales-helper",
+                "rate-limit",
+                self.scope,
+                self.limit_name,
+            ],
+            "project_name": self.configured.opik_project_name,
+            "model": self.configured.model_name,
+            "provider": "rate_limiter",
+            "flush": True,
+        }
+        with opik.start_as_current_span(**span_kwargs) as span:
+            span.error_info = {
+                "type": "RateLimitExceeded",
+                "message": f"{self.limit_name} exceeded",
+            }

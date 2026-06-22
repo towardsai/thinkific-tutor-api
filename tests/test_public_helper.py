@@ -303,19 +303,30 @@ def test_helper_rate_limit_is_hard(monkeypatch) -> None:
     helper_router.helper_global_limiter = FixedWindowRateLimiter(
         (RateLimit("helper_global_per_minute", 100, 60),)
     )
+    scheduled_monitors = []
 
     monkeypatch.setattr(
         helper_router.llm,
         "generate_answer",
         lambda _prompt: LLMResult(answer="ok"),
     )
+    monkeypatch.setattr(
+        helper_router,
+        "_schedule_monitor",
+        lambda monitor: scheduled_monitors.append(monitor),
+    )
 
     first = client.post("/api/helper/chat", json=helper_payload(), headers=HEADERS)
+    scheduled_monitors.clear()
     second = client.post("/api/helper/chat", json=helper_payload(), headers=HEADERS)
 
     assert first.status_code == 200
     assert second.status_code == 429
     assert int(second.headers["retry-after"]) > 0
+    assert len(scheduled_monitors) == 1
+    assert scheduled_monitors[0].limit_name == "helper_per_minute"
+    assert scheduled_monitors[0].scope == "visitor"
+    assert scheduled_monitors[0].visitor_key == "visitor:test-visitor"
 
 
 def test_helper_llm_disables_thinking_to_preserve_visible_output(monkeypatch) -> None:
