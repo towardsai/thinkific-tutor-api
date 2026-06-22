@@ -1,0 +1,50 @@
+[project]
+name = "thinkific-tutor-api"
+version = "0.1.0"
+description = "Thinkific course-player adapter for the Towards AI tutor backend"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "anthropic",
+    "chromadb",
+    "cohere",
+    "fastapi",
+    "google-genai",
+    "hf-xet",
+    "huggingface-hub",
+    "langchain",
+    "langchain-anthropic",
+    "langchain-google-genai",
+    "langchain-openai",
+    "langgraph",
+    "pydantic",
+    "python-dotenv",
+    "requests",
+    "tiktoken",
+    "tqdm",
+    "uvicorn",
+]
+
+[build-system]
+requires = ["setuptools>=70", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[dependency-groups]
+dev = [
+    "httpx",
+    "pytest",
+    "ruff",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+markers = [
+    "live: tests that call the deployed Hugging Face Space",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py313"
+
+[tool.setuptools.packages.find]
+include = ["thinkific_tutor*"]
