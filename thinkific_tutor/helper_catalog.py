@@ -79,6 +79,7 @@ def retrieve(query: str, *, current_url: str = "", limit: int = 7) -> list[dict[
     scored: list[tuple[float, dict[str, Any]]] = []
     current = source_for_url(current_url)
     notes_text = json.dumps(assistant_notes(), ensure_ascii=False)
+    lowered = query.lower()
 
     synthetic_notes = {
         "title": "Towards AI Helper Routing Notes",
@@ -104,9 +105,10 @@ def retrieve(query: str, *, current_url: str = "", limit: int = 7) -> list[dict[
         overlap = len(query_tokens & tokens)
         score = float(overlap)
         kind = page.get("kind", "")
-        lowered = query.lower()
+        url = str(page.get("url", "")).lower()
         if page is current:
-            score += 7.0
+            path = str(page.get("path", "/")).rstrip("/") or "/"
+            score += 2.0 if path in {"/", "/collections"} else 7.0
         if kind == "routing_notes":
             score += 5.0
         if "company" in lowered or "b2b" in lowered or "training" in lowered:
@@ -122,7 +124,32 @@ def retrieve(query: str, *, current_url: str = "", limit: int = 7) -> list[dict[
             if kind in {"book", "book_external"}:
                 score += 8.0
         if "bundle" in lowered or "all" in lowered or "value" in lowered:
-            if "get-it-all" in str(page.get("url", "")):
+            if "get-it-all" in url:
+                score += 8.0
+        if any(
+            term in lowered
+            for term in (
+                "ai engineer",
+                "developer",
+                "engineer",
+                "coding",
+                "code",
+                "build ai",
+                "llm engineer",
+                "software",
+            )
+        ):
+            if "beginner-to-advanced-llm-dev" in url:
+                score += 10.0
+            if "agent-engineering" in url:
+                score += 7.0
+            if "get-it-all" in url:
+                score += 5.0
+        if any(term in lowered for term in ("beginner", "new to coding", "no code")):
+            if "python-for-genai" in url:
+                score += 16.0
+        if any(term in lowered for term in ("manager", "executive", "professional")):
+            if "ai-business-professionals" in url:
                 score += 8.0
         if score > 0:
             scored.append((score, page))
@@ -180,6 +207,24 @@ def in_scope(text: str, history: list[str] | None = None) -> bool:
         "agent",
         "agents",
         "genai",
+        "developer",
+        "developers",
+        "engineer",
+        "engineering",
+        "coding",
+        "code",
+        "software",
+        "beginner",
+        "intermediate",
+        "advanced",
+        "professional",
+        "manager",
+        "student",
+        "job",
+        "role",
+        "portfolio",
+        "product",
+        "startup",
         "certificate",
         "refund",
         "price",

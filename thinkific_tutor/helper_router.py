@@ -121,6 +121,11 @@ def _history_text(payload: HelperChatRequest) -> list[str]:
     ]
 
 
+def _retrieval_query(payload: HelperChatRequest, query: str) -> str:
+    parts = [payload.selectedPrompt.strip(), *_history_text(payload), query]
+    return " ".join(part for part in parts if part)
+
+
 def validate_helper_payload(payload: HelperChatRequest) -> None:
     if payload.context.signedIn:
         raise HTTPException(status_code=403, detail="Helper is only for signed-out visitors.")
@@ -219,7 +224,10 @@ async def helper_chat(
 
     query = payload.query.strip()
     thread_id = payload.threadId.strip() or uuid4().hex
-    selected_pages = retrieve(query, current_url=payload.context.url)
+    selected_pages = retrieve(
+        _retrieval_query(payload, query),
+        current_url=payload.context.url,
+    )
     sources = sources_from_pages(selected_pages)
     usage: dict[str, Any] = {}
     latency_ms = 0
@@ -228,7 +236,7 @@ async def helper_chat(
     try:
         if coupon_intent(query):
             answer = _fixed_coupon_answer(payload)
-        elif not in_scope(query, _history_text(payload)):
+        elif not in_scope(query):
             answer = _out_of_scope_answer()
         else:
             prompt = llm.build_prompt(

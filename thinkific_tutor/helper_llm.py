@@ -34,7 +34,7 @@ class LLMResult:
     latency_ms: int = 0
 
 
-def _context_block(selected_pages: list[dict[str, Any]], max_chars: int = 18000) -> str:
+def _context_block(selected_pages: list[dict[str, Any]], max_chars: int = 12000) -> str:
     chunks = []
     notes = assistant_notes()
     chunks.append("ROUTING NOTES:\n" + str(notes))
@@ -50,7 +50,7 @@ def _context_block(selected_pages: list[dict[str, Any]], max_chars: int = 18000)
                     f"Kind: {page.get('kind', '')}",
                     f"URL: {page.get('url', '')}",
                     f"Headings: {', '.join(str(h) for h in page.get('headings', [])[:12])}",
-                    f"Text: {text[:4500]}",
+                    f"Text: {text[:2600]}",
                 ]
             )
         )
@@ -100,6 +100,7 @@ def generate_answer(prompt: str) -> LLMResult:
         contents=prompt,
         config={
             "system_instruction": SYSTEM_INSTRUCTION,
+            "thinking_config": {"thinking_budget": 0},
             "temperature": 0.2,
             "max_output_tokens": helper_settings.max_output_tokens,
         },

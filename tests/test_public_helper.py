@@ -1,8 +1,11 @@
 from __future__ import annotations
 
+from types import SimpleNamespace
+
+import pytest
 from fastapi.testclient import TestClient
 
-from thinkific_tutor import api, helper_router
+from thinkific_tutor import api, helper_llm, helper_router
 from thinkific_tutor.helper_catalog import (
     allowed_paths_by_host,
     coupon_followup,
@@ -83,6 +86,37 @@ def test_helper_catalog_routes_public_pages_and_queries() -> None:
     assert coupon_followup("Please I really need a discount code", ["coupon?"])
 
 
+@pytest.mark.parametrize(
+    ("query", "expected_url_fragment"),
+    [
+        (
+            "I want help deciding which course to take. "
+            "I am a developer and want to become an AI engineer.",
+            "beginner-to-advanced-llm-dev",
+        ),
+        ("I want help to integrate AI into my company", "towardsai.net/b2b"),
+        ("I want a training inside my company", "towardsai.net/b2b"),
+        (
+            "I'm looking for more free resources to learn before buying a course",
+            "youtube.com/channel",
+        ),
+        ("I want to find mentors", "tai-mentorship"),
+        ("Where can I buy the Towards AI book on Amazon?", "amazon.com"),
+        ("I am a beginner with no coding experience", "python-for-genai"),
+        ("I am a business professional and manager", "ai-business-professionals"),
+    ],
+)
+def test_helper_catalog_routes_common_public_intents(
+    query: str,
+    expected_url_fragment: str,
+) -> None:
+    sources = sources_from_pages(
+        retrieve(query, current_url="https://academy.towardsai.net/")
+    )
+
+    assert any(expected_url_fragment in source["url"] for source in sources), sources
+
+
 def test_helper_config_and_widget_are_served_from_shared_app() -> None:
     config = client.get("/api/helper/config")
     widget = client.get("/helper-widget.js")
@@ -157,6 +191,62 @@ def test_helper_chat_calls_gemini_with_retrieved_sources(monkeypatch) -> None:
     assert "Agent Engineering" in prompts[0]
 
 
+def test_helper_chat_keeps_course_choice_context_on_followup(monkeypatch) -> None:
+    reset_helper_limiters()
+    prompts = []
+
+    def fake_generate_answer(prompt: str) -> LLMResult:
+        prompts.append(prompt)
+        return LLMResult(
+            answer=(
+                "For a developer aiming at AI engineering, start with Full Stack AI "
+                "Engineering. If you also want the best long-term value, consider "
+                "the Get it all bundle."
+            )
+        )
+
+    monkeypatch.setattr(helper_router.llm, "generate_answer", fake_generate_answer)
+    payload = helper_payload(query="I'm a developer. I want to be an AI engineer")
+    payload["selectedPrompt"] = FIRST_PROMPT
+    payload["history"] = [
+        {"role": "user", "content": FIRST_PROMPT},
+        {
+            "role": "assistant",
+            "content": "What is your coding experience and goal?",
+        },
+    ]
+
+    response = client.post("/api/helper/chat", json=payload, headers=HEADERS)
+
+    assert response.status_code == 200
+    data = response.json()
+    source_urls = [source["url"] for source in data["sources"]]
+    assert any("beginner-to-advanced-llm-dev" in url for url in source_urls)
+    assert any("agent-engineering" in url for url in source_urls)
+    assert "Full Stack AI" in prompts[0]
+    assert data["answer"].endswith("bundle.")
+
+
+def test_helper_chat_refuses_unrelated_followup_after_valid_start(monkeypatch) -> None:
+    reset_helper_limiters()
+
+    def unexpected_generate_answer(_prompt: str) -> LLMResult:
+        raise AssertionError("model should not be called for out-of-scope questions")
+
+    monkeypatch.setattr(helper_router.llm, "generate_answer", unexpected_generate_answer)
+    payload = helper_payload(query="Who won the World Cup?")
+    payload["selectedPrompt"] = FIRST_PROMPT
+    payload["history"] = [
+        {"role": "user", "content": FIRST_PROMPT},
+        {"role": "assistant", "content": "What is your background?"},
+    ]
+
+    response = client.post("/api/helper/chat", json=payload, headers=HEADERS)
+
+    assert response.status_code == 200
+    assert response.json()["answer"].startswith("I can only help with choosing")
+
+
 def test_helper_coupon_answer_is_deterministic(monkeypatch) -> None:
     reset_helper_limiters()
 
@@ -206,3 +296,44 @@ def test_helper_rate_limit_is_hard(monkeypatch) -> None:
     assert first.status_code == 200
     assert second.status_code == 429
     assert int(second.headers["retry-after"]) > 0
+
+
+def test_helper_llm_disables_thinking_to_preserve_visible_output(monkeypatch) -> None:
+    captured = {}
+
+    class FakeModels:
+        def generate_content(self, **kwargs):
+            captured.update(kwargs)
+            return SimpleNamespace(
+                text="A complete concise recommendation.",
+                usage_metadata=SimpleNamespace(
+                    prompt_token_count=12,
+                    candidates_token_count=6,
+                    total_token_count=18,
+                ),
+            )
+
+    class FakeClient:
+        def __init__(self, *, api_key: str) -> None:
+            captured["api_key"] = api_key
+            self.models = FakeModels()
+
+    monkeypatch.setattr(helper_llm.genai, "Client", FakeClient)
+    monkeypatch.setattr(
+        helper_llm,
+        "helper_settings",
+        SimpleNamespace(
+            gemini_api_key="test-gemini-key",
+            model_name="gemini-2.5-flash",
+            max_output_tokens=420,
+        ),
+    )
+
+    result = helper_llm.generate_answer("prompt")
+
+    assert result.answer == "A complete concise recommendation."
+    assert result.usage["total_tokens"] == 18
+    assert captured["api_key"] == "test-gemini-key"
+    assert captured["model"] == "gemini-2.5-flash"
+    assert captured["config"]["thinking_config"] == {"thinking_budget": 0}
+    assert captured["config"]["max_output_tokens"] == 420
