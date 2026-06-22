@@ -158,6 +158,28 @@ file inspection at the cost of larger prompts.
 The built-in rate limiter is in-memory. For multi-replica production, replace
 `FixedWindowRateLimiter` with Redis or put a gateway rate limit in front.
 
+## Monitoring
+
+The repo has two layers of monitoring:
+
+- GitHub Actions pings the Hugging Face Space every 12 hours so the free CPU
+  Space stays warm, and scheduled live smoke tests check health/widget/course
+  resolution.
+- Optional Opik tracing records each completed chat turn with course, lesson,
+  student id, model, token usage, estimated cost, latency, and answer status.
+
+Enable Opik with:
+
+```bash
+OPIK_ENABLED=true
+OPIK_API_KEY=...
+OPIK_WORKSPACE=...
+OPIK_PROJECT_NAME=towards-ai-thinkific-tutor
+```
+
+The trace intentionally does not copy full Thinkific page text into Opik. It
+records the student's question, the answer, and operational metadata.
+
 ## Deployment
 
 Build with Docker:
@@ -179,6 +201,8 @@ Required secrets:
 GEMINI_API_KEY
 COHERE_API_KEY
 HF_TOKEN
+OPIK_API_KEY              # optional, for monitoring
+OPIK_WORKSPACE            # optional, for monitoring
 ```
 
 ## Future single-repo path

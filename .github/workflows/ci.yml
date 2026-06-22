@@ -58,6 +58,9 @@ jobs:
       - name: Ruff
         run: uv run ruff check .
 
+      - name: Widget syntax
+        run: node --check static/thinkific-widget.js
+
       - name: Pytest
         run: uv run pytest -m "not live" -p no:cacheprovider tests
 

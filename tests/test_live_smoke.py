@@ -106,6 +106,8 @@ def test_live_health_and_widget_latency() -> None:
     assert "Ask the tutor" in widget.text
     assert "Towards AI Tutor" in widget.text
     assert "renderMarkdown" in widget.text
+    assert "splitTrailingUrlPunctuation" in widget.text
+    assert "displayUrl(rawUrl)" in widget.text
     assert "CoursePlayerV2" in widget.text
     assert "/api/thinkific/resolve" in widget.text
     assert widget_seconds <= max_seconds("LIVE_SMOKE_MAX_WIDGET_SECONDS", 30)

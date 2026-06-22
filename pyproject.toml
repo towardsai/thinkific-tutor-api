@@ -17,6 +17,7 @@ dependencies = [
     "langchain-google-genai",
     "langchain-openai",
     "langgraph",
+    "opik",
     "pydantic",
     "python-dotenv",
     "requests",

@@ -115,12 +115,35 @@
 
   function safeHref(value) {
     try {
-      var url = new URL(value, window.location.href);
+      var candidate = safeString(value).trim();
+      if (/^www\./i.test(candidate)) candidate = "https://" + candidate;
+      var url = new URL(candidate, window.location.href);
       if (url.protocol === "http:" || url.protocol === "https:") {
         return url.href;
       }
     } catch (_error) {}
     return "";
+  }
+
+  function displayUrl(value) {
+    return safeString(value).replace(/^https?:\/\//i, "").replace(/\/$/, "");
+  }
+
+  function splitTrailingUrlPunctuation(value) {
+    var url = safeString(value);
+    var suffix = "";
+    while (/[.,;:!?]$/.test(url)) {
+      suffix = url.slice(-1) + suffix;
+      url = url.slice(0, -1);
+    }
+    while (
+      url.slice(-1) === ")" &&
+      (url.match(/\)/g) || []).length > (url.match(/\(/g) || []).length
+    ) {
+      suffix = ")" + suffix;
+      url = url.slice(0, -1);
+    }
+    return { url: url, suffix: suffix };
   }
 
   function renderBasicMarkdown(text) {
@@ -132,18 +155,27 @@
   function renderInlineMarkdown(text) {
     var output = "";
     var lastIndex = 0;
-    var linkPattern = /\[([^\]]{1,160})\]\((https?:\/\/[^)\s]+)\)/g;
+    var linkPattern =
+      /\[([^\]]{1,180})\]\(((?:https?:\/\/|www\.)[^)\s]+)\)|\[((?:https?:\/\/|www\.)[^\]\s]+)\]|((?:https?:\/\/|www\.)[^\s<]+)/g;
     var match;
     while ((match = linkPattern.exec(text)) !== null) {
       output += renderBasicMarkdown(text.slice(lastIndex, match.index));
-      var href = safeHref(match[2]);
+      var rawUrl = match[2] || match[3] || match[4] || "";
+      var suffix = "";
+      if (!match[2]) {
+        var splitUrl = splitTrailingUrlPunctuation(rawUrl);
+        rawUrl = splitUrl.url;
+        suffix = splitUrl.suffix;
+      }
+      var href = safeHref(rawUrl);
       if (href) {
         output +=
           "<a href='" +
           escapeHtml(href) +
           "' target='_blank' rel='noopener noreferrer'>" +
-          renderBasicMarkdown(match[1]) +
+          (match[1] ? renderBasicMarkdown(match[1]) : escapeHtml(displayUrl(rawUrl))) +
           "</a>";
+        if (suffix) output += renderBasicMarkdown(suffix);
       } else {
         output += renderBasicMarkdown(match[0]);
       }

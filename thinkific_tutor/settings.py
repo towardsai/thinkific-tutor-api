@@ -120,6 +120,25 @@ class Settings:
     rate_limit_global_per_minute: int = field(
         default_factory=lambda: _int_env("THINKIFIC_GLOBAL_RATE_LIMIT_PER_MINUTE", 120)
     )
+    opik_enabled: bool = field(
+        default_factory=lambda: _bool_env("OPIK_ENABLED", False)
+    )
+    opik_api_key: str = field(
+        default_factory=lambda: os.getenv("OPIK_API_KEY", "").strip()
+    )
+    opik_workspace: str = field(
+        default_factory=lambda: os.getenv("OPIK_WORKSPACE", "").strip()
+    )
+    opik_project_name: str = field(
+        default_factory=lambda: os.getenv(
+            "OPIK_PROJECT_NAME",
+            "towards-ai-thinkific-tutor",
+        ).strip()
+        or "towards-ai-thinkific-tutor"
+    )
+    opik_max_text_chars: int = field(
+        default_factory=lambda: _int_env("OPIK_MAX_TEXT_CHARS", 8000)
+    )
     require_logged_in_user: bool = field(
         default_factory=lambda: _bool_env("THINKIFIC_REQUIRE_LOGGED_IN_USER", True)
     )

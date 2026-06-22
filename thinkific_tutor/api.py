@@ -14,6 +14,7 @@ from fastapi.staticfiles import StaticFiles
 
 from .bootstrap import ensure_ai_tutor_importable, repo_root
 from .course_mapper import build_augmented_query, resolve_lesson_context
+from .monitoring import OpikTurnMonitor
 from .rate_limiter import FixedWindowRateLimiter, RateLimit
 from .schemas import ChatTurnIn, ResolveRequest, ThinkificChatRequest
 from .settings import settings
@@ -171,6 +172,21 @@ def _check_rate_limits(
         )
 
 
+def _flush_monitor_later(monitor: OpikTurnMonitor, error_message: str = "") -> None:
+    if not monitor.enabled:
+        return
+
+    task = asyncio.create_task(asyncio.to_thread(monitor.flush, error_message))
+
+    def log_failure(done: asyncio.Task) -> None:
+        try:
+            done.result()
+        except Exception:
+            logger.warning("Background Opik monitor flush failed.", exc_info=True)
+
+    task.add_done_callback(log_failure)
+
+
 def _chat_request(
     payload: ThinkificChatRequest,
     query: str,
@@ -199,9 +215,14 @@ def healthcheck() -> dict[str, str]:
 
 @app.get("/api/thinkific/config")
 def public_config() -> dict[str, Any]:
+    opik_ready = bool(settings.opik_enabled and settings.opik_api_key)
     return {
         "allowedHosts": list(settings.allowed_hosts),
         "model": settings.model_name,
+        "monitoring": {
+            "opikEnabled": opik_ready,
+            "opikProject": settings.opik_project_name if opik_ready else "",
+        },
         "courses": settings.public_course_sources(),
     }
 
@@ -249,6 +270,13 @@ async def chat(request: Request, payload: ThinkificChatRequest) -> StreamingResp
         resolved.source_key,
         resolved.student_id,
     )
+    monitor = OpikTurnMonitor(
+        resolved=resolved,
+        user_query=payload.query,
+        chat_request=chat_request,
+        origin=request.headers.get("origin", ""),
+        referer=request.headers.get("referer", ""),
+    )
 
     async def event_stream():
         encoder = UIMessageStreamEncoder()
@@ -256,6 +284,7 @@ async def chat(request: Request, payload: ThinkificChatRequest) -> StreamingResp
         holds_lock = False
         events = stream_chat(chat_request)
         next_event: asyncio.Task | None = None
+        error_message = ""
         try:
             if slot is not None:
                 acquire = asyncio.ensure_future(slot.lock.acquire())
@@ -286,11 +315,16 @@ async def chat(request: Request, payload: ThinkificChatRequest) -> StreamingResp
                     event = task.result()
                 except StopAsyncIteration:
                     break
+                monitor.observe_event(event)
                 for part in encoder.encode(event):
                     yield sse_frame(part)
                 next_event = asyncio.ensure_future(anext(events))
+        except asyncio.CancelledError:
+            error_message = "client disconnected before the tutor stream completed"
+            raise
         except Exception:
             ref = encoder.message_id or uuid4().hex
+            error_message = f"chat stream failed ref={ref}"
             logger.exception("thinkific chat stream failed ref=%s", ref)
             message = (
                 "Something went wrong while answering. Please try again. "
@@ -300,6 +334,7 @@ async def chat(request: Request, payload: ThinkificChatRequest) -> StreamingResp
                 yield sse_frame(part)
         else:
             if not encoder.closed:
+                error_message = "stream ended without completion"
                 for part in encoder.finish_error("stream ended without completion"):
                     yield sse_frame(part)
         finally:
@@ -309,6 +344,7 @@ async def chat(request: Request, payload: ThinkificChatRequest) -> StreamingResp
                 slot.lock.release()
             if slot is not None:
                 await _release_thread_slot(chat_request.thread_id, slot)
+            _flush_monitor_later(monitor, error_message)
         yield sse_frame("[DONE]")
 
     return StreamingResponse(
