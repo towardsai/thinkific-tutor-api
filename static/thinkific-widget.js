@@ -34,40 +34,56 @@
 
   shadow.innerHTML = [
     "<style>",
-    ":host{all:initial;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#172033}",
+    ":host{all:initial;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#182235}",
     ".wrap{position:fixed;right:20px;bottom:20px;z-index:2147483000}",
-    ".bubble{width:58px;height:58px;border:0;border-radius:50%;background:#172033;color:#fff;box-shadow:0 14px 40px rgba(23,32,51,.24);cursor:pointer;display:flex;align-items:center;justify-content:center;font:700 20px/1 system-ui}",
-    ".bubble:hover{background:#26364f}",
-    ".panel{width:min(390px,calc(100vw - 32px));height:min(620px,calc(100vh - 104px));background:#fff;border:1px solid #d9e0ea;border-radius:10px;box-shadow:0 18px 60px rgba(23,32,51,.22);display:flex;flex-direction:column;overflow:hidden}",
-    ".head{height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;border-bottom:1px solid #edf1f6;background:#f8fafc}",
-    ".title{font:700 15px/1.2 system-ui;color:#172033}",
-    ".lesson{font:500 12px/1.2 system-ui;color:#64748b;max-width:270px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:3px}",
-    ".iconbtn{width:32px;height:32px;border:0;border-radius:7px;background:transparent;color:#475569;cursor:pointer;font:700 19px/1 system-ui}",
-    ".iconbtn:hover{background:#e9eef5}",
-    ".msgs{flex:1;overflow:auto;padding:14px;background:#fff;display:flex;flex-direction:column;gap:11px}",
-    ".msg{max-width:86%;padding:10px 12px;border-radius:8px;font:400 14px/1.45 system-ui;white-space:pre-wrap;overflow-wrap:anywhere}",
-    ".user{align-self:flex-end;background:#172033;color:#fff}",
-    ".assistant{align-self:flex-start;background:#f1f5f9;color:#172033}",
-    ".meta{align-self:flex-start;color:#64748b;font:500 12px/1.3 system-ui}",
-    ".form{display:flex;gap:8px;padding:12px;border-top:1px solid #edf1f6;background:#f8fafc}",
-    ".input{flex:1;resize:none;min-height:42px;max-height:116px;border:1px solid #cbd5e1;border-radius:8px;padding:10px;font:400 14px/1.35 system-ui;outline:none}",
-    ".input:focus{border-color:#64748b;box-shadow:0 0 0 3px rgba(100,116,139,.16)}",
-    ".send{width:44px;border:0;border-radius:8px;background:#172033;color:#fff;cursor:pointer;font:800 15px/1 system-ui}",
+    ".bubble{height:46px;min-width:142px;border:0;border-radius:999px;background:#182235;color:#fff;box-shadow:0 14px 34px rgba(24,34,53,.28);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;padding:0 16px 0 13px;font:750 14px/1 system-ui;letter-spacing:0}",
+    ".bubble:hover{background:#24324b;transform:translateY(-1px)}",
+    ".bubble-mark{width:24px;height:24px;border-radius:999px;background:#11b7ba;color:#082c33;display:flex;align-items:center;justify-content:center;font:800 15px/1 system-ui}",
+    ".panel{width:min(414px,calc(100vw - 32px));height:min(650px,calc(100vh - 96px));background:#fff;border:1px solid #d7e0ea;border-radius:14px;box-shadow:0 20px 70px rgba(24,34,53,.24);display:flex;flex-direction:column;overflow:hidden}",
+    ".head{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 14px 0 16px;border-bottom:1px solid #e7edf4;background:#fbfcfe}",
+    ".brand{min-width:0;display:flex;align-items:center;gap:10px}",
+    ".brand-mark{width:32px;height:32px;border-radius:8px;background:#182235;color:#fff;display:flex;align-items:center;justify-content:center;font:800 12px/1 system-ui}",
+    ".title{font:750 15px/1.2 system-ui;color:#182235;letter-spacing:0}",
+    ".lesson{font:600 12px/1.25 system-ui;color:#64748b;max-width:285px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:3px}",
+    ".iconbtn{width:34px;height:34px;flex:0 0 auto;border:0;border-radius:9px;background:#eef3f8;color:#475569;cursor:pointer;font:800 20px/1 system-ui}",
+    ".iconbtn:hover{background:#e2eaf3;color:#182235}",
+    ".msgs{flex:1;overflow:auto;padding:16px;background:#fff;display:flex;flex-direction:column;gap:12px}",
+    ".msg{max-width:88%;padding:11px 13px;border-radius:11px;font:400 14px/1.48 system-ui;overflow-wrap:anywhere}",
+    ".user{align-self:flex-end;background:#182235;color:#fff;border-bottom-right-radius:4px}",
+    ".assistant{align-self:flex-start;background:#f3f7fb;color:#182235;border:1px solid #e7edf4;border-bottom-left-radius:4px}",
+    ".assistant.empty{color:#64748b;font-style:italic}",
+    ".md{white-space:normal}",
+    ".md p{margin:0 0 10px}",
+    ".md p:last-child{margin-bottom:0}",
+    ".md ol,.md ul{margin:8px 0 10px 20px;padding:0}",
+    ".md li{margin:5px 0;padding-left:2px}",
+    ".md a{color:#087e8b;text-decoration:underline;text-underline-offset:2px;font-weight:650}",
+    ".md code{background:#e8eef5;border:1px solid #d9e3ee;border-radius:5px;padding:1px 4px;font:500 12px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace}",
+    ".md pre{margin:8px 0 10px;padding:10px;border-radius:8px;background:#182235;color:#f8fafc;overflow:auto}",
+    ".md pre code{background:transparent;border:0;color:inherit;padding:0}",
+    ".md strong{font-weight:760}",
+    ".meta{align-self:flex-start;color:#64748b;font:600 12px/1.35 system-ui;background:#f8fafc;border:1px solid #edf2f7;border-radius:999px;padding:6px 10px}",
+    ".form{display:flex;gap:9px;padding:12px;border-top:1px solid #e7edf4;background:#fbfcfe}",
+    ".input{flex:1;resize:none;min-height:44px;max-height:116px;border:1px solid #c8d3df;border-radius:11px;padding:11px 12px;font:400 14px/1.35 system-ui;outline:none;background:#fff;color:#182235}",
+    ".input:focus{border-color:#11a7b0;box-shadow:0 0 0 3px rgba(17,167,176,.16)}",
+    ".send{width:46px;flex:0 0 46px;border:0;border-radius:11px;background:#182235;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center}",
+    ".send:hover{background:#24324b}",
     ".send:disabled{opacity:.45;cursor:not-allowed}",
+    ".send svg{width:18px;height:18px;display:block}",
     ".hidden{display:none!important}",
-    "@media(max-width:520px){.wrap{right:12px;bottom:12px}.panel{width:calc(100vw - 24px);height:calc(100vh - 90px)}}",
+    "@media(max-width:520px){.wrap{right:12px;bottom:12px}.panel{width:calc(100vw - 24px);height:calc(100vh - 86px)}.lesson{max-width:220px}.bubble{min-width:132px}}",
     "</style>",
     "<div class='wrap hidden' data-wrap>",
-    "  <button class='bubble' data-bubble aria-label='Open AI tutor'>AI</button>",
+    "  <button class='bubble' data-bubble aria-label='Ask the tutor'><span class='bubble-mark'>?</span><span>Ask the tutor</span></button>",
     "  <section class='panel hidden' data-panel aria-label='AI tutor chat'>",
     "    <header class='head'>",
-    "      <div><div class='title'>Course tutor</div><div class='lesson' data-lesson></div></div>",
-    "      <button class='iconbtn' data-close aria-label='Close tutor'>x</button>",
+    "      <div class='brand'><div class='brand-mark'>TA</div><div><div class='title'>Towards AI Tutor</div><div class='lesson' data-lesson></div></div></div>",
+    "      <button class='iconbtn' data-close aria-label='Minimize tutor' title='Minimize'>&minus;</button>",
     "    </header>",
     "    <div class='msgs' data-msgs><div class='meta'>Ask about this lesson.</div></div>",
     "    <form class='form' data-form>",
-    "      <textarea class='input' data-input rows='1' placeholder='Ask a question'></textarea>",
-    "      <button class='send' data-send type='submit'>></button>",
+    "      <textarea class='input' data-input rows='1' placeholder='Ask about this lesson' data-gramm='false' data-gramm_editor='false' data-enable-grammarly='false'></textarea>",
+    "      <button class='send' data-send type='submit' aria-label='Send message'><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M4 12h14M13 6l6 6-6 6' fill='none' stroke='currentColor' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/></svg></button>",
     "    </form>",
     "  </section>",
     "</div>",
@@ -86,6 +102,138 @@
   function safeString(value) {
     if (value === null || value === undefined) return "";
     return String(value);
+  }
+
+  function escapeHtml(value) {
+    return safeString(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
+  function safeHref(value) {
+    try {
+      var url = new URL(value, window.location.href);
+      if (url.protocol === "http:" || url.protocol === "https:") {
+        return url.href;
+      }
+    } catch (_error) {}
+    return "";
+  }
+
+  function renderBasicMarkdown(text) {
+    return escapeHtml(text)
+      .replace(/`([^`]+)`/g, "<code>$1</code>")
+      .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+  }
+
+  function renderInlineMarkdown(text) {
+    var output = "";
+    var lastIndex = 0;
+    var linkPattern = /\[([^\]]{1,160})\]\((https?:\/\/[^)\s]+)\)/g;
+    var match;
+    while ((match = linkPattern.exec(text)) !== null) {
+      output += renderBasicMarkdown(text.slice(lastIndex, match.index));
+      var href = safeHref(match[2]);
+      if (href) {
+        output +=
+          "<a href='" +
+          escapeHtml(href) +
+          "' target='_blank' rel='noopener noreferrer'>" +
+          renderBasicMarkdown(match[1]) +
+          "</a>";
+      } else {
+        output += renderBasicMarkdown(match[0]);
+      }
+      lastIndex = match.index + match[0].length;
+    }
+    output += renderBasicMarkdown(text.slice(lastIndex));
+    return output;
+  }
+
+  function isListLine(line) {
+    return /^\s*(?:[-*]\s+|\d+\.\s+)/.test(line);
+  }
+
+  function isHeadingLine(line) {
+    return /^\s*#{1,4}\s+/.test(line);
+  }
+
+  function renderMarkdown(markdown) {
+    var lines = safeString(markdown).replace(/\r\n/g, "\n").split("\n");
+    var html = [];
+    var index = 0;
+
+    while (index < lines.length) {
+      var line = lines[index];
+      var trimmed = line.trim();
+      if (!trimmed) {
+        index += 1;
+        continue;
+      }
+
+      if (trimmed.indexOf("```") === 0) {
+        var code = [];
+        index += 1;
+        while (index < lines.length && lines[index].trim().indexOf("```") !== 0) {
+          code.push(lines[index]);
+          index += 1;
+        }
+        if (index < lines.length) index += 1;
+        html.push("<pre><code>" + escapeHtml(code.join("\n")) + "</code></pre>");
+        continue;
+      }
+
+      if (isHeadingLine(line)) {
+        html.push(
+          "<p><strong>" +
+            renderInlineMarkdown(trimmed.replace(/^#{1,4}\s+/, "")) +
+            "</strong></p>",
+        );
+        index += 1;
+        continue;
+      }
+
+      if (isListLine(line)) {
+        var ordered = /^\s*\d+\.\s+/.test(line);
+        var tag = ordered ? "ol" : "ul";
+        var items = [];
+        while (
+          index < lines.length &&
+          isListLine(lines[index]) &&
+          /^\s*\d+\.\s+/.test(lines[index]) === ordered
+        ) {
+          items.push(
+            "<li>" +
+              renderInlineMarkdown(
+                lines[index].replace(/^\s*(?:[-*]\s+|\d+\.\s+)/, ""),
+              ) +
+              "</li>",
+          );
+          index += 1;
+        }
+        html.push("<" + tag + ">" + items.join("") + "</" + tag + ">");
+        continue;
+      }
+
+      var paragraph = [trimmed];
+      index += 1;
+      while (
+        index < lines.length &&
+        lines[index].trim() &&
+        lines[index].trim().indexOf("```") !== 0 &&
+        !isListLine(lines[index]) &&
+        !isHeadingLine(lines[index])
+      ) {
+        paragraph.push(lines[index].trim());
+        index += 1;
+      }
+      html.push("<p>" + renderInlineMarkdown(paragraph.join(" ")) + "</p>");
+    }
+
+    return "<div class='md'>" + html.join("") + "</div>";
   }
 
   function entityFrom(raw) {
@@ -221,7 +369,16 @@
     state.messages.forEach(function (message) {
       var el = document.createElement("div");
       el.className = "msg " + (message.role === "user" ? "user" : "assistant");
-      el.textContent = message.content || "";
+      if (message.role === "assistant") {
+        if (!message.content) {
+          el.className += " empty";
+          el.textContent = "Thinking...";
+        } else {
+          el.innerHTML = renderMarkdown(message.content);
+        }
+      } else {
+        el.textContent = message.content || "";
+      }
       msgs.appendChild(el);
     });
     msgs.scrollTop = msgs.scrollHeight;

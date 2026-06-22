@@ -102,6 +102,9 @@ def test_widget_serves_course_player_gating_script() -> None:
 
     assert response.status_code == 200
     assert "application/javascript" in response.headers["content-type"]
+    assert "Ask the tutor" in response.text
+    assert "Towards AI Tutor" in response.text
+    assert "renderMarkdown" in response.text
     assert "CoursePlayerV2" in response.text
     assert "/api/thinkific/resolve" in response.text
     assert "quiz" in response.text
