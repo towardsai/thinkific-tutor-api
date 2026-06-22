@@ -134,6 +134,9 @@ def test_helper_config_and_widget_are_served_from_shared_app() -> None:
     assert "isSignedIn" in widget.text
     assert "payload.sources" not in widget.text
     assert "sourceWrap" not in widget.text
+    assert 'event.key === "Enter"' in widget.text
+    assert "!event.shiftKey" in widget.text
+    assert 'form.dispatchEvent(new Event("submit"' in widget.text
 
 
 def test_helper_chat_requires_origin_public_page_signed_out_and_first_prompt() -> None:

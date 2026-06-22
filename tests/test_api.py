@@ -113,6 +113,9 @@ def test_widget_serves_course_player_gating_script() -> None:
     assert "displayUrl(rawUrl)" in response.text
     assert "CoursePlayerV2" in response.text
     assert "/api/thinkific/resolve" in response.text
+    assert 'event.key === "Enter"' in response.text
+    assert "!event.shiftKey" in response.text
+    assert 'form.dispatchEvent(new Event("submit"' in response.text
     assert "quiz" in response.text
 
 

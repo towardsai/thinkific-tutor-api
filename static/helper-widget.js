@@ -409,6 +409,12 @@
     input.style.height = "auto";
     input.style.height = Math.min(input.scrollHeight, 116) + "px";
   });
+  input.addEventListener("keydown", function (event) {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      form.dispatchEvent(new Event("submit", { cancelable: true }));
+    }
+  });
 
   function refreshVisibility() {
     if (!state.config) return;
