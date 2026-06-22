@@ -132,6 +132,8 @@ def test_helper_config_and_widget_are_served_from_shared_app() -> None:
     assert "Towards AI Helper" in widget.text
     assert "Choose a starter prompt" in widget.text
     assert "isSignedIn" in widget.text
+    assert "payload.sources" not in widget.text
+    assert "sourceWrap" not in widget.text
 
 
 def test_helper_chat_requires_origin_public_page_signed_out_and_first_prompt() -> None:
@@ -189,6 +191,8 @@ def test_helper_chat_calls_gemini_with_retrieved_sources(monkeypatch) -> None:
     assert data["sources"]
     assert data["usage"]["total_tokens"] == 18
     assert "Agent Engineering" in prompts[0]
+    assert "inline Markdown links" in prompts[0]
+    assert "Do not add a separate sources or citations list" in prompts[0]
 
 
 def test_helper_chat_keeps_course_choice_context_on_followup(monkeypatch) -> None:

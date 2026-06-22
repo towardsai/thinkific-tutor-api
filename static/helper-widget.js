@@ -57,8 +57,6 @@
     ".prompt{border:1px solid #d7e0ea;border-radius:10px;background:#fff;color:#182235;text-align:left;padding:10px 11px;font:700 13px/1.35 system-ui;cursor:pointer}",
     ".prompt:hover{border-color:#11a7b0;background:#f2fbfc}",
     ".prompt:disabled{opacity:.55;cursor:not-allowed}",
-    ".sources{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}",
-    ".source{font:700 11px/1.2 system-ui;color:#087e8b;background:#e8f8f9;border-radius:999px;padding:5px 8px;text-decoration:none}",
     ".md{white-space:normal}",
     ".md p{margin:0 0 10px}",
     ".md p:last-child{margin-bottom:0}",
@@ -310,24 +308,10 @@
     };
   }
 
-  function appendMessage(role, text, sources) {
+  function appendMessage(role, text) {
     var node = document.createElement("div");
     node.className = "msg " + (role === "user" ? "user" : "assistant");
     node.innerHTML = role === "assistant" ? renderMarkdown(text) : escapeHtml(text);
-    if (role === "assistant" && sources && sources.length) {
-      var sourceWrap = document.createElement("div");
-      sourceWrap.className = "sources";
-      sources.slice(0, 3).forEach(function (source) {
-        var a = document.createElement("a");
-        a.className = "source";
-        a.href = source.url;
-        a.target = "_blank";
-        a.rel = "noopener noreferrer";
-        a.textContent = source.title || source.kind || "Source";
-        sourceWrap.appendChild(a);
-      });
-      node.appendChild(sourceWrap);
-    }
     msgs.appendChild(node);
     msgs.scrollTop = msgs.scrollHeight;
     return node;
@@ -380,20 +364,6 @@
         state.threadId = payload.threadId || state.threadId;
         loading.classList.remove("empty");
         loading.innerHTML = renderMarkdown(payload.answer || "I could not answer that.");
-        if (payload.sources && payload.sources.length) {
-          var sourceWrap = document.createElement("div");
-          sourceWrap.className = "sources";
-          payload.sources.slice(0, 3).forEach(function (source) {
-            var a = document.createElement("a");
-            a.className = "source";
-            a.href = source.url;
-            a.target = "_blank";
-            a.rel = "noopener noreferrer";
-            a.textContent = source.title || source.kind || "Source";
-            sourceWrap.appendChild(a);
-          });
-          loading.appendChild(sourceWrap);
-        }
         state.messages.push({ role: "assistant", content: payload.answer || "" });
         state.firstMessageSent = true;
         prompts.classList.add("hidden");
