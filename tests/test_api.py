@@ -16,6 +16,7 @@ from thinkific_tutor.rate_limiter import FixedWindowRateLimiter, RateLimit  # no
 from thinkific_tutor.settings import settings  # noqa: E402
 
 client = TestClient(api.app)
+THINKIFIC_HEADERS = {"Origin": "https://academy.towardsai.net"}
 
 
 def lesson_context(
@@ -71,6 +72,7 @@ def test_resolve_endpoint_accepts_every_configured_course_url() -> None:
         response = client.post(
             "/api/thinkific/resolve",
             json={"context": lesson_context(course_url)},
+            headers=THINKIFIC_HEADERS,
         )
 
         assert response.status_code == 200
@@ -85,10 +87,12 @@ def test_resolve_endpoint_rejects_anonymous_and_quiz_contexts() -> None:
     anonymous = client.post(
         "/api/thinkific/resolve",
         json={"context": lesson_context(course_url, user_id="")},
+        headers=THINKIFIC_HEADERS,
     )
     quiz = client.post(
         "/api/thinkific/resolve",
         json={"context": lesson_context(course_url, lesson_type="quiz")},
+        headers=THINKIFIC_HEADERS,
     )
 
     assert anonymous.status_code == 200
@@ -128,6 +132,7 @@ def test_chat_endpoint_streams_mocked_answer_and_forces_course_source(
 
     response = client.post(
         "/api/thinkific/chat",
+        headers=THINKIFIC_HEADERS,
         json={
             "query": "What is RAG?",
             "threadId": "",
@@ -160,6 +165,7 @@ def test_chat_endpoint_rejects_unmapped_or_quiz_context(monkeypatch) -> None:
 
     unmapped = client.post(
         "/api/thinkific/chat",
+        headers=THINKIFIC_HEADERS,
         json={
             "query": "Can you help?",
             "context": lesson_context("https://academy.towardsai.net/courses/not-real"),
@@ -168,6 +174,7 @@ def test_chat_endpoint_rejects_unmapped_or_quiz_context(monkeypatch) -> None:
     course_url = next(iter(settings.course_url_source_map))
     quiz = client.post(
         "/api/thinkific/chat",
+        headers=THINKIFIC_HEADERS,
         json={
             "query": "What is the answer?",
             "context": lesson_context(course_url, lesson_type="quiz"),
@@ -197,9 +204,18 @@ def test_chat_endpoint_applies_rate_limit(monkeypatch) -> None:
         "context": lesson_context(course_url, user_id="rate-limited-student"),
     }
 
-    first = client.post("/api/thinkific/chat", json=payload)
-    second = client.post("/api/thinkific/chat", json=payload)
+    first = client.post("/api/thinkific/chat", json=payload, headers=THINKIFIC_HEADERS)
+    second = client.post("/api/thinkific/chat", json=payload, headers=THINKIFIC_HEADERS)
 
     assert first.status_code == 200
     assert second.status_code == 429
     assert int(second.headers["retry-after"]) > 0
+
+
+def test_thinkific_post_endpoints_require_allowed_browser_origin() -> None:
+    course_url = next(iter(settings.course_url_source_map))
+    payload = {"context": lesson_context(course_url)}
+
+    response = client.post("/api/thinkific/resolve", json=payload)
+
+    assert response.status_code == 403

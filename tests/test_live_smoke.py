@@ -29,6 +29,7 @@ COURSE_URL_TO_SOURCE = {
     "https://academy.towardsai.net/courses/ai-business-professionals": "master_ai_for_work",
     "https://academy.towardsai.net/courses/agent-engineering": "agentic_ai_engineering",
 }
+THINKIFIC_HEADERS = {"Origin": "https://academy.towardsai.net"}
 
 
 def require_live_base_url() -> str:
@@ -125,6 +126,7 @@ def test_live_resolve_accepts_all_courses(
         "POST",
         f"{base_url}/api/thinkific/resolve",
         json={"context": lesson_context(course_url, expected_source)},
+        headers=THINKIFIC_HEADERS,
         timeout=60,
     )
 
@@ -148,6 +150,7 @@ def test_live_resolve_rejects_sales_anonymous_and_quiz_pages() -> None:
         response = requests.post(
             f"{base_url}/api/thinkific/resolve",
             json={"context": context},
+            headers=THINKIFIC_HEADERS,
             timeout=60,
         )
         assert response.status_code == 200
@@ -177,6 +180,7 @@ def test_live_chat_streams_non_empty_answer(
             "studentId": os.getenv("LIVE_SMOKE_STUDENT_ID", "github-action-smoke"),
             "context": lesson_context(course_url, expected_source),
         },
+        headers=THINKIFIC_HEADERS,
         stream=True,
         timeout=180,
     )

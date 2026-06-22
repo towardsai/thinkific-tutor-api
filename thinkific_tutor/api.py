@@ -4,6 +4,7 @@ import asyncio
 import logging
 from contextlib import asynccontextmanager
 from typing import Any, AsyncIterator
+from urllib.parse import urlparse
 from uuid import uuid4
 
 from fastapi import FastAPI, HTTPException, Request
@@ -113,6 +114,27 @@ def _client_ip(request: Request) -> str:
     return request.client.host if request.client else "unknown"
 
 
+def _header_host_allowed(value: str) -> bool:
+    if not value:
+        return False
+    hostname = (urlparse(value).hostname or "").lower()
+    return any(
+        hostname == allowed.lower() or hostname.endswith("." + allowed.lower())
+        for allowed in settings.allowed_hosts
+    )
+
+
+def _require_allowed_browser_origin(request: Request) -> None:
+    origin = request.headers.get("origin", "")
+    referer = request.headers.get("referer", "")
+    if _header_host_allowed(origin) or _header_host_allowed(referer):
+        return
+    raise HTTPException(
+        status_code=403,
+        detail="Requests must come from the configured Thinkific site.",
+    )
+
+
 def _history(turns: list[ChatTurnIn]) -> tuple[ChatTurn, ...]:
     return tuple(
         ChatTurn(role=turn.role, content=turn.content.strip())
@@ -185,7 +207,8 @@ def public_config() -> dict[str, Any]:
 
 
 @app.post("/api/thinkific/resolve")
-def resolve_context(payload: ResolveRequest) -> dict[str, Any]:
+def resolve_context(payload: ResolveRequest, request: Request) -> dict[str, Any]:
+    _require_allowed_browser_origin(request)
     resolved = resolve_lesson_context(payload.context)
     if not resolved:
         return {"eligible": False}
@@ -208,6 +231,7 @@ def widget() -> FileResponse:
 
 @app.post("/api/thinkific/chat")
 async def chat(request: Request, payload: ThinkificChatRequest) -> StreamingResponse:
+    _require_allowed_browser_origin(request)
     resolved = resolve_lesson_context(
         payload.context,
         student_id=payload.studentId.strip(),
