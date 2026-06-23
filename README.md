@@ -128,6 +128,7 @@ By default, URL mapping is derived from `ai-tutor-app`:
 | `beginner_python_for_ai_engineering` | `https://academy.towardsai.net/courses/python-for-genai` |
 | `master_ai_for_work` | `https://academy.towardsai.net/courses/ai-business-professionals` |
 | `agentic_ai_engineering` | `https://academy.towardsai.net/courses/agent-engineering` |
+| `llm_primer` | `https://academy.towardsai.net/courses/llm-primer` |
 
 When you have Thinkific course ids, add them for stronger routing:
 

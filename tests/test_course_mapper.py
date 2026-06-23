@@ -27,6 +27,30 @@ def test_resolves_course_from_academy_url() -> None:
     assert resolved.lesson_id == "456"
 
 
+def test_resolves_llm_primer_from_course_player_url() -> None:
+    # Real Thinkific Course Player URLs use the /courses/take/<slug>/lessons/...
+    # form, so resolution relies on slug matching against the ai-tutor-app
+    # `llm-primer` course URL rather than a path prefix.
+    context = ThinkificLessonContext(
+        url="https://academy.towardsai.net/courses/take/llm-primer/lessons/65266782-foundational-knowledge-and-using-llms",
+        course=ThinkificEntity(
+            id="999", title="10-Hour Video-based Crash Course on LLM Fundamentals"
+        ),
+        lesson=ThinkificEntity(
+            id="65266782", title="Foundational Knowledge and Using LLMs", type="video"
+        ),
+        user=logged_in_user(),
+    )
+
+    resolved = resolve_lesson_context(context)
+
+    assert resolved is not None
+    assert resolved.source_key == "llm_primer"
+    assert (
+        resolved.source_label == "10-Hour Video-based Crash Course on LLM Fundamentals"
+    )
+
+
 def test_rejects_domain_without_lesson() -> None:
     context = ThinkificLessonContext(
         url="https://academy.towardsai.net/",
