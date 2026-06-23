@@ -211,8 +211,9 @@ class OpikTurnMonitor:
                 span.total_cost = float(cost)
             if error_message:
                 span.error_info = {
-                    "type": "RuntimeError",
+                    "exception_type": "RuntimeError",
                     "message": _truncate(error_message, 1000),
+                    "traceback": "",
                 }
 
 
@@ -303,6 +304,7 @@ class OpikRateLimitMonitor:
 
         with opik.start_as_current_span(**span_kwargs) as span:
             span.error_info = {
-                "type": "RateLimitExceeded",
+                "exception_type": "RateLimitExceeded",
                 "message": f"{self.limit_name} exceeded",
+                "traceback": "",
             }

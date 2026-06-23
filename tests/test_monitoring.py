@@ -200,8 +200,9 @@ def test_opik_rate_limit_monitor_writes_blocked_span() -> None:
     assert "page_text" not in span.kwargs["metadata"]
     assert "rate-limit" in span.kwargs["tags"]
     assert span.error_info == {
-        "type": "RateLimitExceeded",
+        "exception_type": "RateLimitExceeded",
         "message": "per_minute exceeded",
+        "traceback": "",
     }
 
 
@@ -244,6 +245,7 @@ def test_helper_rate_limit_monitor_writes_blocked_span() -> None:
     assert span.kwargs["metadata"]["visitor_key"] == "visitor:test"
     assert "rate-limit" in span.kwargs["tags"]
     assert span.error_info == {
-        "type": "RateLimitExceeded",
+        "exception_type": "RateLimitExceeded",
         "message": "helper_per_minute exceeded",
+        "traceback": "",
     }
