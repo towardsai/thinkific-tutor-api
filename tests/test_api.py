@@ -173,7 +173,7 @@ def test_chat_endpoint_falls_back_when_primary_stream_fails_before_output(
     course_url, _expected_source = next(iter(settings.course_url_source_map.items()))
     configured = replace(
         settings,
-        model_name="openrouter:deepseek/deepseek-v4-flash",
+        model_name="deepseek:deepseek-v4-flash",
         fallback_model_name="google-genai:gemini-2.5-flash",
     )
 
@@ -208,7 +208,7 @@ def test_chat_endpoint_falls_back_when_primary_stream_fails_before_output(
         for event in events
     )
     assert [request.model_name for request in captured_requests] == [
-        "openrouter:deepseek/deepseek-v4-flash",
+        "deepseek:deepseek-v4-flash",
         "google-genai:gemini-2.5-flash",
     ]
 

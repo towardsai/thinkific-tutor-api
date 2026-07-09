@@ -106,6 +106,8 @@ def _provider_and_model(model_name: str) -> tuple[str, str]:
         return provider.strip(), actual_model.strip()
     if normalized.startswith("gemini"):
         return "google-genai", normalized
+    if normalized.startswith("deepseek"):
+        return "deepseek", normalized
     return "openrouter", normalized
 
 
@@ -197,6 +199,76 @@ def _generate_with_openrouter(prompt: str, model_name: str) -> LLMResult:
     )
 
 
+def _generate_with_deepseek(prompt: str, model_name: str) -> LLMResult:
+    if not helper_settings.deepseek_api_key:
+        raise RuntimeError("DEEPSEEK_API_KEY is not configured")
+
+    started = time.monotonic()
+    response = requests.post(
+        f"{helper_settings.deepseek_base_url}/chat/completions",
+        headers={
+            "Authorization": f"Bearer {helper_settings.deepseek_api_key}",
+            "Content-Type": "application/json",
+        },
+        json={
+            "model": model_name,
+            "messages": [
+                {"role": "system", "content": SYSTEM_INSTRUCTION},
+                {"role": "user", "content": prompt},
+            ],
+            "thinking": {"type": "disabled"},
+            "temperature": 0.2,
+            "max_tokens": helper_settings.max_output_tokens,
+            "stream": False,
+        },
+        timeout=helper_settings.request_timeout_seconds,
+    )
+    try:
+        payload = response.json()
+    except ValueError:
+        payload = {}
+
+    if response.status_code >= 400:
+        message = ""
+        if isinstance(payload, dict):
+            error = payload.get("error") or {}
+            if isinstance(error, dict):
+                message = str(error.get("message") or "").strip()
+        detail = f": {message}" if message else ""
+        raise RuntimeError(
+            f"DeepSeek request failed with HTTP {response.status_code}{detail}"
+        )
+
+    if isinstance(payload, dict) and payload.get("error"):
+        raise RuntimeError("DeepSeek returned an error response")
+
+    choices = payload.get("choices", []) if isinstance(payload, dict) else []
+    first_choice = choices[0] if choices else {}
+    message = first_choice.get("message", {}) if isinstance(first_choice, dict) else {}
+    answer = _message_text(message.get("content"))
+    if not answer:
+        raise RuntimeError("DeepSeek returned an empty answer")
+
+    usage_metadata = payload.get("usage", {}) if isinstance(payload, dict) else {}
+    usage = {}
+    if isinstance(usage_metadata, dict):
+        usage = {
+            "input_tokens": usage_metadata.get("prompt_tokens"),
+            "output_tokens": usage_metadata.get("completion_tokens"),
+            "total_tokens": usage_metadata.get("total_tokens"),
+        }
+    response_model = (
+        payload.get("model", model_name) if isinstance(payload, dict) else model_name
+    )
+    return LLMResult(
+        answer=answer,
+        usage=_clean_usage(usage),
+        latency_ms=int((time.monotonic() - started) * 1000),
+        provider="deepseek",
+        model=str(response_model or model_name),
+    )
+
+
 def _generate_with_gemini(prompt: str, model_name: str) -> LLMResult:
     if not helper_settings.gemini_api_key:
         raise RuntimeError("GEMINI_API_KEY is not configured")
@@ -234,6 +306,8 @@ def _generate_for_model(prompt: str, model_name: str) -> LLMResult:
     provider, actual_model = _provider_and_model(model_name)
     if provider == "openrouter":
         return _generate_with_openrouter(prompt, actual_model)
+    if provider == "deepseek":
+        return _generate_with_deepseek(prompt, actual_model)
     if provider == "google-genai":
         return _generate_with_gemini(prompt, actual_model)
     raise RuntimeError(f"Unsupported helper model provider: {provider}")

@@ -48,9 +48,9 @@ class HelperSettings:
     )
     model_name: str = field(
         default_factory=lambda: os.getenv(
-            "HELPER_MODEL", "openrouter:deepseek/deepseek-v4-flash"
+            "HELPER_MODEL", "deepseek:deepseek-v4-flash"
         ).strip()
-        or "openrouter:deepseek/deepseek-v4-flash"
+        or "deepseek:deepseek-v4-flash"
     )
     fallback_model_name: str = field(
         default_factory=lambda: os.getenv(
@@ -60,6 +60,15 @@ class HelperSettings:
     )
     openrouter_api_key: str = field(
         default_factory=lambda: os.getenv("OPENROUTER_API_KEY", "").strip()
+    )
+    deepseek_api_key: str = field(
+        default_factory=lambda: os.getenv("DEEPSEEK_API_KEY", "").strip()
+    )
+    deepseek_base_url: str = field(
+        default_factory=lambda: os.getenv(
+            "DEEPSEEK_BASE_URL", "https://api.deepseek.com"
+        ).strip().rstrip("/")
+        or "https://api.deepseek.com"
     )
     gemini_api_key: str = field(
         default_factory=lambda: os.getenv("GEMINI_API_KEY", "").strip()

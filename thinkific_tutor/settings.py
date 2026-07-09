@@ -89,9 +89,9 @@ class Settings:
     )
     model_name: str = field(
         default_factory=lambda: os.getenv(
-            "THINKIFIC_TUTOR_MODEL", "openrouter:deepseek/deepseek-v4-flash"
+            "THINKIFIC_TUTOR_MODEL", "deepseek:deepseek-v4-flash"
         ).strip()
-        or "openrouter:deepseek/deepseek-v4-flash"
+        or "deepseek:deepseek-v4-flash"
     )
     fallback_model_name: str = field(
         default_factory=lambda: os.getenv(

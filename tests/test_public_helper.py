@@ -329,7 +329,7 @@ def test_helper_rate_limit_is_hard(monkeypatch) -> None:
     assert scheduled_monitors[0].visitor_key == "visitor:test-visitor"
 
 
-def test_helper_llm_uses_openrouter_deepseek_primary(monkeypatch) -> None:
+def test_helper_llm_uses_deepseek_primary(monkeypatch) -> None:
     captured = {}
 
     class FakeResponse:
@@ -337,7 +337,7 @@ def test_helper_llm_uses_openrouter_deepseek_primary(monkeypatch) -> None:
 
         def json(self):
             return {
-                "model": "deepseek/deepseek-v4-flash",
+                "model": "deepseek-v4-flash",
                 "choices": [
                     {
                         "message": {
@@ -362,37 +362,37 @@ def test_helper_llm_uses_openrouter_deepseek_primary(monkeypatch) -> None:
         helper_llm,
         "helper_settings",
         SimpleNamespace(
-            openrouter_api_key="test-openrouter-key",
+            deepseek_api_key="test-deepseek-key",
+            deepseek_base_url="https://api.deepseek.com",
             gemini_api_key="",
-            model_name="openrouter:deepseek/deepseek-v4-flash",
+            model_name="deepseek:deepseek-v4-flash",
             fallback_model_name="gemini-2.5-flash",
             max_output_tokens=420,
             request_timeout_seconds=45,
-            openrouter_site_url="https://towardsai.net",
-            openrouter_app_name="Towards AI Helper",
         ),
     )
 
     result = helper_llm.generate_answer("prompt")
 
     assert result.answer == "Start with the Agent Engineering course."
-    assert result.provider == "openrouter"
-    assert result.model == "deepseek/deepseek-v4-flash"
+    assert result.provider == "deepseek"
+    assert result.model == "deepseek-v4-flash"
     assert result.usage["total_tokens"] == 27
-    assert captured["url"] == "https://openrouter.ai/api/v1/chat/completions"
-    assert captured["headers"]["Authorization"] == "Bearer test-openrouter-key"
-    assert captured["json"]["model"] == "deepseek/deepseek-v4-flash"
+    assert captured["url"] == "https://api.deepseek.com/chat/completions"
+    assert captured["headers"]["Authorization"] == "Bearer test-deepseek-key"
+    assert captured["json"]["model"] == "deepseek-v4-flash"
     assert captured["json"]["messages"][0]["role"] == "system"
     assert "Towards AI Helper" in captured["json"]["messages"][0]["content"]
     assert captured["json"]["messages"][1] == {"role": "user", "content": "prompt"}
+    assert captured["json"]["thinking"] == {"type": "disabled"}
     assert captured["json"]["max_tokens"] == 420
     assert captured["timeout"] == 45
 
 
-def test_helper_llm_falls_back_to_gemini_when_openrouter_fails(monkeypatch) -> None:
+def test_helper_llm_falls_back_to_gemini_when_deepseek_fails(monkeypatch) -> None:
     captured = {}
 
-    class FakeOpenRouterResponse:
+    class FakeDeepSeekResponse:
         status_code = 503
 
         def json(self):
@@ -418,21 +418,20 @@ def test_helper_llm_falls_back_to_gemini_when_openrouter_fails(monkeypatch) -> N
     monkeypatch.setattr(
         helper_llm.requests,
         "post",
-        lambda *_args, **_kwargs: FakeOpenRouterResponse(),
+        lambda *_args, **_kwargs: FakeDeepSeekResponse(),
     )
     monkeypatch.setattr(helper_llm.genai, "Client", FakeClient)
     monkeypatch.setattr(
         helper_llm,
         "helper_settings",
         SimpleNamespace(
-            openrouter_api_key="test-openrouter-key",
+            deepseek_api_key="test-deepseek-key",
+            deepseek_base_url="https://api.deepseek.com",
             gemini_api_key="test-gemini-key",
-            model_name="openrouter:deepseek/deepseek-v4-flash",
+            model_name="deepseek:deepseek-v4-flash",
             fallback_model_name="gemini-2.5-flash",
             max_output_tokens=420,
             request_timeout_seconds=45,
-            openrouter_site_url="https://towardsai.net",
-            openrouter_app_name="Towards AI Helper",
         ),
     )
 

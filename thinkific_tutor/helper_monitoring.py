@@ -27,6 +27,8 @@ def _provider_from_model(model_name: str) -> str:
         return provider.replace("-", "_")
     if normalized.startswith("gemini"):
         return "google_genai"
+    if normalized.startswith("deepseek"):
+        return "deepseek"
     if normalized:
         return "openrouter"
     return ""
