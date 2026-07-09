@@ -30,6 +30,18 @@ def _compact_dict(value: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _provider_from_model(model_name: str) -> str:
+    normalized = (model_name or "").strip()
+    if ":" in normalized:
+        provider, _, _actual_model = normalized.partition(":")
+        return provider.replace("-", "_")
+    if normalized.startswith("gemini"):
+        return "google_genai"
+    if normalized:
+        return "openai"
+    return ""
+
+
 def _import_opik() -> Any | None:
     global _OPIK_IMPORT_WARNING_EMITTED
     try:
@@ -200,7 +212,9 @@ class OpikTurnMonitor:
             "tags": tags,
             "project_name": self.configured.opik_project_name,
             "model": getattr(self.chat_request, "model_name", self.configured.model_name),
-            "provider": "google_genai",
+            "provider": _provider_from_model(
+                getattr(self.chat_request, "model_name", self.configured.model_name)
+            ),
             "flush": True,
         }
 

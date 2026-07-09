@@ -47,11 +47,37 @@ class HelperSettings:
         )
     )
     model_name: str = field(
-        default_factory=lambda: os.getenv("HELPER_MODEL", "gemini-2.5-flash").strip()
+        default_factory=lambda: os.getenv(
+            "HELPER_MODEL", "openrouter:deepseek/deepseek-v4-flash"
+        ).strip()
+        or "openrouter:deepseek/deepseek-v4-flash"
+    )
+    fallback_model_name: str = field(
+        default_factory=lambda: os.getenv(
+            "HELPER_FALLBACK_MODEL", "gemini-2.5-flash"
+        ).strip()
         or "gemini-2.5-flash"
+    )
+    openrouter_api_key: str = field(
+        default_factory=lambda: os.getenv("OPENROUTER_API_KEY", "").strip()
     )
     gemini_api_key: str = field(
         default_factory=lambda: os.getenv("GEMINI_API_KEY", "").strip()
+    )
+    openrouter_site_url: str = field(
+        default_factory=lambda: os.getenv(
+            "OPENROUTER_SITE_URL", "https://towardsai.net"
+        ).strip()
+        or "https://towardsai.net"
+    )
+    openrouter_app_name: str = field(
+        default_factory=lambda: os.getenv(
+            "OPENROUTER_APP_NAME", "Towards AI Helper"
+        ).strip()
+        or "Towards AI Helper"
+    )
+    request_timeout_seconds: int = field(
+        default_factory=lambda: _int_env("HELPER_LLM_TIMEOUT_SECONDS", 45)
     )
     max_output_tokens: int = field(
         default_factory=lambda: _int_env("HELPER_MAX_OUTPUT_TOKENS", 420)

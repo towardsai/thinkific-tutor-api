@@ -184,7 +184,7 @@ def test_helper_chat_requires_origin_public_page_signed_out_and_first_prompt() -
     )
 
 
-def test_helper_chat_calls_gemini_with_retrieved_sources(monkeypatch) -> None:
+def test_helper_chat_calls_llm_with_retrieved_sources(monkeypatch) -> None:
     reset_helper_limiters()
     prompts = []
 
@@ -327,6 +327,124 @@ def test_helper_rate_limit_is_hard(monkeypatch) -> None:
     assert scheduled_monitors[0].limit_name == "helper_per_minute"
     assert scheduled_monitors[0].scope == "visitor"
     assert scheduled_monitors[0].visitor_key == "visitor:test-visitor"
+
+
+def test_helper_llm_uses_openrouter_deepseek_primary(monkeypatch) -> None:
+    captured = {}
+
+    class FakeResponse:
+        status_code = 200
+
+        def json(self):
+            return {
+                "model": "deepseek/deepseek-v4-flash",
+                "choices": [
+                    {
+                        "message": {
+                            "content": "Start with the Agent Engineering course."
+                        }
+                    }
+                ],
+                "usage": {
+                    "prompt_tokens": 20,
+                    "completion_tokens": 7,
+                    "total_tokens": 27,
+                },
+            }
+
+    def fake_post(url, **kwargs):
+        captured["url"] = url
+        captured.update(kwargs)
+        return FakeResponse()
+
+    monkeypatch.setattr(helper_llm.requests, "post", fake_post)
+    monkeypatch.setattr(
+        helper_llm,
+        "helper_settings",
+        SimpleNamespace(
+            openrouter_api_key="test-openrouter-key",
+            gemini_api_key="",
+            model_name="openrouter:deepseek/deepseek-v4-flash",
+            fallback_model_name="gemini-2.5-flash",
+            max_output_tokens=420,
+            request_timeout_seconds=45,
+            openrouter_site_url="https://towardsai.net",
+            openrouter_app_name="Towards AI Helper",
+        ),
+    )
+
+    result = helper_llm.generate_answer("prompt")
+
+    assert result.answer == "Start with the Agent Engineering course."
+    assert result.provider == "openrouter"
+    assert result.model == "deepseek/deepseek-v4-flash"
+    assert result.usage["total_tokens"] == 27
+    assert captured["url"] == "https://openrouter.ai/api/v1/chat/completions"
+    assert captured["headers"]["Authorization"] == "Bearer test-openrouter-key"
+    assert captured["json"]["model"] == "deepseek/deepseek-v4-flash"
+    assert captured["json"]["messages"][0]["role"] == "system"
+    assert "Towards AI Helper" in captured["json"]["messages"][0]["content"]
+    assert captured["json"]["messages"][1] == {"role": "user", "content": "prompt"}
+    assert captured["json"]["max_tokens"] == 420
+    assert captured["timeout"] == 45
+
+
+def test_helper_llm_falls_back_to_gemini_when_openrouter_fails(monkeypatch) -> None:
+    captured = {}
+
+    class FakeOpenRouterResponse:
+        status_code = 503
+
+        def json(self):
+            return {"error": {"message": "upstream unavailable"}}
+
+    class FakeModels:
+        def generate_content(self, **kwargs):
+            captured.update(kwargs)
+            return SimpleNamespace(
+                text="Gemini fallback answer.",
+                usage_metadata=SimpleNamespace(
+                    prompt_token_count=11,
+                    candidates_token_count=5,
+                    total_token_count=16,
+                ),
+            )
+
+    class FakeClient:
+        def __init__(self, *, api_key: str) -> None:
+            captured["api_key"] = api_key
+            self.models = FakeModels()
+
+    monkeypatch.setattr(
+        helper_llm.requests,
+        "post",
+        lambda *_args, **_kwargs: FakeOpenRouterResponse(),
+    )
+    monkeypatch.setattr(helper_llm.genai, "Client", FakeClient)
+    monkeypatch.setattr(
+        helper_llm,
+        "helper_settings",
+        SimpleNamespace(
+            openrouter_api_key="test-openrouter-key",
+            gemini_api_key="test-gemini-key",
+            model_name="openrouter:deepseek/deepseek-v4-flash",
+            fallback_model_name="gemini-2.5-flash",
+            max_output_tokens=420,
+            request_timeout_seconds=45,
+            openrouter_site_url="https://towardsai.net",
+            openrouter_app_name="Towards AI Helper",
+        ),
+    )
+
+    result = helper_llm.generate_answer("prompt")
+
+    assert result.answer == "Gemini fallback answer."
+    assert result.provider == "google_genai"
+    assert result.model == "gemini-2.5-flash"
+    assert result.usage["total_tokens"] == 16
+    assert captured["api_key"] == "test-gemini-key"
+    assert captured["model"] == "gemini-2.5-flash"
+    assert captured["config"]["thinking_config"] == {"thinking_budget": 0}
 
 
 def test_helper_llm_disables_thinking_to_preserve_visible_output(monkeypatch) -> None:

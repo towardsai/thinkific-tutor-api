@@ -33,7 +33,7 @@ Thinkific Course Player
   -> /api/thinkific/chat
   -> ai-tutor-app stream_chat(...)
   -> course-only Chroma/Cohere retrieval
-  -> Gemini 2.5 Flash
+  -> DeepSeek V4 Flash via OpenRouter, with Gemini 2.5 Flash fallback
 ```
 
 ## Public Sales Helper
@@ -59,8 +59,8 @@ routes. The helper:
   questions.
 - Refuses coupon codes and redirects persistent discount requests to
   `louis@towardsai.net`.
-- Uses Gemini 2.5 Flash, hard public rate limits, and Opik project
-  `towards-ai-helper`.
+- Uses DeepSeek V4 Flash through OpenRouter first, falls back to Gemini 2.5
+  Flash directly, and records Opik traces under `towards-ai-helper`.
 
 ## Local setup
 
@@ -181,7 +181,8 @@ THINKIFIC_BLOCKED_LESSON_KEYWORDS=quiz,quizz,exam,assessment
 Defaults:
 
 ```bash
-THINKIFIC_TUTOR_MODEL=google-genai:gemini-2.5-flash
+THINKIFIC_TUTOR_MODEL=openrouter:deepseek/deepseek-v4-flash
+THINKIFIC_TUTOR_FALLBACK_MODEL=google-genai:gemini-2.5-flash
 THINKIFIC_ENABLED_TOOLS=
 THINKIFIC_DISABLE_KB=true
 THINKIFIC_RETRIEVAL_BUDGET=24000
@@ -192,7 +193,9 @@ THINKIFIC_RATE_LIMIT_PER_DAY=120
 Public helper defaults:
 
 ```bash
-HELPER_MODEL=gemini-2.5-flash
+HELPER_MODEL=openrouter:deepseek/deepseek-v4-flash
+HELPER_FALLBACK_MODEL=gemini-2.5-flash
+HELPER_LLM_TIMEOUT_SECONDS=45
 HELPER_RATE_LIMIT_PER_MINUTE=8
 HELPER_RATE_LIMIT_PER_DAY=50
 HELPER_IP_RATE_LIMIT_PER_MINUTE=60
@@ -252,6 +255,7 @@ Deploy targets that work well:
 Required secrets:
 
 ```bash
+OPENROUTER_API_KEY
 GEMINI_API_KEY
 COHERE_API_KEY
 HF_TOKEN

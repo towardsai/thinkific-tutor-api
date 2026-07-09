@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from collections.abc import AsyncIterator
+from dataclasses import replace
 
 from fastapi.testclient import TestClient
 
@@ -162,6 +163,54 @@ def test_chat_endpoint_streams_mocked_answer_and_forces_course_source(
     assert captured_requests[0].source_keys == (expected_source,)
     assert captured_requests[0].model_name == settings.model_name
     assert "## Current Thinkific context" in captured_requests[0].query
+
+
+def test_chat_endpoint_falls_back_when_primary_stream_fails_before_output(
+    monkeypatch,
+) -> None:
+    reset_limiters()
+    captured_requests = []
+    course_url, _expected_source = next(iter(settings.course_url_source_map.items()))
+    configured = replace(
+        settings,
+        model_name="openrouter:deepseek/deepseek-v4-flash",
+        fallback_model_name="google-genai:gemini-2.5-flash",
+    )
+
+    async def fake_stream_chat(chat_request) -> AsyncIterator[ChatEvent]:
+        captured_requests.append(chat_request)
+        if len(captured_requests) == 1:
+            raise RuntimeError("primary unavailable")
+        yield ChatEvent("thread_started", {"thread_id": "thread-1"})
+        yield ChatEvent("message_started", {"message_id": "message-1"})
+        yield ChatEvent("text_delta", {"text": "Fallback tutor answer."})
+        yield ChatEvent("message_completed", {"answer": "Fallback tutor answer."})
+
+    monkeypatch.setattr(api, "settings", configured)
+    monkeypatch.setattr(api, "stream_chat", fake_stream_chat)
+
+    response = client.post(
+        "/api/thinkific/chat",
+        headers=THINKIFIC_HEADERS,
+        json={
+            "query": "What is RAG?",
+            "threadId": "",
+            "context": lesson_context(course_url, user_id="student-fallback"),
+        },
+    )
+
+    assert response.status_code == 200
+    events = parse_sse(response.text)
+    assert any(
+        event != "[DONE]"
+        and event.get("type") == "text-delta"
+        and event.get("delta") == "Fallback tutor answer."
+        for event in events
+    )
+    assert [request.model_name for request in captured_requests] == [
+        "openrouter:deepseek/deepseek-v4-flash",
+        "google-genai:gemini-2.5-flash",
+    ]
 
 
 def test_chat_endpoint_rejects_unmapped_or_quiz_context(monkeypatch) -> None:

@@ -240,12 +240,13 @@ def _chat_request(
     query: str,
     source_key: str,
     student_id: str,
+    model_name: str | None = None,
 ) -> ChatRequest:
     return ChatRequest(
         query=query,
         history=_history(payload.history),
         source_keys=(source_key,),
-        model_name=settings.model_name,
+        model_name=model_name or settings.model_name,
         include_reasoning=False,
         thread_id=payload.threadId.strip(),
         enabled_tools=settings.enabled_tools,
@@ -267,6 +268,7 @@ def public_config() -> dict[str, Any]:
     return {
         "allowedHosts": list(settings.allowed_hosts),
         "model": settings.model_name,
+        "fallbackModel": settings.fallback_model_name,
         "monitoring": {
             "opikEnabled": opik_ready,
             "opikProject": settings.opik_project_name if opik_ready else "",
@@ -318,6 +320,20 @@ async def chat(request: Request, payload: ThinkificChatRequest) -> StreamingResp
         resolved.source_key,
         resolved.student_id,
     )
+    chat_requests = [chat_request]
+    if (
+        settings.fallback_model_name
+        and settings.fallback_model_name != settings.model_name
+    ):
+        chat_requests.append(
+            _chat_request(
+                payload,
+                augmented_query,
+                resolved.source_key,
+                resolved.student_id,
+                model_name=settings.fallback_model_name,
+            )
+        )
     monitor = OpikTurnMonitor(
         resolved=resolved,
         user_query=payload.query,
@@ -330,9 +346,12 @@ async def chat(request: Request, payload: ThinkificChatRequest) -> StreamingResp
         encoder = UIMessageStreamEncoder()
         slot = await _claim_thread_slot(chat_request.thread_id)
         holds_lock = False
-        events = stream_chat(chat_request)
+        active_chat_request = chat_requests[0]
+        events = stream_chat(active_chat_request)
         next_event: asyncio.Task | None = None
         error_message = ""
+        emitted_payload = False
+        can_try_fallback = len(chat_requests) > 1
         try:
             if slot is not None:
                 acquire = asyncio.ensure_future(slot.lock.acquire())
@@ -363,8 +382,26 @@ async def chat(request: Request, payload: ThinkificChatRequest) -> StreamingResp
                     event = task.result()
                 except StopAsyncIteration:
                     break
+                except Exception:
+                    if can_try_fallback and not emitted_payload:
+                        can_try_fallback = False
+                        active_chat_request = chat_requests[1]
+                        monitor.chat_request = active_chat_request
+                        logger.warning(
+                            "Thinkific primary chat stream failed before output; "
+                            "retrying with fallback model %s.",
+                            active_chat_request.model_name,
+                            exc_info=True,
+                        )
+                        events = stream_chat(active_chat_request)
+                        next_event = asyncio.ensure_future(anext(events))
+                        continue
+                    raise
                 monitor.observe_event(event)
-                for part in encoder.encode(event):
+                parts = list(encoder.encode(event))
+                if parts:
+                    emitted_payload = True
+                for part in parts:
                     yield sse_frame(part)
                 next_event = asyncio.ensure_future(anext(events))
         except asyncio.CancelledError:

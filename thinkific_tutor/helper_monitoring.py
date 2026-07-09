@@ -20,6 +20,18 @@ def _truncate(value: str, limit: int) -> str:
     return value[: limit - 1].rstrip() + "..."
 
 
+def _provider_from_model(model_name: str) -> str:
+    normalized = (model_name or "").strip()
+    if ":" in normalized:
+        provider, _, _actual_model = normalized.partition(":")
+        return provider.replace("-", "_")
+    if normalized.startswith("gemini"):
+        return "google_genai"
+    if normalized:
+        return "openrouter"
+    return ""
+
+
 def _import_opik() -> Any | None:
     global _OPIK_IMPORT_WARNING_EMITTED
     try:
@@ -74,6 +86,8 @@ class HelperMonitor:
     usage: dict[str, Any]
     latency_ms: int
     error_message: str = ""
+    model_name: str = ""
+    provider: str = ""
     configured: HelperSettings = helper_settings
     opik_module: Any | None = None
 
@@ -115,8 +129,9 @@ class HelperMonitor:
             },
             "tags": ["towards-ai-helper", "public-sales-helper"],
             "project_name": self.configured.opik_project_name,
-            "model": self.configured.model_name,
-            "provider": "google_genai",
+            "model": self.model_name or self.configured.model_name,
+            "provider": self.provider
+            or _provider_from_model(self.configured.model_name),
             "flush": True,
         }
         with opik.start_as_current_span(**span_kwargs) as span:

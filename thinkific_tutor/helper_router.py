@@ -276,6 +276,8 @@ async def helper_chat(
     usage: dict[str, Any] = {}
     latency_ms = 0
     error_message = ""
+    model_name = ""
+    provider = ""
 
     try:
         if coupon_intent(query):
@@ -298,6 +300,8 @@ async def helper_chat(
             answer = result.answer or _fallback_answer()
             usage = result.usage
             latency_ms = result.latency_ms
+            model_name = result.model
+            provider = result.provider
     except Exception:
         error_message = "helper generation failed"
         logger.exception("helper generation failed")
@@ -314,6 +318,8 @@ async def helper_chat(
         usage=usage,
         latency_ms=latency_ms,
         error_message=error_message,
+        model_name=model_name,
+        provider=provider,
     )
     _schedule_monitor(monitor)
 

@@ -89,7 +89,13 @@ class Settings:
     )
     model_name: str = field(
         default_factory=lambda: os.getenv(
-            "THINKIFIC_TUTOR_MODEL", "google-genai:gemini-2.5-flash"
+            "THINKIFIC_TUTOR_MODEL", "openrouter:deepseek/deepseek-v4-flash"
+        ).strip()
+        or "openrouter:deepseek/deepseek-v4-flash"
+    )
+    fallback_model_name: str = field(
+        default_factory=lambda: os.getenv(
+            "THINKIFIC_TUTOR_FALLBACK_MODEL", "google-genai:gemini-2.5-flash"
         ).strip()
         or "google-genai:gemini-2.5-flash"
     )
