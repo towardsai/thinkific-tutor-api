@@ -4,10 +4,9 @@ from dataclasses import replace
 from types import SimpleNamespace
 from typing import Any
 
-import thinkific_tutor.monitoring as monitoring
-import thinkific_tutor.helper_monitoring as helper_monitoring
+from thinkific_tutor import helper_monitoring, monitoring
 from thinkific_tutor.course_mapper import ResolvedLesson
-from thinkific_tutor.helper_monitoring import HelperRateLimitMonitor
+from thinkific_tutor.helper_monitoring import HelperMonitor, HelperRateLimitMonitor
 from thinkific_tutor.helper_settings import helper_settings
 from thinkific_tutor.monitoring import OpikRateLimitMonitor, OpikTurnMonitor
 from thinkific_tutor.settings import settings
@@ -28,7 +27,7 @@ class FakeSpanContext:
     def __enter__(self) -> FakeSpan:
         return self.span
 
-    def __exit__(self, *_args: Any) -> None:
+    def __exit__(self, *_args: object) -> None:
         return None
 
 
@@ -248,4 +247,50 @@ def test_helper_rate_limit_monitor_writes_blocked_span() -> None:
         "exception_type": "RateLimitExceeded",
         "message": "helper_per_minute exceeded",
         "traceback": "",
+    }
+
+
+def test_helper_monitor_preserves_grounded_provider_and_model_metadata() -> None:
+    helper_monitoring._OPIK_CONFIGURED_FOR = None
+    fake_opik = FakeOpik()
+    configured = replace(
+        helper_settings,
+        opik_enabled=True,
+        opik_api_key="opik-test-key",
+        opik_workspace="towards-ai",
+        opik_project_name="towards-ai-helper",
+    )
+    monitor = HelperMonitor(
+        query="What course is included in mentorship?",
+        answer="10-Hour LLM Fundamentals video course.",
+        current_url="https://towardsai.com/academy/mentorship/",
+        selected_prompt="I want to find mentors",
+        visitor_key="visitor:test",
+        thread_id="helper-thread",
+        sources=[
+            {
+                "title": "Towards AI Mentorship",
+                "url": "https://towardsai.com/academy/mentorship/",
+                "kind": "mentorship",
+            }
+        ],
+        usage={"input_tokens": 25, "output_tokens": 8, "total_tokens": 33},
+        latency_ms=150,
+        model_name="gemini-2.5-flash",
+        provider="google_genai",
+        configured=configured,
+        opik_module=fake_opik,
+    )
+
+    monitor.flush()
+
+    span = fake_opik.spans[0]
+    assert span.kwargs["project_name"] == "towards-ai-helper"
+    assert span.kwargs["provider"] == "google_genai"
+    assert span.kwargs["model"] == "gemini-2.5-flash"
+    assert span.kwargs["metadata"]["sources"] == monitor.sources
+    assert span.usage == {
+        "prompt_tokens": 25,
+        "completion_tokens": 8,
+        "total_tokens": 33,
     }

@@ -8,7 +8,6 @@ from collections.abc import Iterator
 import pytest
 import requests
 
-
 LIVE_BASE_URL = os.getenv("LIVE_SPACE_BASE_URL", "").rstrip("/")
 RUN_LIVE_CHAT = os.getenv("RUN_LIVE_CHAT_SMOKE", "").lower() in {
     "1",
@@ -30,6 +29,7 @@ COURSE_URL_TO_SOURCE = {
     "https://academy.towardsai.net/courses/agent-engineering": "agentic_ai_engineering",
 }
 THINKIFIC_HEADERS = {"Origin": "https://academy.towardsai.net"}
+HELPER_HEADERS = {"Origin": "https://towardsai.com"}
 HELPER_FIRST_PROMPT = "I want help deciding which course to take."
 
 
@@ -133,9 +133,15 @@ def test_live_helper_config_and_widget_latency() -> None:
     assert config.status_code == 200
     payload = config.json()
     assert HELPER_FIRST_PROMPT in payload["forcedPrompts"]
-    assert "/courses/agent-engineering" in payload["allowedPathsByHost"][
-        "academy.towardsai.net"
-    ]
+    assert "towardsai.com" in payload["siteWideHosts"]
+    assert (
+        "/academy/agent-engineering"
+        in payload["allowedPathsByHost"]["towardsai.com"]
+    )
+    assert (
+        "/courses/agent-engineering"
+        in payload["allowedPathsByHost"]["academy.towardsai.net"]
+    )
     assert payload["monitoring"]["opikProject"] in {"", "towards-ai-helper"}
     assert config_seconds <= max_seconds("LIVE_SMOKE_MAX_CONFIG_SECONDS", 30)
 
@@ -193,7 +199,9 @@ def test_live_resolve_rejects_sales_anonymous_and_quiz_pages() -> None:
 )
 @pytest.mark.parametrize(
     ("course_url", "expected_source"),
-    list(COURSE_URL_TO_SOURCE.items()) if RUN_ALL_COURSE_CHAT else [next(iter(COURSE_URL_TO_SOURCE.items()))],
+    list(COURSE_URL_TO_SOURCE.items())
+    if RUN_ALL_COURSE_CHAT
+    else [next(iter(COURSE_URL_TO_SOURCE.items()))],
 )
 def test_live_chat_streams_non_empty_answer(
     course_url: str,
@@ -250,12 +258,12 @@ def test_live_helper_chat_returns_concise_answer() -> None:
             "selectedPrompt": HELPER_FIRST_PROMPT,
             "visitorId": "github-action-helper-smoke",
             "context": {
-                "url": "https://academy.towardsai.net/courses/agent-engineering",
+                "url": "https://towardsai.com/academy/agent-engineering/",
                 "pageTitle": "Agent course",
                 "signedIn": False,
             },
         },
-        headers=THINKIFIC_HEADERS,
+        headers=HELPER_HEADERS,
         timeout=120,
     )
 

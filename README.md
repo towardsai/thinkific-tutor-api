@@ -39,7 +39,7 @@ Thinkific Course Player
 ## Public Sales Helper
 
 This same deployment also serves a separate signed-out sales helper for public
-academy/TowardsAI.net pages:
+`towardsai.com`, legacy `.net`, and Academy pages:
 
 ```html
 <script
@@ -52,11 +52,13 @@ academy/TowardsAI.net pages:
 It uses `/api/helper/config` and `/api/helper/chat`, not the lesson-tutor
 routes. The helper:
 
-- Shows only on public sitemap-discoverable pages.
+- Shows on all public `towardsai.com` pages and selected Academy/legacy pages.
 - Hides when a visitor appears signed in.
 - Forces the first message to one of the configured starter prompts.
 - Answers only course, bundle, mentorship, free-resource, book, or B2B training
   questions.
+- Uses fresh, reviewed page chunks as the only factual evidence and abstains when
+  retrieval or deterministic quote validation cannot support an answer.
 - Refuses coupon codes and redirects persistent discount requests to
   `louis@towardsai.net`.
 - Uses DeepSeek V4 Flash through DeepSeek's API first, falls back to Gemini 2.5
@@ -193,6 +195,9 @@ THINKIFIC_RATE_LIMIT_PER_DAY=120
 Public helper defaults:
 
 ```bash
+HELPER_ALLOWED_ORIGINS=https://towardsai.com,https://www.towardsai.com,https://academy.towardsai.net,https://towardsai.net,https://www.towardsai.net
+HELPER_ALLOWED_HOSTS=towardsai.com,www.towardsai.com,academy.towardsai.net,towardsai.net,www.towardsai.net
+HELPER_SITE_WIDE_HOSTS=towardsai.com,www.towardsai.com
 HELPER_MODEL=deepseek:deepseek-v4-flash
 HELPER_FALLBACK_MODEL=gemini-2.5-flash
 HELPER_LLM_TIMEOUT_SECONDS=45
@@ -201,8 +206,25 @@ HELPER_RATE_LIMIT_PER_DAY=50
 HELPER_IP_RATE_LIMIT_PER_MINUTE=60
 HELPER_IP_RATE_LIMIT_PER_DAY=300
 HELPER_GLOBAL_RATE_LIMIT_PER_MINUTE=120
+HELPER_CATALOG_MAX_AGE_DAYS=14
 HELPER_OPIK_PROJECT_NAME=towards-ai-helper
 ```
+
+`HELPER_SITE_WIDE_HOSTS` enables current and future public `.com` paths while
+the helper continues to block signed-in sessions, checkout/account paths,
+WordPress admin/API paths, and previews. The `.com` knowledge snapshot and
+canonical recommendation links are maintained in `towardsai/tai-helper` and
+copied into `thinkific_tutor/helper_data` for deployment.
+
+Refresh both public catalogs with:
+
+```bash
+python scripts/build_towardsai_com_catalog.py
+```
+
+Catalog entries older than `HELPER_CATALOG_MAX_AGE_DAYS`, failed fetches,
+redirects, template pages, and stale collection summaries are never used as
+evidence. The helper fails closed if no eligible chunks remain.
 
 `THINKIFIC_DISABLE_KB=true` keeps only vector/BM25 retrieval enabled and removes
 the local KB browsing tool from the agent. Turn it off if you want deeper lesson

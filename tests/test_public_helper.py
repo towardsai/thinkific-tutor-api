@@ -16,12 +16,12 @@ from thinkific_tutor.helper_catalog import (
     retrieve,
     sources_from_pages,
 )
-from thinkific_tutor.helper_llm import LLMResult
+from thinkific_tutor.helper_llm import EvidenceChunk, GroundingResult, LLMResult
 from thinkific_tutor.rate_limiter import FixedWindowRateLimiter, RateLimit
 
 client = TestClient(api.app)
-HEADERS = {"Origin": "https://academy.towardsai.net"}
-PUBLIC_URL = "https://academy.towardsai.net/courses/agent-engineering"
+HEADERS = {"Origin": "https://towardsai.com"}
+PUBLIC_URL = "https://towardsai.com/academy/agent-engineering/"
 FIRST_PROMPT = "I want help deciding which course to take."
 
 
@@ -68,18 +68,30 @@ def test_helper_catalog_routes_public_pages_and_queries() -> None:
     assert page_is_allowed(PUBLIC_URL)
     assert page_is_allowed("https://towardsai.net/b2b")
     assert page_is_allowed("https://www.towardsai.net/b2b")
+    assert page_is_allowed("https://towardsai.com/academy/full-stack-ai-engineering/")
+    assert page_is_allowed("https://www.towardsai.com/a-future-public-page/")
     assert not page_is_allowed(
         "https://academy.towardsai.net/courses/take/agent-engineering/lessons/x"
     )
+    assert not page_is_allowed("https://towardsai.com/wp-admin/edit.php")
+    assert not page_is_allowed("https://towardsai.com/academy/?preview=true")
     assert "/b2b" in allowed_paths_by_host()["www.towardsai.net"]
+    assert "/academy/agent-engineering" in allowed_paths_by_host()[
+        "www.towardsai.com"
+    ]
 
     mentorship = sources_from_pages(retrieve("I want to find mentors"))
     b2b = sources_from_pages(retrieve("I want training inside my company"))
     bundle = sources_from_pages(retrieve("What is the best value bundle?"))
 
-    assert any("tai-mentorship" in source["url"] for source in mentorship)
-    assert any("towardsai.net/b2b" in source["url"] for source in b2b)
-    assert any("get-it-all" in source["url"] for source in bundle)
+    assert any(
+        "towardsai.com/academy/mentorship" in source["url"] for source in mentorship
+    )
+    assert any(source["url"].startswith("https://towardsai.com/") for source in b2b)
+    assert any(
+        source["url"] == "https://towardsai.com/academy/bundles/get-it-all/"
+        for source in bundle
+    )
     assert in_scope("Which course is best for learning agents?")
     assert not in_scope("Who won the world cup?")
     assert coupon_intent("Do you have a coupon code?")
@@ -90,20 +102,19 @@ def test_helper_catalog_routes_public_pages_and_queries() -> None:
     ("query", "expected_url_fragment"),
     [
         (
-            "I want help deciding which course to take. "
-            "I am a developer and want to become an AI engineer.",
-            "beginner-to-advanced-llm-dev",
+            "What is included in the Full Stack AI Engineering course?",
+            "full-stack-ai-engineering",
         ),
-        ("I want help to integrate AI into my company", "towardsai.net/b2b"),
-        ("I want a training inside my company", "towardsai.net/b2b"),
+        ("I want help to integrate AI into my company", "towardsai.com/"),
+        ("I want a training inside my company", "towardsai.com/"),
         (
-            "I'm looking for more free resources to learn before buying a course",
-            "youtube.com/channel",
+            "Where is the Agent Engineering free preview?",
+            "agent-engineering-free-preview",
         ),
-        ("I want to find mentors", "tai-mentorship"),
-        ("Where can I buy the Towards AI book on Amazon?", "amazon.com"),
-        ("I am a beginner with no coding experience", "python-for-genai"),
-        ("I am a business professional and manager", "ai-business-professionals"),
+        ("I want to find mentors", "academy/mentorship"),
+        ("Where are the Building LLMs book companion resources?", "academy/book"),
+        ("I am a beginner with no coding experience", "python-for-ai-engineering"),
+        ("I am a business professional and manager", "ai-for-work"),
     ],
 )
 def test_helper_catalog_routes_common_public_intents(
@@ -117,6 +128,24 @@ def test_helper_catalog_routes_common_public_intents(
     assert any(expected_url_fragment in source["url"] for source in sources), sources
 
 
+def test_helper_catalog_routes_specialized_enterprise_queries() -> None:
+    coding_agents = sources_from_pages(
+        retrieve("We need Claude Code and Codex training for our engineering team")
+    )
+    developer_conversion = sources_from_pages(
+        retrieve("Convert our software developers into AI engineers")
+    )
+    consulting = sources_from_pages(
+        retrieve("We need AI deployment and value creation consulting")
+    )
+
+    assert coding_agents[0]["url"].endswith("/agentic-developer-conversion/")
+    assert developer_conversion[0]["url"].endswith(
+        "/software-developer-to-ai-engineer/"
+    )
+    assert consulting[0]["url"] == "https://towardsai.com/valuecreation/"
+
+
 def test_helper_config_and_widget_are_served_from_shared_app() -> None:
     config = client.get("/api/helper/config")
     widget = client.get("/helper-widget.js")
@@ -125,9 +154,16 @@ def test_helper_config_and_widget_are_served_from_shared_app() -> None:
     payload = config.json()
     assert payload["name"] == "Towards AI Helper"
     assert FIRST_PROMPT in payload["forcedPrompts"]
-    assert "/courses/agent-engineering" in payload["allowedPathsByHost"][
-        "academy.towardsai.net"
-    ]
+    assert "towardsai.com" in payload["allowedHosts"]
+    assert "towardsai.com" in payload["siteWideHosts"]
+    assert (
+        "/academy/agent-engineering"
+        in payload["allowedPathsByHost"]["towardsai.com"]
+    )
+    assert (
+        "/courses/agent-engineering"
+        in payload["allowedPathsByHost"]["academy.towardsai.net"]
+    )
     assert payload["rateLimits"] == {
         "perMinute": 8,
         "perDay": 50,
@@ -150,6 +186,21 @@ def test_helper_config_and_widget_are_served_from_shared_app() -> None:
     assert "!event.shiftKey" in widget.text
     assert 'form.dispatchEvent(new Event("submit"' in widget.text
     assert "quick breather" in widget.text
+    assert "siteWideHosts" in widget.text
+    assert "wp-admin" in widget.text
+
+
+def test_helper_cors_preflight_accepts_towardsai_com() -> None:
+    response = client.options(
+        "/api/helper/chat",
+        headers={
+            "Origin": "https://towardsai.com",
+            "Access-Control-Request-Method": "POST",
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.headers["access-control-allow-origin"] == "https://towardsai.com"
 
 
 def test_helper_chat_requires_origin_public_page_signed_out_and_first_prompt() -> None:
@@ -160,7 +211,7 @@ def test_helper_chat_requires_origin_public_page_signed_out_and_first_prompt() -
         client.post(
             "/api/helper/chat",
             json=helper_payload(
-                url="https://academy.towardsai.net/courses/take/x",
+                url="https://towardsai.com/wp-admin/edit.php",
             ),
             headers=HEADERS,
         ).status_code
@@ -188,15 +239,40 @@ def test_helper_chat_calls_llm_with_retrieved_sources(monkeypatch) -> None:
     reset_helper_limiters()
     prompts = []
 
-    def fake_generate_answer(prompt: str) -> LLMResult:
+    def fake_generate_grounded_answer(
+        prompt: str, selected_pages: list[dict]
+    ) -> GroundingResult:
         prompts.append(prompt)
-        return LLMResult(
+        cited = EvidenceChunk(
+            chunk_id=str(selected_pages[0]["chunk_id"]),
+            title=str(selected_pages[0]["title"]),
+            url=str(selected_pages[0]["url"]),
+            kind=str(selected_pages[0]["kind"]),
+            headings=tuple(selected_pages[0].get("headings", [])),
+            text=str(selected_pages[0]["text"]),
+        )
+        return GroundingResult(
+            valid=True,
+            status="answered",
             answer="Tell me your coding background and goal.",
-            usage={"input_tokens": 10, "output_tokens": 8, "total_tokens": 18},
+            cited_chunks=(cited,),
+            usage={
+                "input_tokens": 10,
+                "output_tokens": 8,
+                "total_tokens": 18,
+                "provider": "deepseek",
+                "model": "deepseek-v4-flash",
+            },
             latency_ms=123,
+            provider="deepseek",
+            model="deepseek-v4-flash",
         )
 
-    monkeypatch.setattr(helper_router.llm, "generate_answer", fake_generate_answer)
+    monkeypatch.setattr(
+        helper_router.llm,
+        "generate_grounded_answer",
+        fake_generate_grounded_answer,
+    )
 
     response = client.post("/api/helper/chat", json=helper_payload(), headers=HEADERS)
 
@@ -207,26 +283,75 @@ def test_helper_chat_calls_llm_with_retrieved_sources(monkeypatch) -> None:
     assert data["sources"]
     assert data["usage"]["total_tokens"] == 18
     assert "Agent Engineering" in prompts[0]
-    assert "inline Markdown links" in prompts[0]
-    assert "Do not add a separate sources or citations list" in prompts[0]
+    assert "EVIDENCE_CHUNKS" in prompts[0]
+    assert "return not_found" in prompts[0]
+
+
+def test_helper_chat_still_accepts_legacy_net_origin(monkeypatch) -> None:
+    reset_helper_limiters()
+    monkeypatch.setattr(
+        helper_router.llm,
+        "generate_grounded_answer",
+        lambda _prompt, selected: GroundingResult(
+            valid=True,
+            status="answered",
+            answer="Supported answer.",
+            cited_chunks=(
+                EvidenceChunk(
+                    chunk_id=str(selected[0]["chunk_id"]),
+                    title=str(selected[0]["title"]),
+                    url=str(selected[0]["url"]),
+                    kind=str(selected[0]["kind"]),
+                    headings=tuple(selected[0].get("headings", [])),
+                    text=str(selected[0]["text"]),
+                ),
+            ),
+        ),
+    )
+
+    response = client.post(
+        "/api/helper/chat",
+        json=helper_payload(url="https://towardsai.net/b2b"),
+        headers={"Origin": "https://towardsai.net"},
+    )
+
+    assert response.status_code == 200
 
 
 def test_helper_chat_keeps_course_choice_context_on_followup(monkeypatch) -> None:
     reset_helper_limiters()
     prompts = []
 
-    def fake_generate_answer(prompt: str) -> LLMResult:
+    def fake_generate_grounded_answer(
+        prompt: str, selected_pages: list[dict]
+    ) -> GroundingResult:
         prompts.append(prompt)
-        return LLMResult(
+        cited = EvidenceChunk(
+            chunk_id=str(selected_pages[0]["chunk_id"]),
+            title=str(selected_pages[0]["title"]),
+            url=str(selected_pages[0]["url"]),
+            kind=str(selected_pages[0]["kind"]),
+            headings=tuple(selected_pages[0].get("headings", [])),
+            text=str(selected_pages[0]["text"]),
+        )
+        return GroundingResult(
+            valid=True,
+            status="answered",
             answer=(
-                "For a developer aiming at AI engineering, start with Full Stack AI "
-                "Engineering. If you also want the best long-term value, consider "
-                "the Get it all bundle."
-            )
+                "Full Stack AI Engineering is designed for developers building "
+                "production AI systems."
+            ),
+            cited_chunks=(cited,),
         )
 
-    monkeypatch.setattr(helper_router.llm, "generate_answer", fake_generate_answer)
-    payload = helper_payload(query="I'm a developer. I want to be an AI engineer")
+    monkeypatch.setattr(
+        helper_router.llm,
+        "generate_grounded_answer",
+        fake_generate_grounded_answer,
+    )
+    payload = helper_payload(
+        query="I'm a developer interested in Full Stack AI Engineering"
+    )
     payload["selectedPrompt"] = FIRST_PROMPT
     payload["history"] = [
         {"role": "user", "content": FIRST_PROMPT},
@@ -241,10 +366,9 @@ def test_helper_chat_keeps_course_choice_context_on_followup(monkeypatch) -> Non
     assert response.status_code == 200
     data = response.json()
     source_urls = [source["url"] for source in data["sources"]]
-    assert any("beginner-to-advanced-llm-dev" in url for url in source_urls)
-    assert any("agent-engineering" in url for url in source_urls)
+    assert any("full-stack-ai-engineering" in url for url in source_urls)
     assert "Full Stack AI" in prompts[0]
-    assert data["answer"].endswith("bundle.")
+    assert data["answer"].endswith("systems.")
 
 
 def test_helper_chat_refuses_unrelated_followup_after_valid_start(monkeypatch) -> None:
@@ -253,7 +377,9 @@ def test_helper_chat_refuses_unrelated_followup_after_valid_start(monkeypatch) -
     def unexpected_generate_answer(_prompt: str) -> LLMResult:
         raise AssertionError("model should not be called for out-of-scope questions")
 
-    monkeypatch.setattr(helper_router.llm, "generate_answer", unexpected_generate_answer)
+    monkeypatch.setattr(
+        helper_router.llm, "generate_answer", unexpected_generate_answer
+    )
     payload = helper_payload(query="Who won the World Cup?")
     payload["selectedPrompt"] = FIRST_PROMPT
     payload["history"] = [
@@ -270,10 +396,12 @@ def test_helper_chat_refuses_unrelated_followup_after_valid_start(monkeypatch) -
 def test_helper_coupon_answer_is_deterministic(monkeypatch) -> None:
     reset_helper_limiters()
 
-    def unexpected_generate_answer(_prompt: str) -> LLMResult:
+    def unexpected_generate_answer(*_args) -> GroundingResult:
         raise AssertionError("model should not be called for coupon intent")
 
-    monkeypatch.setattr(helper_router.llm, "generate_answer", unexpected_generate_answer)
+    monkeypatch.setattr(
+        helper_router.llm, "generate_grounded_answer", unexpected_generate_answer
+    )
     first = helper_payload(query="Do you have a coupon code?")
     first["selectedPrompt"] = FIRST_PROMPT
     first["history"] = [{"role": "user", "content": FIRST_PROMPT}]
@@ -288,7 +416,8 @@ def test_helper_coupon_answer_is_deterministic(monkeypatch) -> None:
     second_response = client.post("/api/helper/chat", json=second, headers=HEADERS)
 
     assert first_response.status_code == 200
-    assert "Get it all bundle" in first_response.json()["answer"]
+    assert "louis@towardsai.net" in first_response.json()["answer"]
+    assert first_response.json()["status"] == "policy"
     assert second_response.status_code == 200
     assert "louis@towardsai.net" in second_response.json()["answer"]
 
@@ -339,11 +468,7 @@ def test_helper_llm_uses_deepseek_primary(monkeypatch) -> None:
             return {
                 "model": "deepseek-v4-flash",
                 "choices": [
-                    {
-                        "message": {
-                            "content": "Start with the Agent Engineering course."
-                        }
-                    }
+                    {"message": {"content": "Start with the Agent Engineering course."}}
                 ],
                 "usage": {
                     "prompt_tokens": 20,
