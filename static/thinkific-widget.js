@@ -200,6 +200,14 @@
     var rect = wrap.getBoundingClientRect();
     if (!rect.width || !rect.height) return;
     var pointerId = event.pointerId;
+    var dragTarget = event.currentTarget;
+    var capturedPointer = false;
+    try {
+      if (dragTarget && typeof dragTarget.setPointerCapture === "function") {
+        dragTarget.setPointerCapture(pointerId);
+        capturedPointer = true;
+      }
+    } catch (_error) {}
     var startX = event.clientX;
     var startY = event.clientY;
     var startLeft = rect.left;
@@ -229,6 +237,16 @@
       window.removeEventListener("pointermove", onPointerMove);
       window.removeEventListener("pointerup", finishDrag);
       window.removeEventListener("pointercancel", finishDrag);
+      try {
+        if (
+          capturedPointer &&
+          dragTarget &&
+          typeof dragTarget.hasPointerCapture === "function" &&
+          dragTarget.hasPointerCapture(pointerId)
+        ) {
+          dragTarget.releasePointerCapture(pointerId);
+        }
+      } catch (_error) {}
       wrap.classList.remove("dragging");
       if (!moved) return;
       savePosition();

@@ -297,7 +297,11 @@ def widget() -> FileResponse:
     path = STATIC_DIR / "thinkific-widget.js"
     if not path.is_file():
         raise HTTPException(status_code=404, detail="Widget not found")
-    return FileResponse(path, media_type="application/javascript")
+    return FileResponse(
+        path,
+        media_type="application/javascript",
+        headers={"Cache-Control": "no-cache, max-age=0, must-revalidate"},
+    )
 
 
 @app.post("/api/thinkific/chat")

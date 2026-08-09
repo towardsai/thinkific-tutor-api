@@ -107,6 +107,7 @@ def test_widget_serves_course_player_gating_script() -> None:
 
     assert response.status_code == 200
     assert "application/javascript" in response.headers["content-type"]
+    assert response.headers["cache-control"] == "no-cache, max-age=0, must-revalidate"
     assert "Ask the tutor" in response.text
     assert "Towards AI Tutor" in response.text
     assert "renderMarkdown" in response.text
@@ -128,6 +129,8 @@ def test_widget_serves_course_player_gating_script() -> None:
     assert 'bubble.addEventListener("pointerdown"' in response.text
     assert 'dragHandle.addEventListener("pointerdown"' in response.text
     assert "function beginDrag(" in response.text
+    assert "setPointerCapture(pointerId)" in response.text
+    assert "releasePointerCapture(pointerId)" in response.text
     assert "function clampToViewport()" in response.text
     assert "towards-ai-thinkific-tutor-position-v1" in response.text
     assert 'window.addEventListener("resize"' in response.text
