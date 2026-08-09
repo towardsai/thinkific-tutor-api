@@ -110,6 +110,8 @@ def test_widget_serves_course_player_gating_script() -> None:
     assert response.headers["cache-control"] == "no-cache, max-age=0, must-revalidate"
     assert "Ask the tutor" in response.text
     assert "Towards AI Tutor" in response.text
+    assert "brand-copy" in response.text
+    assert "flex:0 0 32px" in response.text
     assert "renderMarkdown" in response.text
     assert "splitTrailingUrlPunctuation" in response.text
     assert "displayUrl(rawUrl)" in response.text
