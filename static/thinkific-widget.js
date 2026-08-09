@@ -37,11 +37,13 @@
     "<style>",
     ":host{all:initial;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#182235}",
     ".wrap{position:fixed;right:20px;bottom:20px;z-index:2147483000}",
-    ".bubble{height:46px;min-width:142px;border:0;border-radius:999px;background:#182235;color:#fff;box-shadow:0 14px 34px rgba(24,34,53,.28);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;padding:0 16px 0 13px;font:750 14px/1 system-ui;letter-spacing:0}",
+    ".bubble{height:46px;min-width:142px;border:0;border-radius:999px;background:#182235;color:#fff;box-shadow:0 14px 34px rgba(24,34,53,.28);cursor:grab;touch-action:none;user-select:none;display:flex;align-items:center;justify-content:center;gap:9px;padding:0 16px 0 13px;font:750 14px/1 system-ui;letter-spacing:0}",
     ".bubble:hover{background:#24324b;transform:translateY(-1px)}",
+    ".wrap.dragging .bubble{cursor:grabbing;transform:none}",
     ".bubble-mark{width:24px;height:24px;border-radius:999px;background:#11b7ba;color:#082c33;display:flex;align-items:center;justify-content:center;font:800 15px/1 system-ui}",
     ".panel{width:min(414px,calc(100vw - 32px));height:min(650px,calc(100vh - 96px));background:#fff;border:1px solid #d7e0ea;border-radius:14px;box-shadow:0 20px 70px rgba(24,34,53,.24);display:flex;flex-direction:column;overflow:hidden}",
-    ".head{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 14px 0 16px;border-bottom:1px solid #e7edf4;background:#fbfcfe}",
+    ".head{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 14px 0 16px;border-bottom:1px solid #e7edf4;background:#fbfcfe;cursor:grab;touch-action:none;user-select:none}",
+    ".wrap.dragging .head{cursor:grabbing}",
     ".brand{min-width:0;display:flex;align-items:center;gap:10px}",
     ".brand-mark{width:32px;height:32px;border-radius:8px;background:#182235;color:#fff;display:flex;align-items:center;justify-content:center;font:800 12px/1 system-ui}",
     ".title{font:750 15px/1.2 system-ui;color:#182235;letter-spacing:0}",
@@ -79,7 +81,7 @@
     "<div class='wrap hidden' data-wrap>",
     "  <button class='bubble' data-bubble aria-label='Ask the tutor'><span class='bubble-mark'>?</span><span>Ask the tutor</span></button>",
     "  <section class='panel hidden' data-panel aria-label='AI tutor chat'>",
-    "    <header class='head'>",
+    "    <header class='head' data-drag-handle title='Drag to move tutor'>",
     "      <div class='brand'><div class='brand-mark'>TA</div><div><div class='title'>Towards AI Tutor</div><div class='lesson' data-lesson></div></div></div>",
     "      <div class='actions'><button class='iconbtn' data-reset aria-label='Restart conversation' title='Restart conversation'><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M3 3v6h6' fill='none' stroke='currentColor' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'/><path d='M3.8 13.1a8 8 0 1 0 2.3-7.2L3 9' fill='none' stroke='currentColor' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'/></svg></button><button class='iconbtn' data-close aria-label='Minimize tutor' title='Minimize'>&minus;</button></div>",
     "    </header>",
@@ -95,6 +97,7 @@
   var wrap = shadow.querySelector("[data-wrap]");
   var bubble = shadow.querySelector("[data-bubble]");
   var panel = shadow.querySelector("[data-panel]");
+  var dragHandle = shadow.querySelector("[data-drag-handle]");
   var resetBtn = shadow.querySelector("[data-reset]");
   var closeBtn = shadow.querySelector("[data-close]");
   var form = shadow.querySelector("[data-form]");
@@ -102,6 +105,140 @@
   var sendBtn = shadow.querySelector("[data-send]");
   var msgs = shadow.querySelector("[data-msgs]");
   var lessonLabel = shadow.querySelector("[data-lesson]");
+  var positionStorageKey = "towards-ai-thinkific-tutor-position-v1";
+  var customPosition = false;
+  var suppressBubbleClick = false;
+
+  function readSavedPosition() {
+    try {
+      var parsed = JSON.parse(window.localStorage.getItem(positionStorageKey) || "null");
+      if (
+        parsed &&
+        Number.isFinite(parsed.left) &&
+        Number.isFinite(parsed.top)
+      ) {
+        return { left: parsed.left, top: parsed.top };
+      }
+    } catch (_error) {}
+    return null;
+  }
+
+  function viewportSize() {
+    return {
+      width: Math.max(
+        document.documentElement.clientWidth || 0,
+        window.innerWidth || 0,
+      ),
+      height: Math.max(
+        document.documentElement.clientHeight || 0,
+        window.innerHeight || 0,
+      ),
+    };
+  }
+
+  function clampCoordinates(left, top, width, height) {
+    var margin = 12;
+    var viewport = viewportSize();
+    var maxLeft = Math.max(margin, viewport.width - width - margin);
+    var maxTop = Math.max(margin, viewport.height - height - margin);
+    return {
+      left: Math.min(Math.max(left, margin), maxLeft),
+      top: Math.min(Math.max(top, margin), maxTop),
+    };
+  }
+
+  function positionWrap(left, top) {
+    wrap.style.left = Math.round(left) + "px";
+    wrap.style.top = Math.round(top) + "px";
+    wrap.style.right = "auto";
+    wrap.style.bottom = "auto";
+  }
+
+  function clampToViewport() {
+    if (!customPosition || wrap.classList.contains("hidden")) return;
+    var rect = wrap.getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
+    var clamped = clampCoordinates(rect.left, rect.top, rect.width, rect.height);
+    positionWrap(clamped.left, clamped.top);
+  }
+
+  function savePosition() {
+    if (!customPosition) return;
+    var rect = wrap.getBoundingClientRect();
+    try {
+      window.localStorage.setItem(
+        positionStorageKey,
+        JSON.stringify({ left: Math.round(rect.left), top: Math.round(rect.top) }),
+      );
+    } catch (_error) {}
+  }
+
+  function restorePosition() {
+    var saved = readSavedPosition();
+    if (!saved) return;
+    customPosition = true;
+    positionWrap(saved.left, saved.top);
+    window.requestAnimationFrame(function () {
+      clampToViewport();
+      savePosition();
+    });
+  }
+
+  function beginDrag(event, options) {
+    options = options || {};
+    if (!state.visible) return;
+    if (event.pointerType === "mouse" && event.button !== 0) return;
+    if (
+      options.ignoreActions &&
+      event.target &&
+      typeof event.target.closest === "function" &&
+      event.target.closest(".actions")
+    ) {
+      return;
+    }
+
+    var rect = wrap.getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
+    var pointerId = event.pointerId;
+    var startX = event.clientX;
+    var startY = event.clientY;
+    var startLeft = rect.left;
+    var startTop = rect.top;
+    var moved = false;
+
+    function onPointerMove(moveEvent) {
+      if (moveEvent.pointerId !== pointerId) return;
+      var deltaX = moveEvent.clientX - startX;
+      var deltaY = moveEvent.clientY - startY;
+      if (!moved && Math.abs(deltaX) + Math.abs(deltaY) < 6) return;
+      moved = true;
+      customPosition = true;
+      wrap.classList.add("dragging");
+      var clamped = clampCoordinates(
+        startLeft + deltaX,
+        startTop + deltaY,
+        rect.width,
+        rect.height,
+      );
+      positionWrap(clamped.left, clamped.top);
+      moveEvent.preventDefault();
+    }
+
+    function finishDrag(endEvent) {
+      if (endEvent.pointerId !== pointerId) return;
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerup", finishDrag);
+      window.removeEventListener("pointercancel", finishDrag);
+      wrap.classList.remove("dragging");
+      if (!moved) return;
+      savePosition();
+      if (typeof options.onMoved === "function") options.onMoved();
+    }
+
+    window.addEventListener("pointermove", onPointerMove, { passive: false });
+    window.addEventListener("pointerup", finishDrag);
+    window.addEventListener("pointercancel", finishDrag);
+  }
 
   function safeString(value) {
     if (value === null || value === undefined) return "";
@@ -380,6 +517,10 @@
     wrap.classList.toggle("hidden", !state.visible);
     if (!state.visible) {
       setOpen(false);
+    } else if (!customPosition) {
+      restorePosition();
+    } else {
+      window.requestAnimationFrame(clampToViewport);
     }
   }
 
@@ -387,11 +528,10 @@
     state.open = Boolean(isOpen);
     bubble.classList.toggle("hidden", state.open);
     panel.classList.toggle("hidden", !state.open);
-    if (state.open) {
-      setTimeout(function () {
-        input.focus();
-      }, 0);
-    }
+    window.requestAnimationFrame(function () {
+      clampToViewport();
+      if (state.open) input.focus();
+    });
   }
 
   function renderMessages() {
@@ -583,7 +723,24 @@
     }
   }
 
+  bubble.addEventListener("pointerdown", function (event) {
+    beginDrag(event, {
+      onMoved: function () {
+        suppressBubbleClick = true;
+        window.setTimeout(function () {
+          suppressBubbleClick = false;
+        }, 0);
+      },
+    });
+  });
+  dragHandle.addEventListener("pointerdown", function (event) {
+    beginDrag(event, { ignoreActions: true });
+  });
   bubble.addEventListener("click", function () {
+    if (suppressBubbleClick) {
+      suppressBubbleClick = false;
+      return;
+    }
     setOpen(true);
   });
   resetBtn.addEventListener("click", resetConversation);
@@ -608,6 +765,24 @@
       form.dispatchEvent(new Event("submit", { cancelable: true }));
     }
   });
+  window.addEventListener("resize", function () {
+    if (!customPosition) return;
+    window.requestAnimationFrame(function () {
+      window.requestAnimationFrame(function () {
+        clampToViewport();
+        savePosition();
+      });
+    });
+  });
+  if (typeof window.ResizeObserver === "function") {
+    new window.ResizeObserver(function () {
+      if (!customPosition || wrap.classList.contains("hidden")) return;
+      window.requestAnimationFrame(function () {
+        clampToViewport();
+        savePosition();
+      });
+    }).observe(wrap);
+  }
 
   function attachCoursePlayerHooks() {
     if (!window.CoursePlayerV2 || typeof window.CoursePlayerV2.on !== "function") {

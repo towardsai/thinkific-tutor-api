@@ -123,6 +123,17 @@ def test_widget_serves_course_player_gating_script() -> None:
     assert "!event.shiftKey" in response.text
     assert 'form.dispatchEvent(new Event("submit"' in response.text
     assert "quiz" in response.text
+    assert "data-drag-handle" in response.text
+    assert "Drag to move tutor" in response.text
+    assert 'bubble.addEventListener("pointerdown"' in response.text
+    assert 'dragHandle.addEventListener("pointerdown"' in response.text
+    assert "function beginDrag(" in response.text
+    assert "function clampToViewport()" in response.text
+    assert "towards-ai-thinkific-tutor-position-v1" in response.text
+    assert 'window.addEventListener("resize"' in response.text
+    assert "new window.ResizeObserver" in response.text
+    assert 'closeBtn.addEventListener("click"' in response.text
+    assert "setOpen(false);" in response.text
 
 
 def test_chat_endpoint_streams_mocked_answer_and_forces_course_source(

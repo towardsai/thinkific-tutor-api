@@ -117,8 +117,9 @@ For public signed-out pages, add the helper snippet too:
 
 The widget stays hidden unless it detects Thinkific `CoursePlayerV2` lesson
 events and the API confirms the course maps to one of the tutor course sources.
-It minimizes back to the bottom-right bubble when the student closes the panel.
-The helper widget has separate signed-out/public-page gating.
+Students can drag the open tutor by its header, minimize it to a movable bubble,
+and keep that position across page reloads. The helper widget has separate
+signed-out/public-page gating.
 
 ## Course mapping
 
