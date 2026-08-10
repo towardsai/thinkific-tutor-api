@@ -106,8 +106,10 @@
   var sendBtn = shadow.querySelector("[data-send]");
   var msgs = shadow.querySelector("[data-msgs]");
   var lessonLabel = shadow.querySelector("[data-lesson]");
-  var positionStorageKey = "towards-ai-thinkific-tutor-position-v1";
+  var positionStorageKey = "towards-ai-thinkific-tutor-position-v2";
   var customPosition = false;
+  var minimizedPosition = null;
+  var minimizedUsesDefaultAnchor = true;
   var suppressBubbleClick = false;
 
   function readSavedPosition() {
@@ -155,6 +157,13 @@
     wrap.style.bottom = "auto";
   }
 
+  function positionWrapAtDefault() {
+    wrap.style.left = "";
+    wrap.style.top = "";
+    wrap.style.right = "";
+    wrap.style.bottom = "";
+  }
+
   function clampToViewport() {
     if (!customPosition || wrap.classList.contains("hidden")) return;
     var rect = wrap.getBoundingClientRect();
@@ -163,26 +172,60 @@
     positionWrap(clamped.left, clamped.top);
   }
 
-  function savePosition() {
-    if (!customPosition) return;
+  function saveMinimizedPosition() {
+    if (
+      !customPosition ||
+      state.open ||
+      wrap.classList.contains("hidden")
+    ) {
+      return;
+    }
     var rect = wrap.getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
+    minimizedPosition = {
+      left: Math.round(rect.left),
+      top: Math.round(rect.top),
+    };
+    minimizedUsesDefaultAnchor = false;
     try {
       window.localStorage.setItem(
         positionStorageKey,
-        JSON.stringify({ left: Math.round(rect.left), top: Math.round(rect.top) }),
+        JSON.stringify(minimizedPosition),
       );
     } catch (_error) {}
   }
 
-  function restorePosition() {
-    var saved = readSavedPosition();
-    if (!saved) return;
+  function restoreMinimizedPosition() {
+    var saved = minimizedPosition || readSavedPosition();
+    if (!saved) return false;
+    minimizedPosition = { left: saved.left, top: saved.top };
+    minimizedUsesDefaultAnchor = false;
     customPosition = true;
     positionWrap(saved.left, saved.top);
     window.requestAnimationFrame(function () {
       clampToViewport();
-      savePosition();
+      saveMinimizedPosition();
     });
+    return true;
+  }
+
+  function rememberMinimizedAnchor() {
+    if (customPosition) {
+      saveMinimizedPosition();
+      return;
+    }
+    minimizedPosition = null;
+    minimizedUsesDefaultAnchor = true;
+  }
+
+  function restoreMinimizedAnchor() {
+    if (minimizedUsesDefaultAnchor || !minimizedPosition) {
+      customPosition = false;
+      positionWrapAtDefault();
+      return;
+    }
+    customPosition = true;
+    positionWrap(minimizedPosition.left, minimizedPosition.top);
   }
 
   function beginDrag(event, options) {
@@ -222,6 +265,7 @@
       if (!moved && Math.abs(deltaX) + Math.abs(deltaY) < 6) return;
       moved = true;
       customPosition = true;
+      if (!state.open) minimizedUsesDefaultAnchor = false;
       wrap.classList.add("dragging");
       var clamped = clampCoordinates(
         startLeft + deltaX,
@@ -250,7 +294,7 @@
       } catch (_error) {}
       wrap.classList.remove("dragging");
       if (!moved) return;
-      savePosition();
+      saveMinimizedPosition();
       if (typeof options.onMoved === "function") options.onMoved();
     }
 
@@ -537,18 +581,23 @@
     if (!state.visible) {
       setOpen(false);
     } else if (!customPosition) {
-      restorePosition();
+      restoreMinimizedPosition();
     } else {
       window.requestAnimationFrame(clampToViewport);
     }
   }
 
   function setOpen(isOpen) {
-    state.open = Boolean(isOpen);
+    var nextOpen = Boolean(isOpen);
+    var wasOpen = state.open;
+    if (nextOpen && !wasOpen) rememberMinimizedAnchor();
+    state.open = nextOpen;
     bubble.classList.toggle("hidden", state.open);
     panel.classList.toggle("hidden", !state.open);
+    if (!state.open && wasOpen) restoreMinimizedAnchor();
     window.requestAnimationFrame(function () {
       clampToViewport();
+      if (!state.open) saveMinimizedPosition();
       if (state.open) input.focus();
     });
   }
@@ -789,7 +838,7 @@
     window.requestAnimationFrame(function () {
       window.requestAnimationFrame(function () {
         clampToViewport();
-        savePosition();
+        saveMinimizedPosition();
       });
     });
   });
@@ -798,7 +847,7 @@
       if (!customPosition || wrap.classList.contains("hidden")) return;
       window.requestAnimationFrame(function () {
         clampToViewport();
-        savePosition();
+        saveMinimizedPosition();
       });
     }).observe(wrap);
   }

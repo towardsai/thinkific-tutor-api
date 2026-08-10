@@ -61,10 +61,11 @@ jobs:
       - name: Ruff
         run: uv run --locked ruff check thinkific_tutor tests
 
-      - name: Widget syntax
+      - name: Widget tests
         run: |
           node --check static/thinkific-widget.js
           node --check static/helper-widget.js
+          node --test tests/test_thinkific_widget_position.mjs
 
       - name: Pytest
         run: uv run --locked pytest -m "not live" -p no:cacheprovider tests
