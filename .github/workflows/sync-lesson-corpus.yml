@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       part_count:
-        description: "Number of encrypted GitHub-secret payload parts (1-6)"
+        description: "Number of encrypted GitHub-secret payload parts (1-20)"
         required: true
         default: "1"
 
@@ -31,6 +31,20 @@ jobs:
           LESSON_PART_4: ${{ secrets.THINKIFIC_LESSON_DATA_4 }}
           LESSON_PART_5: ${{ secrets.THINKIFIC_LESSON_DATA_5 }}
           LESSON_PART_6: ${{ secrets.THINKIFIC_LESSON_DATA_6 }}
+          LESSON_PART_7: ${{ secrets.THINKIFIC_LESSON_DATA_7 }}
+          LESSON_PART_8: ${{ secrets.THINKIFIC_LESSON_DATA_8 }}
+          LESSON_PART_9: ${{ secrets.THINKIFIC_LESSON_DATA_9 }}
+          LESSON_PART_10: ${{ secrets.THINKIFIC_LESSON_DATA_10 }}
+          LESSON_PART_11: ${{ secrets.THINKIFIC_LESSON_DATA_11 }}
+          LESSON_PART_12: ${{ secrets.THINKIFIC_LESSON_DATA_12 }}
+          LESSON_PART_13: ${{ secrets.THINKIFIC_LESSON_DATA_13 }}
+          LESSON_PART_14: ${{ secrets.THINKIFIC_LESSON_DATA_14 }}
+          LESSON_PART_15: ${{ secrets.THINKIFIC_LESSON_DATA_15 }}
+          LESSON_PART_16: ${{ secrets.THINKIFIC_LESSON_DATA_16 }}
+          LESSON_PART_17: ${{ secrets.THINKIFIC_LESSON_DATA_17 }}
+          LESSON_PART_18: ${{ secrets.THINKIFIC_LESSON_DATA_18 }}
+          LESSON_PART_19: ${{ secrets.THINKIFIC_LESSON_DATA_19 }}
+          LESSON_PART_20: ${{ secrets.THINKIFIC_LESSON_DATA_20 }}
         run: |
           python - <<'PY'
           import base64
@@ -41,11 +55,14 @@ jobs:
           from huggingface_hub import HfApi
 
           count = int(os.environ["PART_COUNT"])
-          assert 1 <= count <= 6
+          assert 1 <= count <= 20
           encoded = "".join(os.environ[f"LESSON_PART_{i}"] for i in range(1, count + 1))
           payload = gzip.decompress(base64.b64decode(encoded, validate=True))
           rows = [json.loads(line) for line in payload.decode().splitlines() if line.strip()]
-          assert rows and all(row["content"] and row["source"] and row["url"] for row in rows)
+          assert rows and all(
+              row["content"] and row["source"] and row["url"]
+              and row.get("published", True) for row in rows
+          ), "Only published lesson content belongs in the student index"
           api = HfApi(token=os.environ["HF_TOKEN"])
           repo = "towardsai-tutors/ai-tutor-vector-db"
           assert api.repo_info(repo_id=repo, repo_type="dataset").private, "Refusing public corpus upload"

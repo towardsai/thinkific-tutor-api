@@ -132,7 +132,7 @@ def is_lesson_overview(query: str) -> bool:
 
 
 def retrieve_lesson_evidence(query: str, lesson: ResolvedLesson) -> LessonEvidence:
-    documents = course_documents(lesson.source_key)
+    documents = tuple(d for d in course_documents(lesson.source_key) if d.published)
     current = [d for d in documents if match_current_lesson(d, lesson)]
     candidates = current or [d for d in documents if d.published]
     if not current and is_lesson_overview(query):
