@@ -57,6 +57,16 @@ def test_current_lesson_never_matches_another_course():
     )
 
 
+def test_new_lesson_url_takes_priority_over_a_stale_iframe_during_navigation(monkeypatch):
+    exact = document()
+    previous = replace(document(title="Previous lesson"), doc_id="previous", url="https://example.com/previous")
+    lesson = replace(current_lesson(), content_urls=(previous.url,))
+    monkeypatch.setattr(lesson_rag, "course_documents", lambda source: (previous, exact))
+    evidence = lesson_rag.retrieve_lesson_evidence("what is it about", lesson)
+    assert evidence.documents == (exact,)
+    assert "Previous lesson" not in evidence.text
+
+
 def test_embed_url_resolves_a_blueprint_when_titles_differ():
     blueprint = document(source="production_blueprints", title="Source page title")
     lesson = replace(

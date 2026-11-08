@@ -105,23 +105,27 @@ def course_documents(source_key: str) -> tuple[LessonDocument, ...]:
     return tuple(result)
 
 
-def match_current_lesson(document: LessonDocument, lesson: ResolvedLesson) -> bool:
+def _lesson_match_priority(document: LessonDocument, lesson: ResolvedLesson) -> int:
     if document.source_key != lesson.source_key:
-        return False
+        return 0
     if document.url.rstrip("/") == lesson.current_url.rstrip("/"):
-        return True
-    if document.url.rstrip("/") in {url.rstrip("/") for url in lesson.content_urls}:
-        return True
+        return 4
     if lesson.lesson_id and re.search(
         rf"(?:^|[/\-]){re.escape(lesson.lesson_id)}(?:[/\-]|$)",
         urlparse(document.url).path,
     ):
-        return True
+        return 3
+    if document.url.rstrip("/") in {url.rstrip("/") for url in lesson.content_urls}:
+        return 2
     title = normalized_title(lesson.lesson_title)
-    return bool(title) and title in {
+    return int(bool(title) and title in {
         normalized_title(document.title),
         *(normalized_title(alias) for alias in document.aliases),
-    }
+    })
+
+
+def match_current_lesson(document: LessonDocument, lesson: ResolvedLesson) -> bool:
+    return _lesson_match_priority(document, lesson) > 0
 
 
 def is_lesson_overview(query: str) -> bool:
@@ -133,7 +137,9 @@ def is_lesson_overview(query: str) -> bool:
 
 def retrieve_lesson_evidence(query: str, lesson: ResolvedLesson) -> LessonEvidence:
     documents = tuple(d for d in course_documents(lesson.source_key) if d.published)
-    current = [d for d in documents if match_current_lesson(d, lesson)]
+    matches = [(_lesson_match_priority(d, lesson), d) for d in documents]
+    strongest = max((priority for priority, _document in matches), default=0)
+    current = [d for priority, d in matches if priority and priority == strongest]
     candidates = current or [d for d in documents if d.published]
     if not current and is_lesson_overview(query):
         return LessonEvidence("", (), False)
