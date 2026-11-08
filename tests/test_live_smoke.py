@@ -23,6 +23,7 @@ RUN_ALL_COURSE_CHAT = os.getenv("RUN_LIVE_ALL_COURSE_CHAT", "").lower() in {
 }
 
 COURSE_URL_TO_SOURCE = {
+    "https://academy.towardsai.net/courses/llm-primer": "llm_primer",
     "https://academy.towardsai.net/courses/beginner-to-advanced-llm-dev": "full_stack_ai_engineering",
     "https://academy.towardsai.net/courses/python-for-genai": "beginner_python_for_ai_engineering",
     "https://academy.towardsai.net/courses/ai-business-professionals": "master_ai_for_work",

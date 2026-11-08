@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from dataclasses import replace
 from types import SimpleNamespace
 
 import pytest
@@ -233,6 +234,70 @@ def test_helper_chat_requires_origin_public_page_signed_out_and_first_prompt() -
         ).status_code
         == 400
     )
+
+
+def test_shared_helper_preserves_context_and_validates_before_forwarding(monkeypatch) -> None:
+    reset_helper_limiters()
+    monkeypatch.setattr(
+        helper_router, "helper_settings",
+        replace(helper_router.helper_settings, upstream_base_url="https://helper.example"),
+    )
+    calls = []
+    upstream = {
+        "answer": "An answer from the canonical public helper.",
+        "threadId": "canonical-thread",
+        "sources": [{"title": "Course", "url": PUBLIC_URL, "kind": "course"}],
+        "status": "answered",
+        "usage": {"provider": "openrouter"},
+    }
+
+    def post(url, **kwargs):
+        calls.append((url, kwargs))
+        return SimpleNamespace(raise_for_status=lambda: None, json=lambda: upstream)
+
+    monkeypatch.setattr(helper_router.requests, "post", post)
+    assert client.post("/api/helper/chat", json=helper_payload()).status_code == 403
+    assert client.post(
+        "/api/helper/chat", json=helper_payload(signed_in=True), headers=HEADERS
+    ).status_code == 403
+    assert calls == []
+    response = client.post("/api/helper/chat", json=helper_payload(), headers=HEADERS)
+    assert response.json() == upstream
+    assert calls[0][0] == "https://helper.example/api/helper/chat"
+    assert calls[0][1]["json"]["context"]["url"] == PUBLIC_URL
+    assert calls[0][1]["json"]["visitorId"] == "test-visitor"
+    assert calls[0][1]["headers"]["Origin"] == "https://towardsai.com"
+
+
+def test_shared_helper_failure_returns_a_retryable_error(monkeypatch) -> None:
+    reset_helper_limiters()
+    monkeypatch.setattr(
+        helper_router, "helper_settings",
+        replace(helper_router.helper_settings, upstream_base_url="https://helper.example"),
+    )
+
+    def unavailable(*args, **kwargs):
+        raise helper_router.requests.ConnectionError("upstream unavailable")
+
+    monkeypatch.setattr(helper_router.requests, "post", unavailable)
+    response = client.post("/api/helper/chat", json=helper_payload(), headers=HEADERS)
+    assert response.status_code == 503
+    assert "temporarily unavailable" in response.json()["detail"]
+
+
+def test_shared_helper_health_reports_upstream_evidence_state(monkeypatch) -> None:
+    monkeypatch.setattr(
+        helper_router, "helper_settings",
+        replace(helper_router.helper_settings, upstream_base_url="https://helper.example"),
+    )
+    state = {"status": "degraded", "catalog": {"fresh": False, "evidencePages": 0}}
+    monkeypatch.setattr(
+        helper_router.requests, "get",
+        lambda *args, **kwargs: SimpleNamespace(
+            raise_for_status=lambda: None, json=lambda: state
+        ),
+    )
+    assert client.get("/api/helper/healthz").json() == state
 
 
 def test_helper_chat_calls_llm_with_retrieved_sources(monkeypatch) -> None:

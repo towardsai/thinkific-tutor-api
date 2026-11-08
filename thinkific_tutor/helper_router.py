@@ -6,6 +6,7 @@ from typing import Any
 from urllib.parse import urlparse
 from uuid import uuid4
 
+import requests
 from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import FileResponse
 
@@ -33,6 +34,15 @@ router = APIRouter()
 
 @router.get("/api/helper/healthz")
 def helper_healthcheck() -> dict[str, Any]:
+    if helper_settings.upstream_base_url:
+        try:
+            response = requests.get(
+                f"{helper_settings.upstream_base_url}/healthz", timeout=15
+            )
+            response.raise_for_status()
+            return response.json()
+        except (requests.RequestException, ValueError) as exc:
+            raise HTTPException(503, "Sales helper is temporarily unavailable.") from exc
     catalog = freshness()
     return {
         "status": "ok" if catalog["fresh"] else "degraded",
@@ -299,6 +309,23 @@ async def helper_chat(
     require_helper_browser_origin(request)
     validate_helper_payload(payload)
     check_helper_rate_limits(request, payload)
+
+    # Academy embeds keep their installed API URL while sharing the canonical
+    # public helper's retrieval, validation and provider configuration. Lesson
+    # tutor routes continue to run the course-scoped tutor locally.
+    if helper_settings.upstream_base_url:
+        try:
+            response = await asyncio.to_thread(
+                requests.post,
+                f"{helper_settings.upstream_base_url}/api/helper/chat",
+                json=payload.model_dump(),
+                headers={"Origin": f"https://{urlparse(payload.context.url).hostname}"},
+                timeout=helper_settings.request_timeout_seconds,
+            )
+            response.raise_for_status()
+            return HelperChatResponse.model_validate(response.json())
+        except (requests.RequestException, ValueError) as exc:
+            raise HTTPException(503, "Sales helper is temporarily unavailable.") from exc
 
     query = payload.query.strip()
     thread_id = payload.threadId.strip() or uuid4().hex
