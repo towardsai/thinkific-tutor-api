@@ -34,6 +34,12 @@ def _bool_env_chain(primary: str, fallback: str, default: bool = False) -> bool:
 
 @dataclass(frozen=True)
 class HelperSettings:
+    upstream_base_url: str = field(
+        default_factory=lambda: os.getenv(
+            "HELPER_UPSTREAM_BASE_URL",
+            "https://towardsai-tutors-tai-helper.hf.space",
+        ).strip().rstrip("/")
+    )
     allowed_origins: tuple[str, ...] = field(
         default_factory=lambda: _csv_env(
             "HELPER_ALLOWED_ORIGINS",

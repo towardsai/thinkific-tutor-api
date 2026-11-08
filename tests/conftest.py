@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import os
 
+os.environ["HELPER_UPSTREAM_BASE_URL"] = ""
+
 os.environ["HELPER_ALLOWED_ORIGINS"] = (
     "https://towardsai.com,https://www.towardsai.com,"
     "https://academy.towardsai.net,https://towardsai.net,"

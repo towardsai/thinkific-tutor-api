@@ -38,6 +38,13 @@ Thinkific Course Player
 
 ## Public Sales Helper
 
+Academy's installed helper endpoint delegates to the canonical `tai-helper`
+Space by default, so both websites share the same retrieval, grounding rules,
+model routing and evidence health. The course-player lesson tutor still runs
+locally with course-scoped retrieval. `HELPER_UPSTREAM_BASE_URL` overrides the
+public helper backend; set it to an empty string only to run the legacy local
+sales-helper implementation for offline development.
+
 The signed-out Academy helper has its own 14-day evidence catalog. Its health is
 reported separately at `/api/helper/healthz`; `/healthz` checks the lesson tutor.
 The keepalive warns with fewer than five days remaining. **Refresh and Deploy
