@@ -1,0 +1,120 @@
+name: Refresh and Deploy Helper Catalog
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "47 6 * * 1"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-helper-catalog
+  cancel-in-progress: false
+
+jobs:
+  refresh-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      AI_TUTOR_APP_PATH: ${{ github.workspace }}/ai-tutor-app
+      SPACE_BASE_URL: https://towardsai-tutors-thinkific-tutor-api.hf.space
+
+    steps:
+      - name: Checkout adapter
+        uses: actions/checkout@v7.0.1
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Checkout tutor dependency
+        uses: actions/checkout@v7.0.1
+        with:
+          repository: towardsai/ai-tutor-app
+          ref: c8c398a75e76154cb6e7140a169f684ece5f6ac7
+          path: ai-tutor-app
+
+      - name: Checkout canonical catalog builder
+        uses: actions/checkout@v7.0.1
+        with:
+          repository: towardsai/tai-helper
+          path: catalog-builder
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v7.0.0
+        with:
+          python-version: "3.13"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v9.0.0
+        with:
+          version: "0.11.32"
+
+      - name: Install dependencies
+        run: uv sync --all-groups --locked
+
+      - name: Refresh both catalogs from live pages
+        run: |
+          uv run --locked python catalog-builder/scripts/build_towardsai_com_catalog.py \
+            --com-output thinkific_tutor/helper_data/towardsai_com_pages.json \
+            --academy-output thinkific_tutor/helper_data/pages.json
+
+      - name: Validate adapter, widgets and refreshed evidence
+        run: |
+          uv run --locked ruff check thinkific_tutor tests
+          node --check static/thinkific-widget.js
+          node --check static/helper-widget.js
+          node --test tests/test_thinkific_widget_position.mjs
+          uv run --locked pytest -m "not live" -p no:cacheprovider tests
+
+      - name: Commit refreshed catalogs
+        run: |
+          if ! git diff --quiet -- thinkific_tutor/helper_data/; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add thinkific_tutor/helper_data/pages.json thinkific_tutor/helper_data/towardsai_com_pages.json
+            git commit -m "Refresh helper catalogs $(date -u +%Y-%m-%d)"
+            git push
+          fi
+
+      - name: Deploy validated adapter to Hugging Face
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          uv run --locked python - <<'PY'
+          import os
+          import subprocess
+          from huggingface_hub import HfApi
+
+          revision = subprocess.check_output(
+              ["git", "rev-parse", "--short", "HEAD"], text=True
+          ).strip()
+          HfApi(token=os.environ["HF_TOKEN"]).upload_folder(
+              repo_id="towardsai-tutors/thinkific-tutor-api",
+              repo_type="space",
+              folder_path=".",
+              allow_patterns=[
+                  "Dockerfile", "README.md", "pyproject.toml", "uv.lock",
+                  "thinkific_tutor/**", "static/**",
+              ],
+              ignore_patterns=["**/__pycache__/**", "**/*.pyc"],
+              commit_message=f"Deploy Thinkific adapter {revision}",
+          )
+          PY
+
+      - name: Verify tutor and sales helper after rebuild
+        run: |
+          for attempt in $(seq 1 40); do
+            if curl --fail --silent --max-time 30 "$SPACE_BASE_URL/healthz" -o tutor-health.json &&
+               jq -e '.status == "ok"' tutor-health.json >/dev/null &&
+               curl --fail --silent --max-time 30 "$SPACE_BASE_URL/api/helper/healthz" -o helper-health.json &&
+               jq -e '.catalog.fresh == true and .catalog.expiresInDays >= 5' helper-health.json >/dev/null; then
+              cat tutor-health.json helper-health.json
+              exit 0
+            fi
+            echo "Attempt $attempt: waiting for the updated Space."
+            sleep 15
+          done
+          echo "Updated Space did not become healthy in time."
+          cat tutor-health.json helper-health.json || true
+          exit 1

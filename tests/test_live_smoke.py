@@ -118,6 +118,13 @@ def test_live_health_and_widget_latency() -> None:
 def test_live_helper_config_and_widget_latency() -> None:
     base_url = require_live_base_url()
 
+    health, _ = timed_request(
+        "GET", f"{base_url}/api/helper/healthz", timeout=120
+    )
+    assert health.status_code == 200
+    assert health.json()["catalog"]["fresh"] is True
+    assert health.json()["catalog"]["evidencePages"] > 0
+
     widget, widget_seconds = timed_request(
         "GET", f"{base_url}/helper-widget.js", timeout=120
     )

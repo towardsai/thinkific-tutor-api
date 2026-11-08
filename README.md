@@ -38,6 +38,14 @@ Thinkific Course Player
 
 ## Public Sales Helper
 
+The signed-out Academy helper has its own 14-day evidence catalog. Its health is
+reported separately at `/api/helper/healthz`; `/healthz` checks the lesson tutor.
+The keepalive warns with fewer than five days remaining. **Refresh and Deploy
+Helper Catalog** rebuilds both catalogs every Monday using the canonical
+`towardsai/tai-helper` scraper, runs the adapter tests, commits the data and uploads
+the validated adapter to the Space. It can also be run manually for recovery and
+requires the repository's `HF_TOKEN` secret with write access to this Space.
+
 This same deployment also serves a separate signed-out sales helper for public
 `towardsai.com`, legacy `.net`, and Academy pages:
 
