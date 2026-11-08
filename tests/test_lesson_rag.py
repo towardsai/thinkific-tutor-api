@@ -110,6 +110,7 @@ def test_api_supplies_lesson_body_and_emits_its_source(monkeypatch):
     )
     assert response.status_code == 200
     assert exact.content in captured[0].query
+    assert captured[0].query.endswith("what is it about")
     assert captured[0].source_keys == ()
     events = [
         json.loads(line.removeprefix("data: "))
