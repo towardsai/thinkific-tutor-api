@@ -280,7 +280,31 @@ def test_live_helper_chat_returns_concise_answer() -> None:
     payload = response.json()
     assert payload["answer"].strip()
     assert len(payload["answer"]) < 1400
-    assert payload["sources"]
+    if payload["status"] == "policy":
+        assert "build or achieve" in payload["answer"]
+        assert "Python?" in payload["answer"]
+    else:
+        assert payload["status"] == "answered"
+        assert payload["sources"]
+
+    # A clarification has no factual claim to cite. A factual follow-up must
+    # still return verified sources through the canonical helper proxy.
+    followup = requests.post(
+        f"{base_url}/api/helper/chat", headers=HELPER_HEADERS,
+        json={
+            "query": "Does mentorship include access to 2 courses of my choice?",
+            "selectedPrompt": HELPER_FIRST_PROMPT,
+            "visitorId": "github-action-helper-followup",
+            "history": [{"role": "user", "content": HELPER_FIRST_PROMPT}],
+            "context": {"url": "https://towardsai.com/academy/mentorship/", "signedIn": False},
+        }, timeout=120,
+    )
+    assert followup.status_code == 200
+    factual = followup.json()
+    assert factual["status"] == "answered"
+    assert "Included from day one" in factual["answer"]
+    assert "25% off, always" in factual["answer"]
+    assert factual["sources"]
     assert elapsed <= max_seconds("LIVE_SMOKE_MAX_HELPER_CHAT_SECONDS", 90)
 
 

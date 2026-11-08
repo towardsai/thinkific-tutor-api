@@ -339,6 +339,7 @@ async def chat(request: Request, payload: ThinkificChatRequest) -> StreamingResp
     augmented_query = build_augmented_query(payload.query, resolved)
     if evidence and evidence.text:
         augmented_query += evidence_prompt(evidence)
+        augmented_query += "\n\n## Student question to answer now\n" + payload.query.strip()
     chat_request = _chat_request(
         payload,
         augmented_query,
