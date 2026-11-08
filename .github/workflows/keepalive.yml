@@ -20,10 +20,20 @@ jobs:
         run: |
           curl --fail --show-error --silent --max-time 180 "$SPACE_BASE_URL/healthz"
 
+      - name: Sales helper catalog freshness
+        run: |
+          curl --fail --show-error --silent --max-time 60 \
+            "$SPACE_BASE_URL/api/helper/healthz" -o helper-health.json
+          cat helper-health.json
+          jq -e '.catalog.fresh == true and .catalog.evidencePages > 0 and .catalog.expiresInDays >= 5' \
+            helper-health.json
+
       - name: Widget check
         run: |
-          curl --fail --show-error --silent --max-time 60 "$SPACE_BASE_URL/widget.js" | grep -q "Towards AI Tutor"
+          curl --fail --show-error --silent --max-time 60 "$SPACE_BASE_URL/widget.js" -o tutor-widget.js
+          grep -q "Towards AI Tutor" tutor-widget.js
 
       - name: Helper widget check
         run: |
-          curl --fail --show-error --silent --max-time 60 "$SPACE_BASE_URL/helper-widget.js" | grep -q "Towards AI Helper"
+          curl --fail --show-error --silent --max-time 60 "$SPACE_BASE_URL/helper-widget.js" -o helper-widget.js
+          grep -q "Towards AI Helper" helper-widget.js

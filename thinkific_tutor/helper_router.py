@@ -16,6 +16,7 @@ from .helper_catalog import (
     coupon_followup,
     coupon_intent,
     forced_prompts,
+    freshness,
     in_scope,
     page_is_allowed,
     retrieve,
@@ -28,6 +29,16 @@ from .rate_limiter import FixedWindowRateLimiter, RateLimit
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
+
+
+@router.get("/api/helper/healthz")
+def helper_healthcheck() -> dict[str, Any]:
+    catalog = freshness()
+    return {
+        "status": "ok" if catalog["fresh"] else "degraded",
+        "catalog": catalog,
+    }
+
 
 helper_visitor_limiter = FixedWindowRateLimiter(
     (
