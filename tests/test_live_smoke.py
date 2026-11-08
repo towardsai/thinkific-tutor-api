@@ -220,7 +220,7 @@ def test_live_chat_streams_non_empty_answer(
     response = requests.post(
         f"{base_url}/api/thinkific/chat",
         json={
-            "query": "Answer in one short sentence: what should I focus on in this lesson?",
+            "query": "Answer in one short sentence: name an important concept taught in this course.",
             "threadId": "",
             "studentId": os.getenv("LIVE_SMOKE_STUDENT_ID", "github-action-smoke"),
             "context": lesson_context(course_url, expected_source),

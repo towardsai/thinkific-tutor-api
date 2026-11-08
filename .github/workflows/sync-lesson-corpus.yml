@@ -1,0 +1,59 @@
+name: Sync Private Lesson Corpus
+
+on:
+  workflow_dispatch:
+    inputs:
+      part_count:
+        description: "Number of encrypted GitHub-secret payload parts (1-6)"
+        required: true
+        default: "1"
+
+permissions:
+  contents: read
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: "3.13"
+      - name: Install HF client
+        run: python -m pip install huggingface_hub
+      - name: Upload only to the verified private dataset
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          PART_COUNT: ${{ inputs.part_count }}
+          LESSON_PART_1: ${{ secrets.THINKIFIC_LESSON_DATA_1 }}
+          LESSON_PART_2: ${{ secrets.THINKIFIC_LESSON_DATA_2 }}
+          LESSON_PART_3: ${{ secrets.THINKIFIC_LESSON_DATA_3 }}
+          LESSON_PART_4: ${{ secrets.THINKIFIC_LESSON_DATA_4 }}
+          LESSON_PART_5: ${{ secrets.THINKIFIC_LESSON_DATA_5 }}
+          LESSON_PART_6: ${{ secrets.THINKIFIC_LESSON_DATA_6 }}
+        run: |
+          python - <<'PY'
+          import base64
+          import gzip
+          import io
+          import json
+          import os
+          from huggingface_hub import HfApi
+
+          count = int(os.environ["PART_COUNT"])
+          assert 1 <= count <= 6
+          encoded = "".join(os.environ[f"LESSON_PART_{i}"] for i in range(1, count + 1))
+          payload = gzip.decompress(base64.b64decode(encoded, validate=True))
+          rows = [json.loads(line) for line in payload.decode().splitlines() if line.strip()]
+          assert rows and all(row["content"] and row["source"] and row["url"] for row in rows)
+          api = HfApi(token=os.environ["HF_TOKEN"])
+          repo = "towardsai-tutors/ai-tutor-vector-db"
+          assert api.repo_info(repo_id=repo, repo_type="dataset").private, "Refusing public corpus upload"
+          api.upload_file(
+              repo_id=repo, repo_type="dataset",
+              path_or_fileobj=io.BytesIO(payload),
+              path_in_repo="thinkific/lessons.jsonl",
+              commit_message="Refresh private Thinkific lesson supplement",
+          )
+          print(f"Uploaded {len(rows)} lesson records to the private dataset.")
+          PY

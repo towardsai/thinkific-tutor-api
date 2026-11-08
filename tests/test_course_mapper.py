@@ -27,6 +27,21 @@ def test_resolves_course_from_academy_url() -> None:
     assert resolved.lesson_id == "456"
 
 
+def test_resolves_blueprint_course_and_embedded_source_url() -> None:
+    context = ThinkificLessonContext(
+        url="https://academy.towardsai.net/courses/take/production-blueprint/multimedia/test-lesson",
+        course=ThinkificEntity(title="Production Blueprints"),
+        lesson=ThinkificEntity(id="test-lesson", title="Production Blueprint #1"),
+        user=logged_in_user(),
+        extra={"lessonContentUrls": ["https://magnetic-koi.super.site/example-blueprint"]},
+    )
+    resolved = resolve_lesson_context(context)
+    assert resolved is not None
+    assert resolved.source_key == "production_blueprints"
+    assert resolved.source_label == "Production Blueprints"
+    assert resolved.content_urls == ("https://magnetic-koi.super.site/example-blueprint",)
+
+
 def test_resolves_llm_primer_from_course_player_url() -> None:
     # Real Thinkific Course Player URLs use the /courses/take/<slug>/lessons/...
     # form, so resolution relies on slug matching against the ai-tutor-app
