@@ -90,10 +90,11 @@ class FakeElement {
 }
 
 
-async function createWidgetHarness() {
+async function createWidgetHarness({ frames = [] } = {}) {
   const viewport = { width: 1000, height: 800 };
   const storage = new Map();
   const courseHooks = new Map();
+  const requests = [];
   const windowListeners = new Map();
   let resizeObserverCallback = () => {};
 
@@ -174,6 +175,9 @@ async function createWidgetHarness() {
     querySelector() {
       return body;
     },
+    querySelectorAll() {
+      return frames;
+    },
   };
 
   const location = new URL("https://academy.towardsai.net/courses/test/chapters/one/lessons/two");
@@ -237,7 +241,10 @@ async function createWidgetHarness() {
     URL,
     console,
     document,
-    fetch: async () => ({ ok: true, json: async () => ({ eligible: true }) }),
+    fetch: async (url, init) => {
+      requests.push({ url, body: init?.body ? JSON.parse(init.body) : null });
+      return { ok: true, json: async () => ({ eligible: true }) };
+    },
     window,
   });
   const widgetSource = await readFile(
@@ -285,6 +292,7 @@ async function createWidgetHarness() {
     drag,
     dragHandle,
     panel,
+    requests,
     rect: () => wrap.getBoundingClientRect(),
     storage,
     triggerResize: () => resizeObserverCallback(),
@@ -351,4 +359,11 @@ test("the default bubble returns to the bottom-right after minimizing", async ()
   assert.equal(harness.wrap.style.top, "");
   assert.equal(harness.wrap.style.right, "");
   assert.equal(harness.wrap.style.bottom, "");
+});
+
+test("lesson resolution includes iframe source URLs without reading cross-origin bodies", async () => {
+  const url = "https://magnetic-koi.super.site/example-blueprint";
+  const harness = await createWidgetHarness({ frames: [{ src: url }] });
+  const resolve = harness.requests.find((request) => String(request.url).includes("/api/thinkific/resolve"));
+  assert.deepEqual(Array.from(resolve.body.context.extra.lessonContentUrls), [url]);
 });

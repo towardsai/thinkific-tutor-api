@@ -28,6 +28,7 @@ COURSE_URL_TO_SOURCE = {
     "https://academy.towardsai.net/courses/python-for-genai": "beginner_python_for_ai_engineering",
     "https://academy.towardsai.net/courses/ai-business-professionals": "master_ai_for_work",
     "https://academy.towardsai.net/courses/agent-engineering": "agentic_ai_engineering",
+    "https://academy.towardsai.net/courses/production-blueprint": "production_blueprints",
 }
 THINKIFIC_HEADERS = {"Origin": "https://academy.towardsai.net"}
 HELPER_HEADERS = {"Origin": "https://towardsai.com"}
@@ -220,7 +221,7 @@ def test_live_chat_streams_non_empty_answer(
     response = requests.post(
         f"{base_url}/api/thinkific/chat",
         json={
-            "query": "Answer in one short sentence: what should I focus on in this lesson?",
+            "query": "Answer in one short sentence: name an important concept taught in this course.",
             "threadId": "",
             "studentId": os.getenv("LIVE_SMOKE_STUDENT_ID", "github-action-smoke"),
             "context": lesson_context(course_url, expected_source),
@@ -281,3 +282,46 @@ def test_live_helper_chat_returns_concise_answer() -> None:
     assert len(payload["answer"]) < 1400
     assert payload["sources"]
     assert elapsed <= max_seconds("LIVE_SMOKE_MAX_HELPER_CHAT_SECONDS", 90)
+
+
+@pytest.mark.live
+@pytest.mark.skipif(not RUN_LIVE_CHAT, reason="RUN_LIVE_CHAT_SMOKE is not enabled")
+@pytest.mark.parametrize(
+    ("course_slug", "lesson_path", "title", "concepts"),
+    [
+        (
+            "agent-engineering",
+            "74998057-lesson-0-build-a-research-and-writing-agent-with-mcp",
+            "Lesson 0: Build a Research and Writing Agent with MCP",
+            (("research",), ("writing", "writer"), ("mcp", "model context protocol")),
+        ),
+        (
+            "production-blueprint",
+            "77176240-production-blueprint-1-our-agent-setup-and-the-practices-behind-it",
+            "Production Blueprint #1: Our Agent Setup and the Practices Behind It",
+            (("vault", "obsidian", "claude code"), ("skill", "feedback", "context")),
+        ),
+    ],
+)
+def test_live_current_lesson_summary_uses_real_sources(
+    course_slug: str, lesson_path: str, title: str, concepts: tuple,
+) -> None:
+    base_url = require_live_base_url()
+    course_url = f"https://academy.towardsai.net/courses/{course_slug}"
+    url = f"https://academy.towardsai.net/courses/take/{course_slug}/multimedia/{lesson_path}"
+    context = lesson_context(course_url, COURSE_URL_TO_SOURCE[course_url])
+    context.update({"url": url, "pageTitle": title})
+    context["lesson"] = {"id": lesson_path.split("-", 1)[0], "title": title, "type": "multimedia"}
+    response = requests.post(
+        f"{base_url}/api/thinkific/chat",
+        json={"query": "what is it about? Keep it to three short sentences.", "context": context},
+        headers=THINKIFIC_HEADERS, stream=True, timeout=180,
+    )
+    assert response.status_code == 200
+    events = [event for event in iter_sse_data(response) if isinstance(event, dict)]
+    assert not [event for event in events if event.get("type") == "error"]
+    text = "".join(event.get("delta", "") for event in events if event.get("type") == "text-delta").lower()
+    assert text.strip()
+    assert all(any(term in text for term in group) for group in concepts), text
+    assert not any(phrase in text for phrase in ("likely serves", "based on its title", "wasn't explicitly found"))
+    assert any(event.get("type") == "source-url" and event.get("url") == url for event in events)

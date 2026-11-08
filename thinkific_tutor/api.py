@@ -17,6 +17,7 @@ from .course_mapper import ResolvedLesson, build_augmented_query, resolve_lesson
 from .helper_router import router as helper_router
 from .helper_settings import helper_settings
 from .monitoring import OpikRateLimitMonitor, OpikTurnMonitor
+from .lesson_rag import evidence_prompt, is_lesson_overview, retrieve_lesson_evidence
 from .rate_limiter import FixedWindowRateLimiter, RateLimit
 from .schemas import ChatTurnIn, ResolveRequest, ThinkificChatRequest
 from .settings import settings
@@ -25,7 +26,7 @@ ensure_ai_tutor_importable()
 
 from app.api import UIMessageStreamEncoder, sse_frame  # noqa: E402
 from app.chat_service import stream_chat, warm_up_retriever  # noqa: E402
-from app.chat_types import ChatRequest, ChatTurn  # noqa: E402
+from app.chat_types import ChatEvent, ChatRequest, ChatTurn  # noqa: E402
 
 logger = logging.getLogger(__name__)
 
@@ -241,11 +242,12 @@ def _chat_request(
     source_key: str,
     student_id: str,
     model_name: str | None = None,
+    grounded_lesson: bool = False,
 ) -> ChatRequest:
     return ChatRequest(
         query=query,
         history=_history(payload.history),
-        source_keys=(source_key,),
+        source_keys=() if grounded_lesson or source_key == "production_blueprints" else (source_key,),
         model_name=model_name or settings.model_name,
         include_reasoning=False,
         thread_id=payload.threadId.strip(),
@@ -317,12 +319,32 @@ async def chat(request: Request, payload: ThinkificChatRequest) -> StreamingResp
             detail="Tutor is only available from a mapped Thinkific course lesson.",
         )
     _check_rate_limits(request, payload, resolved)
+    evidence = None
+    if settings.lesson_prefetch_enabled:
+        try:
+            evidence = await asyncio.to_thread(
+                retrieve_lesson_evidence, payload.query, resolved
+            )
+        except Exception as exc:
+            logger.warning("Lesson retrieval failed (%s).", type(exc).__name__)
+            raise HTTPException(503, "Lesson retrieval is unavailable. Please try again.") from exc
+        if not evidence.text or (
+            is_lesson_overview(payload.query) and not evidence.current_lesson_found
+        ):
+            raise HTTPException(
+                409,
+                "I don't have an indexed copy of this lesson yet, so I can't "
+                "summarize it reliably. The course material needs to be synced.",
+            )
     augmented_query = build_augmented_query(payload.query, resolved)
+    if evidence and evidence.text:
+        augmented_query += evidence_prompt(evidence)
     chat_request = _chat_request(
         payload,
         augmented_query,
         resolved.source_key,
         resolved.student_id,
+        grounded_lesson=bool(evidence and evidence.text),
     )
     chat_requests = [chat_request]
     if (
@@ -336,6 +358,7 @@ async def chat(request: Request, payload: ThinkificChatRequest) -> StreamingResp
                 resolved.source_key,
                 resolved.student_id,
                 model_name=settings.fallback_model_name,
+                grounded_lesson=bool(evidence and evidence.text),
             )
         )
     monitor = OpikTurnMonitor(
@@ -356,6 +379,7 @@ async def chat(request: Request, payload: ThinkificChatRequest) -> StreamingResp
         error_message = ""
         emitted_payload = False
         can_try_fallback = len(chat_requests) > 1
+        emitted_lesson_sources = False
         try:
             if slot is not None:
                 acquire = asyncio.ensure_future(slot.lock.acquire())
@@ -402,6 +426,21 @@ async def chat(request: Request, payload: ThinkificChatRequest) -> StreamingResp
                         continue
                     raise
                 monitor.observe_event(event)
+                if event.type == "text_delta" and evidence and not emitted_lesson_sources:
+                    emitted_lesson_sources = True
+                    for document in evidence.documents:
+                        source_event = ChatEvent("source_match", {
+                            "doc_id": document.doc_id,
+                            "title": document.title,
+                            "url": document.url,
+                            "source_key": document.source_key,
+                            "source_label": resolved.source_label,
+                            "score": 1.0,
+                            "group": "courses",
+                        })
+                        monitor.observe_event(source_event)
+                        for part in encoder.encode(source_event):
+                            yield sse_frame(part)
                 parts = list(encoder.encode(event))
                 if parts:
                     emitted_payload = True

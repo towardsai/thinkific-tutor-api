@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 
+os.environ["THINKIFIC_LESSON_PREFETCH_ENABLED"] = "false"
 os.environ["HELPER_UPSTREAM_BASE_URL"] = ""
 
 os.environ["HELPER_ALLOWED_ORIGINS"] = (

@@ -149,6 +149,7 @@ By default, URL mapping is derived from `ai-tutor-app`:
 | `master_ai_for_work` | `https://academy.towardsai.net/courses/ai-business-professionals` |
 | `agentic_ai_engineering` | `https://academy.towardsai.net/courses/agent-engineering` |
 | `llm_primer` | `https://academy.towardsai.net/courses/llm-primer` |
+| `production_blueprints` | `https://academy.towardsai.net/courses/production-blueprint` |
 
 When you have Thinkific course ids, add them for stronger routing:
 
@@ -244,9 +245,31 @@ Catalog entries older than `HELPER_CATALOG_MAX_AGE_DAYS`, failed fetches,
 redirects, template pages, and stale collection summaries are never used as
 evidence. The helper fails closed if no eligible chunks remain.
 
-`THINKIFIC_DISABLE_KB=true` keeps only vector/BM25 retrieval enabled and removes
-the local KB browsing tool from the agent. Turn it off if you want deeper lesson
-file inspection at the cost of larger prompts.
+Lesson retrieval runs before generation by default (`THINKIFIC_LESSON_PREFETCH_ENABLED=true`).
+It matches the current lesson by URL, lesson ID, embedded source URL, or title
+against full documents in the existing private RAG bundle. Newly published Agent
+Engineering lessons and Production Blueprints come from the private supplement
+`towardsai-tutors/ai-tutor-vector-db/thinkific/lessons.jsonl`. The current lesson
+takes priority; detailed questions use chunk selection and Cohere reranking.
+The API emits the retrieved sources alongside the answer. If a lesson summary
+has no exact indexed lesson, it returns an honest sync error instead of asking
+the model to infer contents from the title.
+
+Paid lesson bodies and access passwords must stay out of this public repository.
+To refresh the supplement, prepare JSONL records with `id`, `source`, `title`,
+`url`, `content`, optional `aliases`, and `published=true` outside the repository.
+Use the Academy lesson URL for citations. Gzip/base64 the JSONL and split it into
+at most 20 parts of 40,000 characters; set `THINKIFIC_LESSON_DATA_1` through the
+required part count as temporary GitHub Actions secrets. Run **Sync Private
+Lesson Corpus**, then **Refresh and Deploy Helper Catalog** to restart the
+adapter with the new corpus. The upload workflow verifies the HF dataset is
+private and rejects unpublished material. Delete the temporary payload secrets
+after a successful upload. `THINKIFIC_LESSON_CORPUS_PATH` provides a local fixture
+override for development.
+
+`THINKIFIC_DISABLE_KB=true` removes the optional local KB browsing tool. Server
+lesson retrieval still runs, and the model receives the retrieved evidence
+directly; it does not need to decide to call a search tool for a vague question.
 
 The built-in rate limiter is in-memory. For multi-replica production, replace
 `FixedWindowRateLimiter` with Redis or put a gateway rate limit in front.

@@ -62,11 +62,12 @@ def default_course_url_map() -> dict[str, str]:
         url = str(display.get("url", "")).strip()
         if url:
             mapping[url] = source_key
+    mapping["https://academy.towardsai.net/courses/production-blueprint"] = "production_blueprints"
     return mapping
 
 
 def _validate_source_map(mapping: dict[str, str], name: str) -> dict[str, str]:
-    allowed = set(COURSE_SOURCE_KEYS)
+    allowed = {*COURSE_SOURCE_KEYS, "production_blueprints"}
     invalid = sorted({source for source in mapping.values() if source not in allowed})
     if invalid:
         raise ValueError(
@@ -77,6 +78,9 @@ def _validate_source_map(mapping: dict[str, str], name: str) -> dict[str, str]:
 
 @dataclass(frozen=True)
 class Settings:
+    lesson_prefetch_enabled: bool = field(
+        default_factory=lambda: _bool_env("THINKIFIC_LESSON_PREFETCH_ENABLED", True)
+    )
     allowed_origins: tuple[str, ...] = field(
         default_factory=lambda: _csv_env(
             "THINKIFIC_ALLOWED_ORIGINS", "https://academy.towardsai.net"
@@ -178,13 +182,20 @@ class Settings:
 
     def public_course_sources(self) -> list[dict[str, Any]]:
         result: list[dict[str, Any]] = []
-        for source_key in sorted(COURSE_SOURCE_KEYS):
+        for source_key in sorted({*COURSE_SOURCE_KEYS, "production_blueprints"}):
             display = SOURCE_DISPLAY_INFO.get(source_key, {})
             result.append(
                 {
                     "sourceKey": source_key,
-                    "label": SOURCE_KEY_TO_LABEL.get(source_key, source_key),
-                    "url": display.get("url", ""),
+                    "label": (
+                        "Production Blueprints" if source_key == "production_blueprints"
+                        else SOURCE_KEY_TO_LABEL.get(source_key, source_key)
+                    ),
+                    "url": (
+                        "https://academy.towardsai.net/courses/production-blueprint"
+                        if source_key == "production_blueprints"
+                        else display.get("url", "")
+                    ),
                 }
             )
         return result

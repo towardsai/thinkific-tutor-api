@@ -523,6 +523,15 @@
       pageText: visibleText(),
       extra: {
         pathname: window.location.pathname,
+        lessonContentUrls: [
+          hookData.lesson && hookData.lesson.url,
+          hookData.lesson && hookData.lesson.sourceUrl,
+          hookData.lesson && hookData.lesson.source_url,
+          hookData.lesson && hookData.lesson.contentUrl,
+          hookData.lesson && hookData.lesson.content_url,
+        ].concat(Array.prototype.map.call(document.querySelectorAll("iframe[src]"), function (frame) {
+          return frame.src;
+        })).filter(function (url) { return typeof url === "string" && /^https:\/\//i.test(url); }).slice(0, 12),
         contentType:
           safeString(hookData.lesson && (hookData.lesson.contentType || hookData.lesson.content_type)),
         lessonType:

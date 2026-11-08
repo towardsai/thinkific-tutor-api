@@ -37,6 +37,7 @@ class ResolvedLesson:
     page_title: str
     page_text: str
     selected_text: str
+    content_urls: tuple[str, ...] = ()
 
 
 def _host_allowed(hostname: str, allowed_hosts: tuple[str, ...]) -> bool:
@@ -201,6 +202,14 @@ def resolve_lesson_context(
         if match:
             source_key, course_url = match
 
+    raw_content_urls = context.extra.get("lessonContentUrls") or []
+    if not isinstance(raw_content_urls, (list, tuple)):
+        raw_content_urls = []
+    content_urls = tuple(
+        str(value).strip()[:2048]
+        for value in raw_content_urls[:12]
+        if isinstance(value, str) and urlparse(value).scheme == "https"
+    )
     if not source_key and configured.allow_unmapped_courses:
         source_key = configured.default_source_key
         course_url = str(SOURCE_DISPLAY_INFO.get(source_key, {}).get("url", ""))
@@ -210,7 +219,10 @@ def resolve_lesson_context(
 
     return ResolvedLesson(
         source_key=source_key,
-        source_label=SOURCE_KEY_TO_LABEL.get(source_key, source_key),
+        source_label=(
+            "Production Blueprints" if source_key == "production_blueprints"
+            else SOURCE_KEY_TO_LABEL.get(source_key, source_key)
+        ),
         course_url=course_url,
         current_url=context.url,
         course_id=course_id,
@@ -224,6 +236,7 @@ def resolve_lesson_context(
         page_title=context.pageTitle.strip(),
         page_text=context.pageText.strip()[: configured.max_page_context_chars],
         selected_text=context.selectedText.strip()[: configured.max_page_context_chars],
+        content_urls=content_urls,
     )
 
 
