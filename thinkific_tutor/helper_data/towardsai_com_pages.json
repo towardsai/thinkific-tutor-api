@@ -1,11 +1,11 @@
 {
   "schema_version": 2,
   "source": "https://towardsai.com/pages-sitemap.xml",
-  "generated_at": "2026-11-16T16:26:55.016644+00:00",
+  "generated_at": "2026-11-23T18:45:08.919835+00:00",
   "authority": "official_site",
   "status_counts": {
     "excluded": 3,
-    "included": 29
+    "included": 30
   },
   "pages": [
     {
@@ -85,7 +85,7 @@
         },
         {
           "text": "Discord",
-          "url": "https://discord.gg/learnaitogether"
+          "url": "https://towardsai.com/community/"
         },
         {
           "text": "ToneBench arrow_forward",
@@ -101,7 +101,7 @@
         },
         {
           "text": "Join us",
-          "url": "https://discord.gg/learnaitogether"
+          "url": "https://towardsai.com/community/"
         },
         {
           "text": "Browse our Learning Academy Browse our Learning Academy",
@@ -109,7 +109,7 @@
         },
         {
           "text": "Explore community arrow_forward",
-          "url": "https://discord.gg/learnaitogether"
+          "url": "https://towardsai.com/community/"
         },
         {
           "text": "Browse courses arrow_forward",
@@ -686,7 +686,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T16:26:55.016644+00:00",
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
       "content_sha256": "af89a6dde4e497b1e214203f13da0e2befbffff01ecbc3aededa41d43629ab0e",
       "content_hash": "af89a6dde4e497b1e214203f13da0e2befbffff01ecbc3aededa41d43629ab0e",
       "authority": "official_site",
@@ -699,7 +699,552 @@
         "https://towardsai.com/"
       ],
       "excluded_reason": "homepage offer summaries can conflict with canonical detail pages",
-      "evidence_hash": "50926640c4ff53ffa2849920a4e70d261bcf28c5ae95f4ddfe4c759c1b8a8e07"
+      "evidence_hash": "a2478fd8a1bdf635e9c155a179e3dfe87a67db0781923701a3978a255729556c"
+    },
+    {
+      "discovered_url": "https://towardsai.com/community/",
+      "url": "https://towardsai.com/community/",
+      "canonical_url": "https://towardsai.com/community/",
+      "host": "towardsai.com",
+      "path": "/community",
+      "kind": "page",
+      "offer_id": null,
+      "entity_id": "page:towardsai.com/community",
+      "title": "Learn AI Together | Towards AI",
+      "review_title": "",
+      "reviewed_summary": "",
+      "meta_description": "Explore live Discord activity, member projects and practical AI engineering resources.",
+      "headings": [
+        "Learn AI Together",
+        "Your first visit",
+        "What do you want to work on?",
+        "Choose a first build",
+        "Get help debugging",
+        "Find a collaborator",
+        "Get feedback on a project",
+        "Share a milestone",
+        "Follow the conversation",
+        "Inside the Discord today",
+        "Keep learning between builds",
+        "Free guides and videos",
+        "Courses and book",
+        "Towards AI Mentorship",
+        "From the community newsletter",
+        "Is Your Agent Failing Outside the Model?",
+        "Can AI Forget Without Getting Worse?",
+        "Can a Sandbox Stop a Hostile Agent?",
+        "Community FAQ"
+      ],
+      "text": "Waitlist open Our new book, AI Engineering For Production , is coming before the end of 2026. Get the release date first. New book: AI Engineering For Production , coming before the end of 2026. Join the waitlist → Towards AI community\n\nLearn AI Together\nWhere do you turn when your model passes the notebook test and fails on a real example? Bring it to Learn AI Together. More than 100,000 members have joined our Discord to learn AI engineering, compare experiments and build with peers. Join the free Discord Find your channel\n\nYour first visit\nJoin and choose what you want to work on in onboarding. Introduce yourself in #introduce-yourself . Share the project or skill you are working on. Bring one example to #technical-questions or offer feedback on a demo in #share-your-projects .\n\nWhat do you want to work on?\n\nChoose a first build\nOpen the pinned first-week guide in #learn-ai-engineering . Pick something small enough to test this week. In #introduce-yourself , tell people what you want it to do.\n\nGet help debugging\nUse #technical-questions for a specific problem. Include a small input, the output you expected and what happened instead. A failed retrieval example gives someone much more to work with than “my RAG app is broken”.\n\nFind a collaborator\nUse #study-groups to find people learning the same topic. In #call-for-collabs , say what you are building, what is already working and which part you want help with.\n\nGet feedback on a project\nPost a demo or repo in #share-your-projects with one decision you want reviewed. If you changed your evaluation set, show a case where the new test caught a mistake.\n\nShare a milestone\nUse #our-accomplishments for a result and the lesson behind it. A before-and-after measurement or a short account of your first deployment gives other builders something they can use. Launch announcements and offers belong in #self-promotion .\n\nFollow the conversation\nUse #general-discussions for open engineering conversations. In #community-newsletter you can catch up on selected builds and research, then discuss an issue in its thread.\n\nInside the Discord today\nExplore the rooms on the map to see where people are talking and which topics are coming up. Open full-size map\n\nKeep learning between builds\n\nFree guides and videos\nPick an exercise from Louis’s AI engineering roadmap . Watch a What’s AI walkthrough when you need to see a technique in action. Browse the weekly newsletter archive\n\nCourses and book\nChoose a structured path through the topic you are working on. Beginner Python for AI Engineering 10-Hour LLM Fundamentals Full Stack AI Engineering Agentic AI Engineering AI for Work Building LLMs for Production\n\nTowards AI Mentorship\nIf you want sustained guidance on your engineering skills, explore the Academy mentorship program. Review the mentors and program details to decide whether it fits your current project. Explore mentorship Some book and Academy links are affiliate links. They support our work at no extra cost to you.\n\nFrom the community newsletter\n19 Nov 2026\n\nIs Your Agent Failing Outside the Model?\nWhen an agent picks the wrong tool, what can you change in the surrounding code? This issue looks at tool selection, agent harnesses and data-pipeline controls. 12 Nov 2026\n\nCan AI Forget Without Getting Worse?\nWhat should an agent remember after a failed tool call? Explore recovery, feedback and the trade-offs researchers face when a model needs to forget. 05 Nov 2026\n\nCan a Sandbox Stop a Hostile Agent?\nFive sandboxes faced the same attack. The tests show why the credentials you hand an agent matter even when the sandbox holds. Browse every issue\n\nCommunity FAQ\nCan I join if I am new to AI? Yes. Joining the Discord is free. Start in #learn-ai-engineering for a first project and use #study-groups if you want company while you learn. How do I find the channels that matter to me? Choose your goal during onboarding. You can revisit Channels & Roles in the Discord sidebar to select other interests and discover more rooms. Channel links on this page open inside the server once you have joined. How do I get a useful answer? Open a post in #technical-questions with the model or tool you used, a minimal example and what you already tried. Return to the same thread with the fix so the next engineer can learn from it. Can I share a product I built? Yes. Choose #share-your-projects for technical feedback or #self-promotion for a launch, offer or signup link. Pick the room that fits your purpose and post there once. Where are the course discussions? The agents, full-stack, 10-hour, Python and AI for Work course rooms use enrolled-learner roles. If you enrolled and cannot see your room, contact Academy staff privately with the course name. Keep enrollment details out of public chat. Where can I read past community features? The newsletter archive keeps past issues in one place. Browse the dated editions for member projects, research and resources. A forum submission does not guarantee a feature. What does the map show? Channel activity, topics and online counts from the public community map. Check its update time before using it to decide where to join a conversation. How do I suggest a change to the server? Use #server-suggestion . Describe what was difficult, which channel or onboarding step was involved and what would make it easier for the next member. Join Learn AI Together",
+      "links": [
+        {
+          "text": "Join the waitlist →",
+          "url": "https://www.louisbouchard.ai/book/?utm_source=site-tai&utm_medium=banner&utm_campaign=book"
+        },
+        {
+          "text": "Join the free Discord",
+          "url": "https://discord.gg/learnaitogether"
+        },
+        {
+          "text": "#introduce-yourself",
+          "url": "https://discord.com/channels/702624558536065165/702624559198896181"
+        },
+        {
+          "text": "#technical-questions",
+          "url": "https://discord.com/channels/702624558536065165/1045845524651200573"
+        },
+        {
+          "text": "#share-your-projects",
+          "url": "https://discord.com/channels/702624558536065165/1145719762438074368"
+        },
+        {
+          "text": "#learn-ai-engineering",
+          "url": "https://discord.com/channels/702624558536065165/831861014597337088"
+        },
+        {
+          "text": "#study-groups",
+          "url": "https://discord.com/channels/702624558536065165/784477688551178240"
+        },
+        {
+          "text": "#call-for-collabs",
+          "url": "https://discord.com/channels/702624558536065165/1055305443595005972"
+        },
+        {
+          "text": "#our-accomplishments",
+          "url": "https://discord.com/channels/702624558536065165/792193096519516162"
+        },
+        {
+          "text": "#self-promotion",
+          "url": "https://discord.com/channels/702624558536065165/983037843532308500"
+        },
+        {
+          "text": "#general-discussions",
+          "url": "https://discord.com/channels/702624558536065165/702878028841091093"
+        },
+        {
+          "text": "#community-newsletter",
+          "url": "https://discord.com/channels/702624558536065165/991447428127526973"
+        },
+        {
+          "text": "Open full-size map",
+          "url": "https://louisfb01.github.io/learn-ai-together-live/"
+        },
+        {
+          "text": "Louis’s AI engineering roadmap",
+          "url": "https://github.com/louisfb01/start-ai-engineering"
+        },
+        {
+          "text": "What’s AI walkthrough",
+          "url": "https://www.youtube.com/@WhatsAI"
+        },
+        {
+          "text": "Browse the weekly newsletter archive",
+          "url": "https://learnaitogethernewsletter.substack.com/archive"
+        },
+        {
+          "text": "Beginner Python for AI Engineering",
+          "url": "https://academy.towardsai.net/courses/python-for-genai?ref=1f9b29"
+        },
+        {
+          "text": "10-Hour LLM Fundamentals",
+          "url": "https://academy.towardsai.net/courses/llm-primer?ref=1f9b29"
+        },
+        {
+          "text": "Full Stack AI Engineering",
+          "url": "https://academy.towardsai.net/courses/beginner-to-advanced-llm-dev?ref=1f9b29"
+        },
+        {
+          "text": "Agentic AI Engineering",
+          "url": "https://academy.towardsai.net/courses/agent-engineering?ref=1f9b29"
+        },
+        {
+          "text": "AI for Work",
+          "url": "https://academy.towardsai.net/courses/ai-business-professionals?ref=1f9b29"
+        },
+        {
+          "text": "Building LLMs for Production",
+          "url": "https://amzn.to/4dZ0Mtz"
+        },
+        {
+          "text": "Explore mentorship",
+          "url": "https://academy.towardsai.net/bundles/tai-mentorship?ref=1f9b29"
+        },
+        {
+          "text": "",
+          "url": "https://learnaitogethernewsletter.substack.com/p/lai-152-is-your-agent-failing-outside"
+        },
+        {
+          "text": "",
+          "url": "https://learnaitogethernewsletter.substack.com/p/lai-151-can-ai-forget-without-getting"
+        },
+        {
+          "text": "",
+          "url": "https://learnaitogethernewsletter.substack.com/p/lai-150-can-a-sandbox-stop-a-hostile"
+        },
+        {
+          "text": "Browse every issue",
+          "url": "https://learnaitogethernewsletter.substack.com/archive"
+        },
+        {
+          "text": "newsletter archive",
+          "url": "https://learnaitogethernewsletter.substack.com/archive"
+        },
+        {
+          "text": "#server-suggestion",
+          "url": "https://discord.com/channels/702624558536065165/1063167591834726470"
+        },
+        {
+          "text": "Join Learn AI Together",
+          "url": "https://discord.gg/learnaitogether"
+        }
+      ],
+      "chunks": [
+        {
+          "chunk_id": "tai-424b0f82adade137896ee7fc",
+          "text": "Waitlist open Our new book, AI Engineering For Production , is coming before the end of 2026. Get the release date first. New book: AI Engineering For Production , coming before the end of 2026. Join the waitlist → Towards AI community\n\nLearn AI Together\nWhere do you turn when your model passes the notebook test and fails on a real example? Bring it to Learn AI Together. More than 100,000 members have joined our Discord to learn AI engineering, compare experiments and build with peers. Join the free Discord Find your channel\n\nYour first visit\nJoin and choose what you want to work on in onboarding. Introduce yourself in #introduce-yourself . Share the project or skill you are working on. Bring one example to #technical-questions or offer feedback on a demo in #share-your-projects .\n\nWhat do you want to work on?\n\nChoose a first build\nOpen the pinned first-week guide in #learn-ai-engineering . Pick something small enough to test this week. In #introduce-yourself , tell people what you want it to do.\n\nGet help debugging\nUse #technical-questions for a specific problem. Include a small input, the output you expected and what happened instead. A failed retrieval example gives someone much more to work with than “my RAG app is broken”.\n\nFind a collaborator\nUse #study-groups to find people learning the same topic. In #call-for-collabs , say what you are building, what is already working and which part you want help with.\n\nGet feedback on a project\nPost a demo or repo in #share-your-projects with one decision you want reviewed. If you changed your evaluation set, show a case where the new test caught a mistake.",
+          "heading": "Learn AI Together",
+          "index": 0,
+          "evidence_spans": [
+            {
+              "span_id": "span-a8050be66a658c942f419f70",
+              "text": "Waitlist open Our new book, AI Engineering For Production , is coming before the end of 2026."
+            },
+            {
+              "span_id": "span-11ab9e99c2a0fa4b73eb6dd0",
+              "text": "Get the release date first."
+            },
+            {
+              "span_id": "span-7c4b6040fa8b419573c4d583",
+              "text": "New book: AI Engineering For Production , coming before the end of 2026."
+            },
+            {
+              "span_id": "span-ba6fe1876e7e30feb7cb74c1",
+              "text": "Join the waitlist →"
+            },
+            {
+              "span_id": "span-8de8605aff92d3411d1b109c",
+              "text": "Towards AI community"
+            },
+            {
+              "span_id": "span-8a7ec4487b81e2f6906a61ac",
+              "text": "Where do you turn when your model passes the notebook test and fails on a real example?"
+            },
+            {
+              "span_id": "span-04d93c447d8bc73597455218",
+              "text": "Bring it to Learn AI Together."
+            },
+            {
+              "span_id": "span-47801f6bdf081048a7b0b911",
+              "text": "More than 100,000 members have joined our Discord to learn AI engineering, compare experiments and build with peers."
+            },
+            {
+              "span_id": "span-b6dfe2bd5344d296470e24dc",
+              "text": "Join the free Discord Find your channel"
+            },
+            {
+              "span_id": "span-e9da103ac0e1059f864a00b5",
+              "text": "Join and choose what you want to work on in onboarding."
+            },
+            {
+              "span_id": "span-2ad4d86ea32a37d4ffeca126",
+              "text": "Introduce yourself in #introduce-yourself ."
+            },
+            {
+              "span_id": "span-c80e90fbd2ff2633663c547f",
+              "text": "Share the project or skill you are working on."
+            },
+            {
+              "span_id": "span-6fb5edf5001d22f24bb6a092",
+              "text": "Bring one example to #technical-questions or offer feedback on a demo in #share-your-projects ."
+            },
+            {
+              "span_id": "span-fa629d60900a152ee917e909",
+              "text": "What do you want to work on?"
+            },
+            {
+              "span_id": "span-4d4ceae3f8748e2614b58653",
+              "text": "Open the pinned first-week guide in #learn-ai-engineering ."
+            },
+            {
+              "span_id": "span-93a19c40582ee0537e1bbfb4",
+              "text": "Pick something small enough to test this week."
+            },
+            {
+              "span_id": "span-411f2767fd91517b23d666ab",
+              "text": "In #introduce-yourself , tell people what you want it to do."
+            },
+            {
+              "span_id": "span-ca84233b6cc62df918ffb5a1",
+              "text": "Use #technical-questions for a specific problem."
+            },
+            {
+              "span_id": "span-ec2839a14b424a27b9fbf494",
+              "text": "Include a small input, the output you expected and what happened instead."
+            },
+            {
+              "span_id": "span-9210e3fd0011fa82ed093e5a",
+              "text": "A failed retrieval example gives someone much more to work with than “my RAG app is broken”."
+            },
+            {
+              "span_id": "span-da5124036348a8d7cd3b4ec1",
+              "text": "Use #study-groups to find people learning the same topic."
+            },
+            {
+              "span_id": "span-cc3762679e21e4df4f36dcac",
+              "text": "In #call-for-collabs , say what you are building, what is already working and which part you want help with."
+            },
+            {
+              "span_id": "span-462621c8890bbbd29e184314",
+              "text": "Post a demo or repo in #share-your-projects with one decision you want reviewed."
+            },
+            {
+              "span_id": "span-64b1a5d603dbf72da36b5c08",
+              "text": "If you changed your evaluation set, show a case where the new test caught a mistake."
+            }
+          ]
+        },
+        {
+          "chunk_id": "tai-18e1c66a6f6304a9d8b798b8",
+          "text": "Share a milestone\nUse #our-accomplishments for a result and the lesson behind it. A before-and-after measurement or a short account of your first deployment gives other builders something they can use. Launch announcements and offers belong in #self-promotion .\n\nFollow the conversation\nUse #general-discussions for open engineering conversations. In #community-newsletter you can catch up on selected builds and research, then discuss an issue in its thread.\n\nInside the Discord today\nExplore the rooms on the map to see where people are talking and which topics are coming up. Open full-size map\n\nKeep learning between builds\n\nFree guides and videos\nPick an exercise from Louis’s AI engineering roadmap . Watch a What’s AI walkthrough when you need to see a technique in action. Browse the weekly newsletter archive\n\nCourses and book\nChoose a structured path through the topic you are working on. Beginner Python for AI Engineering 10-Hour LLM Fundamentals Full Stack AI Engineering Agentic AI Engineering AI for Work Building LLMs for Production\n\nTowards AI Mentorship\nIf you want sustained guidance on your engineering skills, explore the Academy mentorship program. Review the mentors and program details to decide whether it fits your current project. Explore mentorship Some book and Academy links are affiliate links. They support our work at no extra cost to you.\n\nFrom the community newsletter\n19 Nov 2026\n\nIs Your Agent Failing Outside the Model?\nWhen an agent picks the wrong tool, what can you change in the surrounding code? This issue looks at tool selection, agent harnesses and data-pipeline controls. 12 Nov 2026",
+          "heading": "Towards AI Mentorship",
+          "index": 1,
+          "evidence_spans": [
+            {
+              "span_id": "span-4e4a2a88041f6148198647d7",
+              "text": "Use #our-accomplishments for a result and the lesson behind it."
+            },
+            {
+              "span_id": "span-b621bbe1441376a022d38ba3",
+              "text": "A before-and-after measurement or a short account of your first deployment gives other builders something they can use."
+            },
+            {
+              "span_id": "span-98b85aa5c87dac1d2075283d",
+              "text": "Launch announcements and offers belong in #self-promotion ."
+            },
+            {
+              "span_id": "span-85fa3f7f26f41bbb390b1e28",
+              "text": "Use #general-discussions for open engineering conversations."
+            },
+            {
+              "span_id": "span-146c216f546dd356802763dc",
+              "text": "In #community-newsletter you can catch up on selected builds and research, then discuss an issue in its thread."
+            },
+            {
+              "span_id": "span-7fe759a0e6a92f9d4f5f6cb4",
+              "text": "Explore the rooms on the map to see where people are talking and which topics are coming up."
+            },
+            {
+              "span_id": "span-0d1ae8ae69260089a61a477e",
+              "text": "Open full-size map"
+            },
+            {
+              "span_id": "span-65149e878a7d2c47a0d6d092",
+              "text": "Keep learning between builds"
+            },
+            {
+              "span_id": "span-64e8579cba01f9b981616d42",
+              "text": "Pick an exercise from Louis’s AI engineering roadmap ."
+            },
+            {
+              "span_id": "span-835bc659b9e060d14d45d423",
+              "text": "Watch a What’s AI walkthrough when you need to see a technique in action."
+            },
+            {
+              "span_id": "span-ff0cb79f4178559fe952bafd",
+              "text": "Browse the weekly newsletter archive"
+            },
+            {
+              "span_id": "span-81bd9921a0ed726996c9dc36",
+              "text": "Choose a structured path through the topic you are working on."
+            },
+            {
+              "span_id": "span-3f451befa09309863ba1e198",
+              "text": "Beginner Python for AI Engineering"
+            },
+            {
+              "span_id": "span-e98d68f9af4cb79909e2f4b0",
+              "text": "10-Hour LLM Fundamentals"
+            },
+            {
+              "span_id": "span-1e4ba88381badafba73af560",
+              "text": "Full Stack AI Engineering"
+            },
+            {
+              "span_id": "span-97126b107b7870ad069d947c",
+              "text": "Agentic AI Engineering"
+            },
+            {
+              "span_id": "span-29bf95ac8a3843272f30de79",
+              "text": "AI for Work"
+            },
+            {
+              "span_id": "span-6fde2a4017314d0e122ac4cc",
+              "text": "Building LLMs for Production"
+            },
+            {
+              "span_id": "span-7bbbb66ff2eda5521aec65d6",
+              "text": "If you want sustained guidance on your engineering skills, explore the Academy mentorship program."
+            },
+            {
+              "span_id": "span-340a21c255894a035223b88c",
+              "text": "Review the mentors and program details to decide whether it fits your current project."
+            },
+            {
+              "span_id": "span-5e07a4f40b23f0fe79871afe",
+              "text": "Explore mentorship"
+            },
+            {
+              "span_id": "span-9fd76040e33a597f21baabd8",
+              "text": "Some book and Academy links are affiliate links."
+            },
+            {
+              "span_id": "span-43f6277840c318ca2729f522",
+              "text": "They support our work at no extra cost to you."
+            },
+            {
+              "span_id": "span-9bbd4cf32bd2407d7dff5133",
+              "text": "19 Nov 2026"
+            },
+            {
+              "span_id": "span-d681e58c8a156f4388a5149c",
+              "text": "When an agent picks the wrong tool, what can you change in the surrounding code?"
+            },
+            {
+              "span_id": "span-e27f8466e16b6f2b5e66fc90",
+              "text": "This issue looks at tool selection, agent harnesses and data-pipeline controls."
+            },
+            {
+              "span_id": "span-252ad997d065ccdde3fa76c1",
+              "text": "12 Nov 2026"
+            }
+          ]
+        },
+        {
+          "chunk_id": "tai-7052ca144a94b0aeb86a25b3",
+          "text": "Can AI Forget Without Getting Worse?\nWhat should an agent remember after a failed tool call? Explore recovery, feedback and the trade-offs researchers face when a model needs to forget. 05 Nov 2026\n\nCan a Sandbox Stop a Hostile Agent?\nFive sandboxes faced the same attack. The tests show why the credentials you hand an agent matter even when the sandbox holds. Browse every issue",
+          "heading": "Can AI Forget Without Getting Worse?",
+          "index": 2,
+          "evidence_spans": [
+            {
+              "span_id": "span-8a6a366c321a92aec9557121",
+              "text": "What should an agent remember after a failed tool call?"
+            },
+            {
+              "span_id": "span-5fc29789eb46d07e5a5431ac",
+              "text": "Explore recovery, feedback and the trade-offs researchers face when a model needs to forget."
+            },
+            {
+              "span_id": "span-8a04b731a8f550877602b408",
+              "text": "05 Nov 2026"
+            },
+            {
+              "span_id": "span-6d77bca8450e8879fe709fb3",
+              "text": "Five sandboxes faced the same attack."
+            },
+            {
+              "span_id": "span-3c72185e431cd38e5c7e17fa",
+              "text": "The tests show why the credentials you hand an agent matter even when the sandbox holds."
+            },
+            {
+              "span_id": "span-2f06a20834cad200f1394286",
+              "text": "Browse every issue"
+            }
+          ]
+        },
+        {
+          "chunk_id": "tai-66de4795c54c21745f1228f1",
+          "text": "Community FAQ\nCan I join if I am new to AI? Yes. Joining the Discord is free. Start in #learn-ai-engineering for a first project and use #study-groups if you want company while you learn. How do I find the channels that matter to me? Choose your goal during onboarding. You can revisit Channels & Roles in the Discord sidebar to select other interests and discover more rooms. Channel links on this page open inside the server once you have joined. How do I get a useful answer? Open a post in #technical-questions with the model or tool you used, a minimal example and what you already tried. Return to the same thread with the fix so the next engineer can learn from it. Can I share a product I built? Yes. Choose #share-your-projects for technical feedback or #self-promotion for a launch, offer or signup link. Pick the room that fits your purpose and post there once. Where are the course discussions? The agents, full-stack, 10-hour, Python and AI for Work course rooms use enrolled-learner roles. If you enrolled and cannot see your room, contact Academy staff privately with the course name. Keep enrollment details out of public chat. Where can I read past community features? The newsletter archive keeps past issues in one place. Browse the dated editions for member projects, research and resources. A forum submission does not guarantee a feature. What does the map show? Channel activity, topics and online counts from the public community map. Check its update time before using it to decide where to join a conversation. How do I suggest a change to the server? Use #server-suggestion . Describe what was difficult, which channel or onboarding step was involved and what would make it easier for the next member. Join Learn AI Together",
+          "heading": "Community FAQ",
+          "index": 3,
+          "evidence_spans": [
+            {
+              "span_id": "span-668aec88036baf31cdb6fe45",
+              "text": "Can I join if I am new to AI?"
+            },
+            {
+              "span_id": "span-e9b590e660c0d01cd3d23ac8",
+              "text": "Joining the Discord is free."
+            },
+            {
+              "span_id": "span-9a880139a0ff860976577575",
+              "text": "Start in #learn-ai-engineering for a first project and use #study-groups if you want company while you learn."
+            },
+            {
+              "span_id": "span-5f9e545b1a427dd7537d1e8e",
+              "text": "How do I find the channels that matter to me?"
+            },
+            {
+              "span_id": "span-d95650a492f4f419941fcdbb",
+              "text": "Choose your goal during onboarding."
+            },
+            {
+              "span_id": "span-15b4b24eeb934c85ba6039a9",
+              "text": "You can revisit Channels & Roles in the Discord sidebar to select other interests and discover more rooms."
+            },
+            {
+              "span_id": "span-15121a19d856d377bf327133",
+              "text": "Channel links on this page open inside the server once you have joined."
+            },
+            {
+              "span_id": "span-5b953708f91bc1e04a28382b",
+              "text": "How do I get a useful answer?"
+            },
+            {
+              "span_id": "span-acce9c1a2b86c989fdd83dd6",
+              "text": "Open a post in #technical-questions with the model or tool you used, a minimal example and what you already tried."
+            },
+            {
+              "span_id": "span-09711ffa3f26fbe00f712527",
+              "text": "Return to the same thread with the fix so the next engineer can learn from it."
+            },
+            {
+              "span_id": "span-1e066c62b835e7605130e21f",
+              "text": "Can I share a product I built?"
+            },
+            {
+              "span_id": "span-c4c01ae6720d899a71df633a",
+              "text": "Choose #share-your-projects for technical feedback or #self-promotion for a launch, offer or signup link."
+            },
+            {
+              "span_id": "span-72297caabfea9eb6402ade49",
+              "text": "Pick the room that fits your purpose and post there once."
+            },
+            {
+              "span_id": "span-1c1593fa17276f07cba9c93c",
+              "text": "Where are the course discussions?"
+            },
+            {
+              "span_id": "span-6edf3836cb1bb1253c017461",
+              "text": "The agents, full-stack, 10-hour, Python and AI for Work course rooms use enrolled-learner roles."
+            },
+            {
+              "span_id": "span-419da342fd026263e9ae2eb1",
+              "text": "If you enrolled and cannot see your room, contact Academy staff privately with the course name."
+            },
+            {
+              "span_id": "span-3e940c4afae06bd2f314a01b",
+              "text": "Keep enrollment details out of public chat."
+            },
+            {
+              "span_id": "span-b220b4d91ddd2c1e9482ed0d",
+              "text": "Where can I read past community features?"
+            },
+            {
+              "span_id": "span-ce41c5cda8789e4f6519a2b8",
+              "text": "The newsletter archive keeps past issues in one place."
+            },
+            {
+              "span_id": "span-e182b927eb0e2d2d262577af",
+              "text": "Browse the dated editions for member projects, research and resources."
+            },
+            {
+              "span_id": "span-062d67bac7165f9cea4740c0",
+              "text": "A forum submission does not guarantee a feature."
+            },
+            {
+              "span_id": "span-f4f26984aba33e8331078745",
+              "text": "What does the map show?"
+            },
+            {
+              "span_id": "span-33ba3fbbd9ff8f7bbb14b4e2",
+              "text": "Channel activity, topics and online counts from the public community map."
+            },
+            {
+              "span_id": "span-8413843323e0228e3f63c82e",
+              "text": "Check its update time before using it to decide where to join a conversation."
+            },
+            {
+              "span_id": "span-0b6937d551203b6e1c6c8b5d",
+              "text": "How do I suggest a change to the server?"
+            },
+            {
+              "span_id": "span-abaa0187b4c1cb136c77027c",
+              "text": "Use #server-suggestion ."
+            },
+            {
+              "span_id": "span-0f8d015f94c3977bc35b32cc",
+              "text": "Describe what was difficult, which channel or onboarding step was involved and what would make it easier for the next member."
+            },
+            {
+              "span_id": "span-5377c25deddafc371a669129",
+              "text": "Join Learn AI Together"
+            }
+          ]
+        }
+      ],
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
+      "content_sha256": "da174b3d4f4e2f49e489f7c82ad1f3a30760a596eedfbca4f40c758b212dc1d1",
+      "content_hash": "da174b3d4f4e2f49e489f7c82ad1f3a30760a596eedfbca4f40c758b212dc1d1",
+      "authority": "official_site",
+      "status": "included",
+      "retrieval_eligible": true,
+      "http_status": 200,
+      "lastmod": "",
+      "sitemap_url": "https://towardsai.com/pages-sitemap.xml",
+      "redirect_chain": [
+        "https://towardsai.com/community/"
+      ],
+      "evidence_hash": "47e1f5944a005b0592009c4af77729ae382aef1211cc5c85c5361e0ddedba295"
     },
     {
       "discovered_url": "https://towardsai.com/academy/",
@@ -1137,7 +1682,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T16:26:55.016644+00:00",
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
       "content_sha256": "9011694b342cf4fac018c85c8604ffd26cb18614e89777218bc52d63d39bc4a5",
       "content_hash": "9011694b342cf4fac018c85c8604ffd26cb18614e89777218bc52d63d39bc4a5",
       "authority": "official_site",
@@ -1150,7 +1695,7 @@
         "https://towardsai.com/academy/"
       ],
       "excluded_reason": "catalog summary can conflict with canonical offer detail pages",
-      "evidence_hash": "9b5c33bd8837d73811c0eb218c271542c0090d826075f162959791d57e834590"
+      "evidence_hash": "82778fd3795ef7d2390f87cbfea332244e1b9cb85bafdfd8248040c61a0811f4"
     },
     {
       "discovered_url": "https://towardsai.com/academy/full-stack-ai-engineering/",
@@ -2353,7 +2898,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T16:26:55.016644+00:00",
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
       "content_sha256": "ba8fedc4e33254e28e7bbd2802353ff293c170969f08ca7d1bd3aca4e5237078",
       "content_hash": "ba8fedc4e33254e28e7bbd2802353ff293c170969f08ca7d1bd3aca4e5237078",
       "authority": "official_site",
@@ -2365,7 +2910,7 @@
       "redirect_chain": [
         "https://towardsai.com/academy/full-stack-ai-engineering/"
       ],
-      "evidence_hash": "761b8337d7904718643386927fac3e8b819e02ae6615d91ad10ab96be3c41f84"
+      "evidence_hash": "77a1900824c93271e0f8d767728117ac4a39e9a663a750fbdde92238c5656d74"
     },
     {
       "discovered_url": "https://towardsai.com/academy/agent-engineering/",
@@ -3407,7 +3952,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T16:26:55.016644+00:00",
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
       "content_sha256": "430eb0253889602950b590caedb7238667452b47583a67c95dbf31fc146c5ad0",
       "content_hash": "430eb0253889602950b590caedb7238667452b47583a67c95dbf31fc146c5ad0",
       "authority": "official_site",
@@ -3419,7 +3964,7 @@
       "redirect_chain": [
         "https://towardsai.com/academy/agent-engineering/"
       ],
-      "evidence_hash": "82bcb1dd8df1b741418a0a353bfc2cd7951c2ce3fd31582b44eb8d4538e213e6"
+      "evidence_hash": "6d0c3bf6ff3c93d6def5f7daa0f8fec99605326848ae7ffde9352fc43c14cec5"
     },
     {
       "discovered_url": "https://towardsai.com/academy/llm-primer/",
@@ -3878,7 +4423,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T16:26:55.016644+00:00",
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
       "content_sha256": "439e0d2d3f6d17e1c25ae3834fef3ee44894f3d69e884a8017cc100504794642",
       "content_hash": "439e0d2d3f6d17e1c25ae3834fef3ee44894f3d69e884a8017cc100504794642",
       "authority": "official_site",
@@ -3890,7 +4435,7 @@
       "redirect_chain": [
         "https://towardsai.com/academy/llm-primer/"
       ],
-      "evidence_hash": "dbe3efd844f2333aa650826b2513204a2b9325ae898e5e83672c6d1890609c5c"
+      "evidence_hash": "79e5c3f9bf9348de4a97d2cd6334e70c54273be9470478c40f8cf5086be59637"
     },
     {
       "discovered_url": "https://towardsai.com/academy/python-for-ai-engineering/",
@@ -4422,7 +4967,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T16:26:55.016644+00:00",
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
       "content_sha256": "de56d91cb2c90d211fc0b866dd8c599ccc25fdfd44820e80c8c8422801f4cbb4",
       "content_hash": "de56d91cb2c90d211fc0b866dd8c599ccc25fdfd44820e80c8c8422801f4cbb4",
       "authority": "official_site",
@@ -4434,7 +4979,7 @@
       "redirect_chain": [
         "https://towardsai.com/academy/python-for-ai-engineering/"
       ],
-      "evidence_hash": "af4463c10a1fc139a568ca995d80b3336380170644376ee46e99eaed9a0e79ed"
+      "evidence_hash": "dc15123fcc6f84353c88035dc3e3614a1e6e8cfd04a5760cbcf8758781d8277a"
     },
     {
       "discovered_url": "https://towardsai.com/academy/ai-for-work/",
@@ -5028,7 +5573,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T16:26:55.016644+00:00",
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
       "content_sha256": "634ad9d70c4ba8df2cc99d5675bfa12b9df9b95c494b4fc3b421ccd239b7b851",
       "content_hash": "634ad9d70c4ba8df2cc99d5675bfa12b9df9b95c494b4fc3b421ccd239b7b851",
       "authority": "official_site",
@@ -5040,7 +5585,7 @@
       "redirect_chain": [
         "https://towardsai.com/academy/ai-for-work/"
       ],
-      "evidence_hash": "5fd041b4b2d58646ada6718b3d76e090e73f67fa3a9854abd95956e2e0245c5e"
+      "evidence_hash": "16c9b60d4c7c95302021e913e1d11e907cdca2b99345a34183e6d2c32ada5b6d"
     },
     {
       "discovered_url": "https://towardsai.com/academy/building-llms-for-production/",
@@ -5797,7 +6342,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T16:26:55.016644+00:00",
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
       "content_sha256": "051a3b60653cfeed027eee111fdfebba08bd3f46901aa05144dc64a8874a4389",
       "content_hash": "051a3b60653cfeed027eee111fdfebba08bd3f46901aa05144dc64a8874a4389",
       "authority": "official_site",
@@ -5809,7 +6354,7 @@
       "redirect_chain": [
         "https://towardsai.com/academy/building-llms-for-production/"
       ],
-      "evidence_hash": "349f0874b1b2cfa3699cdafd459dc5696e6e0638056d44105858042f1d100544"
+      "evidence_hash": "bfe151918cb06bec982c7a93541f962fb648ceaf747f004a6fd043a5bc9edbba"
     },
     {
       "discovered_url": "https://towardsai.com/academy/bundles/",
@@ -6203,7 +6748,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T16:26:55.016644+00:00",
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
       "content_sha256": "a61198fc560c731755fc91b891a82c56bd26bb052e57f6a8532a7af949d27a11",
       "content_hash": "a61198fc560c731755fc91b891a82c56bd26bb052e57f6a8532a7af949d27a11",
       "authority": "official_site",
@@ -6216,7 +6761,7 @@
         "https://towardsai.com/academy/bundles/"
       ],
       "excluded_reason": "catalog summary can conflict with canonical bundle detail pages",
-      "evidence_hash": "b1887fc0dbc97ba892a8254e5b5bf8ef586ec58a59f1551fa3a33e68f7222b47"
+      "evidence_hash": "cb9918cd7ecdfe4fb6da33b905cec0fc8c27ff6aba17c4406974f02fadb82537"
     },
     {
       "discovered_url": "https://towardsai.com/academy/mentorship/",
@@ -7056,7 +7601,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T16:26:55.016644+00:00",
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
       "content_sha256": "f4233d3a60bcac64c38cb2a49db73bbfdee77fb07d0aabacf2f90f39b2b02a92",
       "content_hash": "f4233d3a60bcac64c38cb2a49db73bbfdee77fb07d0aabacf2f90f39b2b02a92",
       "authority": "official_site",
@@ -7068,7 +7613,7 @@
       "redirect_chain": [
         "https://towardsai.com/academy/mentorship/"
       ],
-      "evidence_hash": "12ccbb4c54559df5ed743b8b10121c4ac5c9a8abd20af18095c1c8c80b08b449"
+      "evidence_hash": "7c21af0d86df329b4418698bcedeaeb0489c91beaa13fe00cd72f4233c1fb4ee"
     },
     {
       "discovered_url": "https://towardsai.com/academy/about/",
@@ -7368,7 +7913,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T16:26:55.016644+00:00",
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
       "content_sha256": "7598f153c14db5c51268b1d992710fd8991a9b47a65c4309eccc261dafcc9469",
       "content_hash": "7598f153c14db5c51268b1d992710fd8991a9b47a65c4309eccc261dafcc9469",
       "authority": "official_site",
@@ -7380,7 +7925,7 @@
       "redirect_chain": [
         "https://towardsai.com/academy/about/"
       ],
-      "evidence_hash": "d6f17fcfbb1112c434b4033b401beeaae907adb124bcf011bffe1d087911dc82"
+      "evidence_hash": "ba2571bed6ec5da1f5d137007647522b708c59871840654c0252613fa67fe7c4"
     },
     {
       "discovered_url": "https://towardsai.com/academy/contact/",
@@ -7545,7 +8090,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T16:26:55.016644+00:00",
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
       "content_sha256": "0e933b49599fb19635f8e3abb28baf286d842074ace2bfe5232272e9fef5bc17",
       "content_hash": "0e933b49599fb19635f8e3abb28baf286d842074ace2bfe5232272e9fef5bc17",
       "authority": "official_site",
@@ -7557,7 +8102,7 @@
       "redirect_chain": [
         "https://towardsai.com/academy/contact/"
       ],
-      "evidence_hash": "5c45affa4b0783c7ca92ea7e4797868754923a188b39386937a45062c1692e16"
+      "evidence_hash": "b649c29704654046988b06ecc88df427de33e353b3609181808c7fae67ea7b15"
     },
     {
       "discovered_url": "https://towardsai.com/contribute/",
@@ -7986,7 +8531,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T16:26:55.016644+00:00",
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
       "content_sha256": "00825d1d58dacbb82006c418ebe855ed2e8e8cea9f1c21831b9e96a49bcfa56a",
       "content_hash": "00825d1d58dacbb82006c418ebe855ed2e8e8cea9f1c21831b9e96a49bcfa56a",
       "authority": "official_site",
@@ -7998,7 +8543,7 @@
       "redirect_chain": [
         "https://towardsai.com/contribute/"
       ],
-      "evidence_hash": "7b03801c20c116ad7ca5721cc2c71079755fad59733a50e02f07d496ccd4a76d"
+      "evidence_hash": "3b37cd55ec68a58a64a5ea256ef3263fda58e718e9ec20bccf96c13258310a93"
     },
     {
       "discovered_url": "https://towardsai.com/enterprise/software-developer-to-ai-engineer/",
@@ -8899,7 +9444,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T16:26:55.016644+00:00",
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
       "content_sha256": "86de4e780ace9674c8d8fc64c3096d5b86bfdd9d300efc9875ce1977ddc58ecc",
       "content_hash": "86de4e780ace9674c8d8fc64c3096d5b86bfdd9d300efc9875ce1977ddc58ecc",
       "authority": "official_site",
@@ -8911,7 +9456,7 @@
       "redirect_chain": [
         "https://towardsai.com/enterprise/software-developer-to-ai-engineer/"
       ],
-      "evidence_hash": "164853f3eb71258066c35f810bfa71cd8e69113a37bd253fc38b4c18e9789e4a"
+      "evidence_hash": "d3ecf529910b20f3121a52164032873361a275e33817da04e7643d07696d8a88"
     },
     {
       "discovered_url": "https://towardsai.com/enterprise/agentic-developer-conversion/",
@@ -10076,7 +10621,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T16:26:55.016644+00:00",
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
       "content_sha256": "49945ed32fe994d6ec0917cb6dff42aed4129df9386841c8edaf801faa2e880d",
       "content_hash": "49945ed32fe994d6ec0917cb6dff42aed4129df9386841c8edaf801faa2e880d",
       "authority": "official_site",
@@ -10088,7 +10633,7 @@
       "redirect_chain": [
         "https://towardsai.com/enterprise/agentic-developer-conversion/"
       ],
-      "evidence_hash": "63bef1074adc6c730357ddd1bc370d3d24dbb26db4d3e11e05db125d8b9e5ccc"
+      "evidence_hash": "b8f534abe548c54ab5f685687a3644e0201e7564c31aea298bb7f37ae9815bd9"
     },
     {
       "discovered_url": "https://towardsai.com/academy/affiliate/",
@@ -10409,7 +10954,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T16:26:55.016644+00:00",
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
       "content_sha256": "fcc79ed06736130d9c37c3ee352ec3a1b3592d0774a34221fc3b549ac3815caa",
       "content_hash": "fcc79ed06736130d9c37c3ee352ec3a1b3592d0774a34221fc3b549ac3815caa",
       "authority": "official_site",
@@ -10421,7 +10966,7 @@
       "redirect_chain": [
         "https://towardsai.com/academy/affiliate/"
       ],
-      "evidence_hash": "4ad0b1aa788ef47757b9f5988e8df96351c8f93f71ac93dffde9b3877de3dbdc"
+      "evidence_hash": "6d9ea539bebc0e38bac57fff377f67a6a21ba3aa15bba76bcd28a09ab0b89549"
     },
     {
       "discovered_url": "https://towardsai.com/academy/agent-engineering-free-preview/",
@@ -10545,7 +11090,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T16:26:55.016644+00:00",
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
       "content_sha256": "71a195950d7605b943174178b7b38208a690f242faa120544cd6207a8dfb0aa8",
       "content_hash": "71a195950d7605b943174178b7b38208a690f242faa120544cd6207a8dfb0aa8",
       "authority": "official_site",
@@ -10557,7 +11102,7 @@
       "redirect_chain": [
         "https://towardsai.com/academy/agent-engineering-free-preview/"
       ],
-      "evidence_hash": "a8bc1d3731a31cfe9c88239a54a24fbb4fee493b6659187410e90759bf43306e"
+      "evidence_hash": "49a5d486553e3ddf5d18c2019001eff453df1ef41abf1efc11fcba85f6e23ce0"
     },
     {
       "discovered_url": "https://towardsai.com/academy/full-stack-ai-engineering-free-preview/",
@@ -10640,7 +11185,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T16:26:55.016644+00:00",
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
       "content_sha256": "b4aa5e13bf7e1d8a54995a3cb08e91653c85fee896e3713bd538241f1c0a5ff7",
       "content_hash": "b4aa5e13bf7e1d8a54995a3cb08e91653c85fee896e3713bd538241f1c0a5ff7",
       "authority": "official_site",
@@ -10652,7 +11197,7 @@
       "redirect_chain": [
         "https://towardsai.com/academy/full-stack-ai-engineering-free-preview/"
       ],
-      "evidence_hash": "ac7e7ae123a0775bd933a8b1545381798eb6d49eeedb550d03aae9df8e9df851"
+      "evidence_hash": "a81a9c680dd36b752349c7584494c30d3a749912fe6af645ef82337128bef919"
     },
     {
       "discovered_url": "https://towardsai.com/academy/book/",
@@ -12870,7 +13415,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T16:26:55.016644+00:00",
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
       "content_sha256": "a7f19a0b336257bdaca5e02ccccf8a6aa491322e9db51701a0b1c3687de904ff",
       "content_hash": "a7f19a0b336257bdaca5e02ccccf8a6aa491322e9db51701a0b1c3687de904ff",
       "authority": "official_site",
@@ -12882,7 +13427,7 @@
       "redirect_chain": [
         "https://towardsai.com/academy/book/"
       ],
-      "evidence_hash": "0c5bf8e6a3eb67762b06b3abc7f3aef36315dd36415bcfed5ea71ecffee15f0d"
+      "evidence_hash": "42046c6b7a49748c6ce2b587d8440510f569d631de6fadf6454180d9f273c1f5"
     },
     {
       "discovered_url": "https://towardsai.com/academy/bundles/get-it-all/",
@@ -13187,7 +13732,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T16:26:55.016644+00:00",
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
       "content_sha256": "4c8498fd6dea071fca2b00a12bf05b3c9bd01ab5c380f2bd95404ef97534a4ca",
       "content_hash": "4c8498fd6dea071fca2b00a12bf05b3c9bd01ab5c380f2bd95404ef97534a4ca",
       "authority": "official_site",
@@ -13199,7 +13744,7 @@
       "redirect_chain": [
         "https://towardsai.com/academy/bundles/get-it-all/"
       ],
-      "evidence_hash": "e6ae0920d443cc0cb65fa6513b99fca54f1d116e5d27f711034f8f040ca0d206"
+      "evidence_hash": "286dd487adf1181e43198a937603ff89f92f6c39f45b2ffa828d67b65ee6f4ca"
     },
     {
       "discovered_url": "https://towardsai.com/academy/bundles/from-coding-novice-to-advanced-llm-developer/",
@@ -13534,7 +14079,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T16:26:55.016644+00:00",
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
       "content_sha256": "8e298edd3528004e1244bb7c8a5cfa10a64af7c16734b2931780b7db9ec6b918",
       "content_hash": "8e298edd3528004e1244bb7c8a5cfa10a64af7c16734b2931780b7db9ec6b918",
       "authority": "official_site",
@@ -13546,7 +14091,7 @@
       "redirect_chain": [
         "https://towardsai.com/academy/bundles/from-coding-novice-to-advanced-llm-developer/"
       ],
-      "evidence_hash": "0df9a95ac9f9f0b9752f321810d4646c50523da8c307fd85a0e3031340ac15b0"
+      "evidence_hash": "4cd08e2bb8efd04866ca3a7a8af285de4eac1af1f057d1475f801952baa1f221"
     },
     {
       "discovered_url": "https://towardsai.com/academy/bundles/10-hour-crash-course-into-llm-developer-expert/",
@@ -13842,7 +14387,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T16:26:55.016644+00:00",
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
       "content_sha256": "8e0d55af65317ce092f63d4f6e4fc72c930deae16bae1c0e6daebb36a856bdb1",
       "content_hash": "8e0d55af65317ce092f63d4f6e4fc72c930deae16bae1c0e6daebb36a856bdb1",
       "authority": "official_site",
@@ -13854,7 +14399,7 @@
       "redirect_chain": [
         "https://towardsai.com/academy/bundles/10-hour-crash-course-into-llm-developer-expert/"
       ],
-      "evidence_hash": "bcfcf45cedba791376df0e4db492c70c7338c92e58e74c56363882a2c50697cf"
+      "evidence_hash": "55ec8338f52262a951de9e84e5e1d316fd73d8e934c510c7b7190ebc721eec61"
     },
     {
       "discovered_url": "https://towardsai.com/enterpriseenablement/",
@@ -14606,7 +15151,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T16:26:55.016644+00:00",
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
       "content_sha256": "d2dcad86e47c4cac9642f488f66f5632bc8d7705596b959afb564a03c3b3edad",
       "content_hash": "d2dcad86e47c4cac9642f488f66f5632bc8d7705596b959afb564a03c3b3edad",
       "authority": "official_site",
@@ -14618,7 +15163,7 @@
       "redirect_chain": [
         "https://towardsai.com/enterpriseenablement/"
       ],
-      "evidence_hash": "8b91e61ee257ea2987f06cc62aefe182bf65ffad0beaf06cd44f10d0b85300cf"
+      "evidence_hash": "a20d76dd4e26e16a4b0b7ca182c31c90089de39a657e4f2a3a75fb493387d51e"
     },
     {
       "discovered_url": "https://towardsai.com/valuecreation/",
@@ -15041,7 +15586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T16:26:55.016644+00:00",
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
       "content_sha256": "81044f30b96c5a3047fdb665f7a0226fa32e59e30a401ea8bc42973cd00415ae",
       "content_hash": "81044f30b96c5a3047fdb665f7a0226fa32e59e30a401ea8bc42973cd00415ae",
       "authority": "official_site",
@@ -15053,7 +15598,7 @@
       "redirect_chain": [
         "https://towardsai.com/valuecreation/"
       ],
-      "evidence_hash": "bb8ef6ac67af0e3a42c1c7832e585e850b0087cb075f9d1a4b25a55d8caf6b42"
+      "evidence_hash": "4da6f333455ce94740287b2dc3500159efaa148431abbe8cf37713ebff14234f"
     },
     {
       "discovered_url": "https://towardsai.com/valuecreation/careers/",
@@ -15717,7 +16262,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T16:26:55.016644+00:00",
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
       "content_sha256": "e881f3c8144e0535ccb0e35d6192ce7112dc7ff443b7e2e6ed2a50bf9caae6e5",
       "content_hash": "e881f3c8144e0535ccb0e35d6192ce7112dc7ff443b7e2e6ed2a50bf9caae6e5",
       "authority": "official_site",
@@ -15729,7 +16274,7 @@
       "redirect_chain": [
         "https://towardsai.com/valuecreation/careers/"
       ],
-      "evidence_hash": "5f16e0339257f08299bdf84810337dec4546a26d1c082179887dec8bc65cd8b6"
+      "evidence_hash": "59165215a16a734e169ad7bf77a67ce856ee75117fe9f33a5ba15bc2caf9ef53"
     },
     {
       "discovered_url": "https://towardsai.com/valuecreation/deployment-strategist/",
@@ -16209,7 +16754,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T16:26:55.016644+00:00",
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
       "content_sha256": "b21e448079551dc6442683375435309073cbb7fc5145ff1927e72742159ef729",
       "content_hash": "b21e448079551dc6442683375435309073cbb7fc5145ff1927e72742159ef729",
       "authority": "official_site",
@@ -16221,7 +16766,7 @@
       "redirect_chain": [
         "https://towardsai.com/valuecreation/deployment-strategist/"
       ],
-      "evidence_hash": "c7925e8b7384fc20b6282421d498ca28d6e8af02144091ae7b220e67e3d53dcc"
+      "evidence_hash": "58d487ef030dba2f9c1125630577282a7cdd259b275167eda4869db0d096e644"
     },
     {
       "discovered_url": "https://towardsai.com/valuecreation/junior-ai-engineer/",
@@ -16809,7 +17354,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T16:26:55.016644+00:00",
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
       "content_sha256": "f623c6b05acb4f3b09219f69508037c53e64206b3bdc94e3b9e7989d96db6160",
       "content_hash": "f623c6b05acb4f3b09219f69508037c53e64206b3bdc94e3b9e7989d96db6160",
       "authority": "official_site",
@@ -16821,7 +17366,7 @@
       "redirect_chain": [
         "https://towardsai.com/valuecreation/junior-ai-engineer/"
       ],
-      "evidence_hash": "15028361c2fc2a725a43c5be7f47dd567da15639b7d075a2943e57311e508851"
+      "evidence_hash": "407108228211bac9f7ff0c2cf1591632f6bcbb1f3f78466d4ec1b77fb7d51022"
     },
     {
       "discovered_url": "https://towardsai.com/valuecreation/senior-ai-engineer/",
@@ -17285,7 +17830,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T16:26:55.016644+00:00",
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
       "content_sha256": "2e3e7fcf92bb91a47250cee772509f732c62c72f1d632edeb30109a390448a3f",
       "content_hash": "2e3e7fcf92bb91a47250cee772509f732c62c72f1d632edeb30109a390448a3f",
       "authority": "official_site",
@@ -17297,7 +17842,7 @@
       "redirect_chain": [
         "https://towardsai.com/valuecreation/senior-ai-engineer/"
       ],
-      "evidence_hash": "58c33386049888a9c43db7f61ca92a4a1ed2f287ddfcfddb879979f39417d80c"
+      "evidence_hash": "692d266a316447c30f10fb4e625f673a5124e0ab4ca1d45a571c18e8204003e7"
     },
     {
       "discovered_url": "https://towardsai.com/valuecreation/technical-lead-platform-security/",
@@ -17773,7 +18318,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T16:26:55.016644+00:00",
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
       "content_sha256": "f734d10a393d7a1fdde3347dde22dca8c30d971ead30fe9e2ff725f7b525d4af",
       "content_hash": "f734d10a393d7a1fdde3347dde22dca8c30d971ead30fe9e2ff725f7b525d4af",
       "authority": "official_site",
@@ -17785,7 +18330,7 @@
       "redirect_chain": [
         "https://towardsai.com/valuecreation/technical-lead-platform-security/"
       ],
-      "evidence_hash": "28e03f77e1538f8c185234e4f5c594937d2f2800e0c55e52efa3a5bd08625fdd"
+      "evidence_hash": "131c4779576dcb62b8a3520d6979c38b7067b7e0f1ea22f03b412dc4563e7894"
     },
     {
       "discovered_url": "https://towardsai.com/valuecreation/senior-full-stack-software-engineer/",
@@ -18444,7 +18989,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T16:26:55.016644+00:00",
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
       "content_sha256": "27f12365897c7cbfe79e0f0b2b40ff48608aa2cddcc1626f75a6c192dc544240",
       "content_hash": "27f12365897c7cbfe79e0f0b2b40ff48608aa2cddcc1626f75a6c192dc544240",
       "authority": "official_site",
@@ -18456,7 +19001,7 @@
       "redirect_chain": [
         "https://towardsai.com/valuecreation/senior-full-stack-software-engineer/"
       ],
-      "evidence_hash": "1e08e51dcbd96c86f0333f889af823a291ff38412ce1a382443dc90ee984d34c"
+      "evidence_hash": "88f709521baffb7322fc16c129cc904c47015e309665e3acc8b9f9340e2168b4"
     },
     {
       "discovered_url": "https://towardsai.com/theaitastegap/",
@@ -19459,7 +20004,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T16:26:55.016644+00:00",
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
       "content_sha256": "88250ede364979699b70788f8ae076b8f7d1255c43103e3fc36159a13fbac729",
       "content_hash": "88250ede364979699b70788f8ae076b8f7d1255c43103e3fc36159a13fbac729",
       "authority": "official_site",
@@ -19471,7 +20016,7 @@
       "redirect_chain": [
         "https://towardsai.com/theaitastegap/"
       ],
-      "evidence_hash": "da167dcec6429a4a8dad3aef4402b6ad602230778da3dab3d661954b84ddef16"
+      "evidence_hash": "13875f34597db80b3c121bb50dc143fd2cd686544c0b4898e432264d3df8a4ea"
     },
     {
       "discovered_url": "https://towardsai.com/webinars/agentengineering/",
@@ -19929,7 +20474,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T16:26:55.016644+00:00",
+      "fetched_at": "2026-11-23T18:45:08.919835+00:00",
       "content_sha256": "8f9ea21e3b843ac95e05b9e7bea50231f69841c892ea807c1420b991338c4f16",
       "content_hash": "8f9ea21e3b843ac95e05b9e7bea50231f69841c892ea807c1420b991338c4f16",
       "authority": "official_site",
@@ -19941,7 +20486,7 @@
       "redirect_chain": [
         "https://towardsai.com/webinars/agentengineering/"
       ],
-      "evidence_hash": "66dc4180d7958ddc8b36d188ef4687c89ac8ce3d49945a532ade047411a79d60"
+      "evidence_hash": "a0a80fcc98901b4cb522069ac67c7ecd9a88a3349464d8bea1ff59d03dfb492d"
     }
   ]
 }
