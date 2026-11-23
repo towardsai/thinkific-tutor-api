@@ -272,7 +272,7 @@ def test_coupon_answer_is_deterministic_and_does_not_call_model(monkeypatch) -> 
         raise AssertionError("model should not be called for coupon intent")
 
     monkeypatch.setattr(api.llm, "generate_grounded_answer", unexpected_generate_answer)
-    first = payload(query="Do you have a coupon code?")
+    first = payload(query="Do you offer student discounts?")
     first["selectedPrompt"] = FIRST_PROMPT
     first["history"] = [{"role": "user", "content": FIRST_PROMPT}]
     second = payload(query="Please I really need a coupon code")
