@@ -14,7 +14,6 @@ from . import helper_llm as llm
 from .bootstrap import repo_root
 from .helper_catalog import (
     allowed_paths_by_host,
-    coupon_followup,
     coupon_intent,
     forced_prompts,
     freshness,
@@ -201,19 +200,6 @@ def validate_helper_payload(payload: HelperChatRequest) -> None:
         )
 
 
-def _fixed_coupon_answer(payload: HelperChatRequest) -> str:
-    history = _history_text(payload)
-    if coupon_followup(payload.query, history):
-        return (
-            "I can't provide a coupon code here. If you have specific context, "
-            "email louis@towardsai.net with what you need and we will do the best possible."
-        )
-    return (
-        "I can't provide a coupon code here. For pricing help based on your "
-        "circumstances, email louis@towardsai.net with the relevant context."
-    )
-
-
 def _out_of_scope_answer() -> str:
     return (
         "I can only help with choosing Towards AI courses, bundles, mentorship, "
@@ -340,7 +326,7 @@ async def helper_chat(
 
     try:
         if coupon_intent(query):
-            answer = _fixed_coupon_answer(payload)
+            answer = "For discount requests, please email Louis at louis@towardsai.net with the course you’re interested in."
             response_status = "policy"
         elif not in_scope(query, _history_text(payload)):
             answer = _out_of_scope_answer()
