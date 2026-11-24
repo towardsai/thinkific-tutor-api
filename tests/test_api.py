@@ -134,7 +134,7 @@ def test_widget_serves_course_player_gating_script() -> None:
     assert "setPointerCapture(pointerId)" in response.text
     assert "releasePointerCapture(pointerId)" in response.text
     assert "function clampToViewport()" in response.text
-    assert "towards-ai-thinkific-tutor-position-v2" in response.text
+    assert "towards-ai-thinkific-tutor-position-v3" in response.text
     assert "function rememberMinimizedAnchor()" in response.text
     assert "function restoreMinimizedAnchor()" in response.text
     assert "positionWrapAtDefault();" in response.text

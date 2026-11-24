@@ -39,7 +39,7 @@
     "*{box-sizing:border-box}",
     "button{font:inherit}",
     "button:focus-visible{outline:2px solid var(--brand-2);outline-offset:2px}",
-    ".wrap{position:fixed;right:20px;bottom:20px;z-index:2147483000}",
+    ".wrap{position:fixed;right:16px;bottom:16px;z-index:2147483000}",
     ".bubble{position:relative;height:48px;border:0;border-radius:999px;background:linear-gradient(135deg,var(--brand-2) 0%,var(--brand) 55%,var(--brand-deep) 100%);color:#fff;box-shadow:0 1px 0 rgba(255,255,255,.28) inset,0 10px 28px rgba(61,71,163,.38),0 2px 6px rgba(31,35,64,.18);cursor:grab;touch-action:none;user-select:none;display:flex;align-items:center;gap:10px;padding:0 18px 0 7px;font:600 15px/1 var(--font);letter-spacing:.1px;transition:transform .2s ease,box-shadow .2s ease;animation:rise .45s cubic-bezier(.2,.8,.2,1) both}",
     ".bubble:hover{transform:translateY(-2px);box-shadow:0 1px 0 rgba(255,255,255,.3) inset,0 16px 36px rgba(61,71,163,.45),0 2px 6px rgba(31,35,64,.18)}",
     ".bubble::after{content:'';position:absolute;inset:-4px;border-radius:999px;border:2px solid rgba(86,98,214,.45);opacity:0;animation:ring 2.4s ease-out .6s 2}",
@@ -133,7 +133,7 @@
   var sendBtn = shadow.querySelector("[data-send]");
   var msgs = shadow.querySelector("[data-msgs]");
   var lessonLabel = shadow.querySelector("[data-lesson]");
-  var positionStorageKey = "towards-ai-thinkific-tutor-position-v2";
+  var positionStorageKey = "towards-ai-thinkific-tutor-position-v3";
   var customPosition = false;
   var minimizedPosition = null;
   var minimizedUsesDefaultAnchor = true;

@@ -329,7 +329,7 @@ test("minimizing restores the last explicitly moved bubble position", async () =
   );
   assert.deepEqual(
     JSON.parse(
-      harness.storage.get("towards-ai-thinkific-tutor-position-v2"),
+      harness.storage.get("towards-ai-thinkific-tutor-position-v3"),
     ),
     { left: movedBubble.left, top: movedBubble.top },
   );
