@@ -911,7 +911,26 @@
       state.context = buildContext(data);
       updateLessonLabel(state.context);
     });
+    if (!state.context) {
+      var fromUrl = hookDataFromUrl();
+      if (fromUrl) resolveEligibility(buildContext(fromUrl));
+    }
     return true;
+  }
+
+  function hookDataFromUrl() {
+    var match = window.location.pathname.match(/\/courses\/take\/([^/]+)\/([^/]+)\/(\d+)-([^/?#]+)/);
+    if (!match) return null;
+    var header = document.querySelector(".course-player__content-header__title, [class*='content-header__title']");
+    return {
+      course: { slug: match[1] },
+      lesson: {
+        id: match[3],
+        slug: match[4],
+        title: safeString(header && header.textContent).trim() || match[4].replace(/-/g, " "),
+        contentType: match[2],
+      },
+    };
   }
 
   renderMessages();
