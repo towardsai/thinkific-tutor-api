@@ -100,6 +100,7 @@ async function createWidgetHarness({ frames = [] } = {}) {
 
   const wrap = new FakeElement("wrap", "hidden");
   const bubble = new FakeElement("bubble");
+  const dismiss = new FakeElement("bubble-x");
   const panel = new FakeElement("panel", "hidden");
   const dragHandle = new FakeElement("head");
   const reset = new FakeElement("iconbtn");
@@ -113,6 +114,7 @@ async function createWidgetHarness({ frames = [] } = {}) {
   const shadowElements = new Map([
     ["[data-wrap]", wrap],
     ["[data-bubble]", bubble],
+    ["[data-dismiss]", dismiss],
     ["[data-panel]", panel],
     ["[data-drag-handle]", dragHandle],
     ["[data-reset]", reset],
@@ -286,9 +288,20 @@ async function createWidgetHarness({ frames = [] } = {}) {
     });
   }
 
+  async function changeLesson(id) {
+    courseHooks.get("hooks:contentDidChange")({
+      course: { id: "course-1", title: "Test course" },
+      lesson: { id, title: `Lesson ${id}` },
+      user: { id: "student-1" },
+    });
+    await new Promise((resolve) => setImmediate(resolve));
+  }
+
   return {
     bubble,
+    changeLesson,
     close,
+    dismiss,
     drag,
     dragHandle,
     panel,
@@ -366,4 +379,17 @@ test("lesson resolution includes iframe source URLs without reading cross-origin
   const harness = await createWidgetHarness({ frames: [{ src: url }] });
   const resolve = harness.requests.find((request) => String(request.url).includes("/api/thinkific/resolve"));
   assert.deepEqual(Array.from(resolve.body.context.extra.lessonContentUrls), [url]);
+});
+
+test("the bubble's close button hides the tutor for this lesson only", async () => {
+  const harness = await createWidgetHarness();
+
+  harness.dismiss.dispatch("click", { stopPropagation() {} });
+  assert.equal(harness.wrap.classList.contains("hidden"), true);
+
+  await harness.changeLesson("lesson-1");
+  assert.equal(harness.wrap.classList.contains("hidden"), true);
+
+  await harness.changeLesson("lesson-2");
+  assert.equal(harness.wrap.classList.contains("hidden"), false);
 });

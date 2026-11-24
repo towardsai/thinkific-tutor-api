@@ -26,6 +26,7 @@
     streaming: false,
     resolveAbort: null,
     requestId: 0,
+    dismissedLesson: "",
   };
 
   var root = document.createElement("div");
@@ -41,6 +42,11 @@
     "button:focus-visible{outline:2px solid var(--brand-2);outline-offset:2px}",
     ".wrap{position:fixed;right:16px;bottom:16px;z-index:2147483000}",
     ".bubble{position:relative;height:48px;border:0;border-radius:999px;background:linear-gradient(135deg,var(--brand-2) 0%,var(--brand) 55%,var(--brand-deep) 100%);color:#fff;box-shadow:0 1px 0 rgba(255,255,255,.28) inset,0 10px 28px rgba(61,71,163,.38),0 2px 6px rgba(31,35,64,.18);cursor:grab;touch-action:none;user-select:none;display:flex;align-items:center;gap:10px;padding:0 18px 0 7px;font:600 15px/1 var(--font);letter-spacing:.1px;transition:transform .2s ease,box-shadow .2s ease;animation:rise .45s cubic-bezier(.2,.8,.2,1) both}",
+    ".bubble-x{position:absolute;top:-8px;right:-8px;z-index:1;width:22px;height:22px;border:0;border-radius:999px;background:#fff;color:#646a86;box-shadow:0 2px 8px rgba(31,35,64,.25);display:flex;align-items:center;justify-content:center;padding:5px;cursor:pointer;opacity:0;transition:opacity .15s,transform .15s}",
+    ".bubble-x svg{width:12px;height:12px;display:block}",
+    ".wrap:hover .bubble-x,.bubble-x:focus-visible{opacity:1}",
+    ".bubble-x:hover{color:#1f2340;transform:scale(1.08)}",
+    "@media(hover:none){.bubble-x{opacity:1}}",
     ".bubble:hover{transform:translateY(-2px);box-shadow:0 1px 0 rgba(255,255,255,.3) inset,0 16px 36px rgba(61,71,163,.45),0 2px 6px rgba(31,35,64,.18)}",
     ".bubble::after{content:'';position:absolute;inset:-4px;border-radius:999px;border:2px solid rgba(86,98,214,.45);opacity:0;animation:ring 2.4s ease-out .6s 2}",
     ".wrap.dragging .bubble{cursor:grabbing;transform:none}",
@@ -103,7 +109,7 @@
     "@media(max-width:520px){.wrap{right:12px;bottom:12px}.panel{width:calc(100vw - 24px);height:calc(100vh - 86px)}.lesson{max-width:210px}}",
     "</style>",
     "<div class='wrap hidden' data-wrap>",
-    "  <button class='bubble' data-bubble aria-label='Ask the tutor'><span class='bubble-mark'><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M12 3.5c.5 3.9 2.6 6 6.5 6.5-3.9.5-6 2.6-6.5 6.5-.5-3.9-2.6-6-6.5-6.5 3.9-.5 6-2.6 6.5-6.5z' fill='currentColor'/><path d='M18.5 15.5c.2 1.6 1 2.4 2.5 2.5-1.5.2-2.3 1-2.5 2.5-.2-1.5-1-2.3-2.5-2.5 1.5-.1 2.3-.9 2.5-2.5z' fill='currentColor' opacity='.7'/></svg></span><span>Ask the tutor</span></button>",
+    "  <button class='bubble-x' data-dismiss aria-label='Hide the tutor for this lesson' title='Hide for this lesson'><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M7 7l10 10M17 7L7 17' fill='none' stroke='currentColor' stroke-width='2.6' stroke-linecap='round'/></svg></button><button class='bubble' data-bubble aria-label='Ask the tutor'><span class='bubble-mark'><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M12 3.5c.5 3.9 2.6 6 6.5 6.5-3.9.5-6 2.6-6.5 6.5-.5-3.9-2.6-6-6.5-6.5 3.9-.5 6-2.6 6.5-6.5z' fill='currentColor'/><path d='M18.5 15.5c.2 1.6 1 2.4 2.5 2.5-1.5.2-2.3 1-2.5 2.5-.2-1.5-1-2.3-2.5-2.5 1.5-.1 2.3-.9 2.5-2.5z' fill='currentColor' opacity='.7'/></svg></span><span>Ask the tutor</span></button>",
     "  <section class='panel hidden' data-panel aria-label='AI tutor chat'>",
     "    <header class='head' data-drag-handle title='Drag to move tutor'>",
     "      <div class='brand'><div class='avatar'><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M12 3.5c.5 3.9 2.6 6 6.5 6.5-3.9.5-6 2.6-6.5 6.5-.5-3.9-2.6-6-6.5-6.5 3.9-.5 6-2.6 6.5-6.5z' fill='currentColor'/><path d='M18.5 15.5c.2 1.6 1 2.4 2.5 2.5-1.5.2-2.3 1-2.5 2.5-.2-1.5-1-2.3-2.5-2.5 1.5-.1 2.3-.9 2.5-2.5z' fill='currentColor' opacity='.7'/></svg></div><div class='brand-copy'><div class='title'>Towards AI Tutor<span class='dot' aria-hidden='true'></span></div><div class='lesson' data-lesson></div></div></div>",
@@ -124,6 +130,7 @@
 
   var wrap = shadow.querySelector("[data-wrap]");
   var bubble = shadow.querySelector("[data-bubble]");
+  var dismissBtn = shadow.querySelector("[data-dismiss]");
   var panel = shadow.querySelector("[data-panel]");
   var dragHandle = shadow.querySelector("[data-drag-handle]");
   var resetBtn = shadow.querySelector("[data-reset]");
@@ -629,6 +636,7 @@
     if (nextOpen && !wasOpen) rememberMinimizedAnchor();
     state.open = nextOpen;
     bubble.classList.toggle("hidden", state.open);
+    dismissBtn.classList.toggle("hidden", state.open);
     panel.classList.toggle("hidden", !state.open);
     if (!state.open && wasOpen) restoreMinimizedAnchor();
     window.requestAnimationFrame(function () {
@@ -679,6 +687,11 @@
     lessonLabel.textContent = label;
   }
 
+  function lessonKey(context) {
+    var lesson = (context && context.lesson) || {};
+    return String(lesson.id || lesson.slug || lesson.title || (context && context.url) || "");
+  }
+
   function resolveEligibility(context) {
     if (!hasLesson(context) || !hasLoggedInUser(context) || isBlockedLesson(context)) {
       setWidgetVisible(false);
@@ -699,7 +712,8 @@
       .then(function (data) {
         state.context = context;
         updateLessonLabel(context);
-        setWidgetVisible(Boolean(data && data.eligible));
+        if (state.dismissedLesson && state.dismissedLesson !== lessonKey(context)) state.dismissedLesson = "";
+        setWidgetVisible(Boolean(data && data.eligible) && !state.dismissedLesson);
       })
       .catch(function (error) {
         if (error && error.name === "AbortError") return;
@@ -845,6 +859,11 @@
   });
   dragHandle.addEventListener("pointerdown", function (event) {
     beginDrag(event, { ignoreActions: true });
+  });
+  dismissBtn.addEventListener("click", function (event) {
+    event.stopPropagation();
+    state.dismissedLesson = lessonKey(state.context);
+    setWidgetVisible(false);
   });
   bubble.addEventListener("click", function () {
     if (suppressBubbleClick) {
