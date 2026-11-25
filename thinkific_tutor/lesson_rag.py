@@ -43,6 +43,25 @@ class LessonEvidence:
     current_lesson_found: bool
 
 
+ARTICLE_WORKFLOW_SOURCE = LessonDocument(
+    doc_id="brown-build-generate-article-workflow",
+    source_key="agentic_ai_engineering",
+    title="build_generate_article_workflow — generate_article.py, line 30",
+    url=(
+        "https://github.com/towardsai/agentic-ai-engineering-course/blob/"
+        "675a59e3ad4ab5013834a1f2f776c611766008d5/"
+        "lessons/writing_workflow/src/brown/workflows/generate_article.py#L30"
+    ),
+    content=(
+        "build_generate_article_workflow is defined at line 30 of "
+        "lessons/writing_workflow/src/brown/workflows/generate_article.py. "
+        "The MCP server imports it from brown.workflows. The factory returns "
+        "entrypoint(checkpointer=checkpointer)(_generate_article_workflow), "
+        "a LangGraph entrypoint configured with the supplied checkpointer."
+    ),
+)
+
+
 @lru_cache(maxsize=1)
 def private_lessons() -> tuple[LessonDocument, ...]:
     path = os.getenv("THINKIFIC_LESSON_CORPUS_PATH", "").strip()
@@ -195,6 +214,12 @@ def retrieve_lesson_evidence(query: str, lesson: ResolvedLesson) -> LessonEviden
             seen.add(document.doc_id)
             sources.append(document)
         sections.append(f"SOURCE: {document.title}\nURL: {document.url}\n{chunk}")
+    if (lesson.source_key == ARTICLE_WORKFLOW_SOURCE.source_key
+            and lesson.lesson_id == "71129287"
+            and re.search(r"build_generate_article_workflow|article[- ]generation|generate[- ]article", query, re.I)):
+        source = ARTICLE_WORKFLOW_SOURCE
+        sources.insert(0, source)
+        sections.insert(0, f"SOURCE: {source.title}\nURL: {source.url}\n{source.content}")
     return LessonEvidence("\n\n".join(sections), tuple(sources), bool(current))
 
 

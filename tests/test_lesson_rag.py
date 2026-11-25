@@ -155,3 +155,17 @@ def test_existing_full_document_name_field_is_indexed(monkeypatch):
         assert lesson_rag.match_current_lesson(records[0], current_lesson())
     finally:
         lesson_rag.course_documents.cache_clear()
+
+
+def test_lesson_24_definition_question_includes_the_exact_code_source(monkeypatch):
+    lesson = replace(current_lesson(), lesson_id="71129287")
+    monkeypatch.setattr(lesson_rag, "course_documents", lambda _: (document(),))
+    for question in ("Where is build_generate_article_workflow defined?",
+                     "What is the article-generation workflow?"):
+        evidence = lesson_rag.retrieve_lesson_evidence(question, lesson)
+        code = evidence.documents[0]
+        assert code.url.endswith("/brown/workflows/generate_article.py#L30")
+        assert code.url in evidence.text
+        assert "entrypoint(checkpointer=checkpointer)" in evidence.text
+    other = lesson_rag.retrieve_lesson_evidence("summarize this lesson", lesson)
+    assert other.documents == (document(),)
