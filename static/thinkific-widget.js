@@ -132,6 +132,72 @@
   var bubble = shadow.querySelector("[data-bubble]");
   var dismissBtn = shadow.querySelector("[data-dismiss]");
   var panel = shadow.querySelector("[data-panel]");
+  // Count distinct browsers in the Toronto reporting day. The collector receives
+  // only a rotating random ID, surface, day and highest engagement stage.
+  function engagementTracker(surfaceForPage, needsBlogConsent) {
+    var noop = function () {};
+    if (!window.IntersectionObserver || !window.crypto || !window.crypto.randomUUID) return noop;
+    var endpoint = "https://tutor-engagement.bouchard-lf.workers.dev/event";
+    var clock = new Intl.DateTimeFormat("en-CA", {timeZone:"America/Toronto",
+      year:"numeric", month:"2-digit", day:"2-digit", hour:"2-digit", hourCycle:"h23"});
+    var inFlight = new Set();
+    var highest = 0;
+    var previousKey = "";
+    function allowed() {
+      return !navigator.webdriver && !navigator.globalPrivacyControl && navigator.doNotTrack !== "1"
+        && (!needsBlogConsent || localStorage.getItem("lba-analytics-consent") === "granted")
+        && (!window.Cookiebot || Boolean(window.Cookiebot.consent && window.Cookiebot.consent.statistics));
+    }
+    function record(stage) {
+      try {
+        if (document.visibilityState !== "visible" || !allowed()) return;
+        var surface = surfaceForPage();
+        var parts = Object.fromEntries(clock.formatToParts(new Date()).map(function(p) { return [p.type,p.value]; }));
+        var day = new Date(Date.UTC(+parts.year,+parts.month-1,+parts.day+(+parts.hour>=4?1:0))).toISOString().slice(0,10);
+        var key = "tutor-engagement-v1:" + surface;
+        var token = localStorage.getItem(key);
+        if (!token || token.slice(0,10) !== day) {
+          token = day + ":" + window.crypto.randomUUID();
+          localStorage.setItem(key, token);
+        }
+        if (previousKey !== surface + token) { highest = 0; previousKey = surface + token; }
+        highest = Math.max(highest,stage);
+        var ackKey = key + ":ack";
+        var marker = token + ":" + highest;
+        var ack = localStorage.getItem(ackKey) || "";
+        if ((ack.slice(0,-2) === token && +ack.slice(-1) >= highest) || inFlight.has(marker)) return;
+        inFlight.add(marker);
+        fetch(endpoint, {method:"POST", credentials:"omit", referrerPolicy:"no-referrer", keepalive:true,
+          headers:{"Content-Type":"text/plain"}, body:JSON.stringify({surface:surface, visitor:token.slice(11),day:day,stage:highest})})
+          .then(function(response) {
+            if (!response.ok || localStorage.getItem(key) !== token) return;
+            var latest = localStorage.getItem(ackKey) || "";
+            if (latest.slice(0,-2) !== token || +latest.slice(-1) < +marker.slice(-1)) localStorage.setItem(ackKey,marker);
+          }).catch(noop).finally(function(){inFlight.delete(marker);});
+      } catch (_) { /* Storage and analytics failures must never interrupt chat. */ }
+    }
+    function visibleStage() {
+      if (document.visibilityState !== "visible") return 0;
+      var node = panel.getBoundingClientRect().width ? panel : bubble;
+      var r = node.getBoundingClientRect();
+      if (!r.width || !r.height || getComputedStyle(node).visibility !== "visible") return 0;
+      var w = Math.max(0,Math.min(innerWidth,r.right)-Math.max(0,r.left));
+      var h = Math.max(0,Math.min(innerHeight,r.bottom)-Math.max(0,r.top));
+      if (w*h < r.width*r.height*0.5) return 0;
+      var top = document.elementFromPoint(Math.max(0,r.left)+w/2,Math.max(0,r.top)+h/2);
+      return top === node.getRootNode().host ? (node === panel ? 2 : 1) : 0;
+    }
+    function check() { var stage = visibleStage(); if (stage) record(stage); }
+    var observer = new IntersectionObserver(check,{threshold:[0,0.5,1]});
+    observer.observe(bubble); observer.observe(panel);
+    document.addEventListener("visibilitychange",check);
+    window.addEventListener("lba:analytics-consent",function(){setTimeout(check,0);});
+    // Covers viewport occlusion changes, retry after network loss, and overnight tabs.
+    window.setInterval(check,15000);
+    return record;
+  }
+
+  var recordEngagement = engagementTracker(function () { return "lessons"; }, false);
   var dragHandle = shadow.querySelector("[data-drag-handle]");
   var resetBtn = shadow.querySelector("[data-reset]");
   var closeBtn = shadow.querySelector("[data-close]");
@@ -633,6 +699,7 @@
   function setOpen(isOpen) {
     var nextOpen = Boolean(isOpen);
     var wasOpen = state.open;
+    if (nextOpen && !wasOpen) recordEngagement(2);
     if (nextOpen && !wasOpen) rememberMinimizedAnchor();
     state.open = nextOpen;
     bubble.classList.toggle("hidden", state.open);
@@ -791,6 +858,7 @@
 
   async function sendQuestion(question) {
     if (state.streaming || !question.trim() || !state.context) return;
+    recordEngagement(3);
     var requestId = ++state.requestId;
     state.streaming = true;
     sendBtn.disabled = true;
