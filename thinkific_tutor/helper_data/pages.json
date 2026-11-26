@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "source": "https://academy.towardsai.net/sitemap.xml",
-  "generated_at": "2026-11-25T11:26:44.299348+00:00",
+  "generated_at": "2026-11-26T12:27:58.261966+00:00",
   "authority": "official_academy",
   "status_counts": {
     "excluded": 15,
@@ -444,20 +444,20 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T11:26:44.299348+00:00",
+      "fetched_at": "2026-11-26T12:27:58.261966+00:00",
       "content_sha256": "9011694b342cf4fac018c85c8604ffd26cb18614e89777218bc52d63d39bc4a5",
       "content_hash": "9011694b342cf4fac018c85c8604ffd26cb18614e89777218bc52d63d39bc4a5",
       "authority": "official_academy",
       "status": "excluded",
       "retrieval_eligible": false,
       "http_status": 200,
-      "lastmod": "2026-11-25T11:26:47Z",
+      "lastmod": "2026-11-26T12:28:02Z",
       "sitemap_url": "https://academy.towardsai.net/sitemap.xml",
       "redirect_chain": [
         "https://academy.towardsai.net/"
       ],
       "excluded_reason": "canonical URL is outside the sitemap authority",
-      "evidence_hash": "8cec4af66e7a2f100e954aa700921835ca57daf313b3cb5fa64b223213979196"
+      "evidence_hash": "53dda4cc7f1bbb987d22c41cc5cbecfe3ac2d6822f17ccbe1b00a6a683b4c72f"
     },
     {
       "discovered_url": "https://academy.towardsai.net/collections",
@@ -485,10 +485,10 @@
         "From Non-Coder to AI Engineer",
         "From Developer to Advanced AI Engineer"
       ],
-      "text": "Products\nSearch All Courses, Become an AI Engineer\n\nFull Stack AI Engineering\nCourse • 124 lessons 5.0 average rating (46 reviews) (Python requirement) Build a working full-stack advanced LLM product and master the skills companies need. Learn Context Engineering (Prompting, RAG, Data Collection), Fine-Tuning, Agents, Deployment and more! $349 All Courses, Become an AI Engineer\n\nAgent Engineering: Building Multi-Agent Systems\nCourse • 52 lessons 5.0 average rating (26 reviews) This course is for computer science students, ML engineers, and full-stack developers tasked with integrating autonomous features. You'll leave fully prepared to design, build, evaluate, and deploy sophisticated, production-grade AI agents. $499 All Courses, Become an AI Engineer\n\n10-Hours LLM Fundamentals (Video)\nCourse • 13 lessons 5.0 average rating (7 reviews) Transform your ideas into AI-powered solutions. Master LLMs from prompts to deployment with essential skills and insights needed for production-ready applications. $199 All Courses, Become an AI Engineer\n\nBeginner Python for AI Engineering\nCourse • 38 lessons 5.0 average rating (4 reviews) (For everyone) A Python course for the LLM era! Build a foundation for developing your own LLM apps with Python, covering API integration, open-source model usage, fundamental training/testing skills, and more. $149 All Courses\n\nTowards AI Mentorship\nBundle • 3 learning products AI career support and production mentorship from the AI engineering team at Towards AI. Resume teardowns, async help on any AI-related topic, architecture reviews, and industry Q&A to land and succeed in AI roles. $99 / month All Courses, Become AI-First at Work\n\nMaster AI for Work\nCourse • 98 lessons 5.0 average rating (2 reviews) (For anyone) who want to achieve AI productivity and capability benefits across real work tasks. For leaders and managers to bring AI into their company and team. Not satisfied after the first section? Get a 100% refund within 30 days. $399\n\nBundles\nGet your personalized offer at the best price!\n\nGet it all! From Novice to Expert\nBundle • 6 learning products (For everyone) It is a complete curriculum for ANYONE to learn Python, focusing on working with LLMs and becoming proficient in building with them (with our 10-hour video, business, AI engineering & agent engineering courses). $1,349 Purchase\n\nFrom Non-Coder to AI Engineer\nBundle • 4 learning products (For everyone) This bundle combines our Python introduction, 10-hour video and LLM developer courses to create a complete curriculum for ANYONE to learn Python based on working with LLMs and becoming proficient with LLMs leveraging Python. $599\n\nFrom Developer to Advanced AI Engineer\nBundle • 4 learning products (For developers) to become an expert LLM developer. Start with our 10-hour boot camp and follow up with our 60-hour beginner to advanced LLM Developer course for tons of insights, practice, guidance, and a valuable final project. $948 View more products",
+      "text": "Products\nSearch All Courses, Become an AI Engineer\n\nFull Stack AI Engineering\nCourse • 123 lessons 5.0 average rating (46 reviews) (Python requirement) Build a working full-stack advanced LLM product and master the skills companies need. Learn Context Engineering (Prompting, RAG, Data Collection), Fine-Tuning, Agents, Deployment and more! $349 All Courses, Become an AI Engineer\n\nAgent Engineering: Building Multi-Agent Systems\nCourse • 52 lessons 5.0 average rating (26 reviews) This course is for computer science students, ML engineers, and full-stack developers tasked with integrating autonomous features. You'll leave fully prepared to design, build, evaluate, and deploy sophisticated, production-grade AI agents. $499 All Courses, Become an AI Engineer\n\n10-Hours LLM Fundamentals (Video)\nCourse • 13 lessons 5.0 average rating (7 reviews) Transform your ideas into AI-powered solutions. Master LLMs from prompts to deployment with essential skills and insights needed for production-ready applications. $199 All Courses, Become an AI Engineer\n\nBeginner Python for AI Engineering\nCourse • 38 lessons 5.0 average rating (4 reviews) (For everyone) A Python course for the LLM era! Build a foundation for developing your own LLM apps with Python, covering API integration, open-source model usage, fundamental training/testing skills, and more. $149 All Courses\n\nTowards AI Mentorship\nBundle • 3 learning products AI career support and production mentorship from the AI engineering team at Towards AI. Resume teardowns, async help on any AI-related topic, architecture reviews, and industry Q&A to land and succeed in AI roles. $99 / month All Courses, Become AI-First at Work\n\nMaster AI for Work\nCourse • 98 lessons 5.0 average rating (2 reviews) (For anyone) who want to achieve AI productivity and capability benefits across real work tasks. For leaders and managers to bring AI into their company and team. Not satisfied after the first section? Get a 100% refund within 30 days. $399\n\nBundles\nGet your personalized offer at the best price!\n\nGet it all! From Novice to Expert\nBundle • 6 learning products (For everyone) It is a complete curriculum for ANYONE to learn Python, focusing on working with LLMs and becoming proficient in building with them (with our 10-hour video, business, AI engineering & agent engineering courses). $1,349 Purchase\n\nFrom Non-Coder to AI Engineer\nBundle • 4 learning products (For everyone) This bundle combines our Python introduction, 10-hour video and LLM developer courses to create a complete curriculum for ANYONE to learn Python based on working with LLMs and becoming proficient with LLMs leveraging Python. $599\n\nFrom Developer to Advanced AI Engineer\nBundle • 4 learning products (For developers) to become an expert LLM developer. Start with our 10-hour boot camp and follow up with our 60-hour beginner to advanced LLM Developer course for tons of insights, practice, guidance, and a valuable final project. $948 View more products",
       "links": [
         {
-          "text": "All Courses, Become an AI Engineer Course • 124 lessons 5.0 average rating (46 reviews) (Python requirement) Build a working full-stack advanced LLM product and master the skills companies need. Learn Context Engineering (Prompting, RAG, Data Collection), Fine-Tuning, Agents, Deployment and more! $349",
+          "text": "All Courses, Become an AI Engineer Course • 123 lessons 5.0 average rating (46 reviews) (Python requirement) Build a working full-stack advanced LLM product and master the skills companies need. Learn Context Engineering (Prompting, RAG, Data Collection), Fine-Tuning, Agents, Deployment and more! $349",
           "url": "https://academy.towardsai.net/courses/beginner-to-advanced-llm-dev"
         },
         {
@@ -539,7 +539,7 @@
       "chunks": [
         {
           "chunk_id": "tai-ce7e1c66add176a4801485b0",
-          "text": "Products\nSearch All Courses, Become an AI Engineer\n\nFull Stack AI Engineering\nCourse • 124 lessons 5.0 average rating (46 reviews) (Python requirement) Build a working full-stack advanced LLM product and master the skills companies need. Learn Context Engineering (Prompting, RAG, Data Collection), Fine-Tuning, Agents, Deployment and more! $349 All Courses, Become an AI Engineer\n\nAgent Engineering: Building Multi-Agent Systems\nCourse • 52 lessons 5.0 average rating (26 reviews) This course is for computer science students, ML engineers, and full-stack developers tasked with integrating autonomous features. You'll leave fully prepared to design, build, evaluate, and deploy sophisticated, production-grade AI agents. $499 All Courses, Become an AI Engineer\n\n10-Hours LLM Fundamentals (Video)\nCourse • 13 lessons 5.0 average rating (7 reviews) Transform your ideas into AI-powered solutions. Master LLMs from prompts to deployment with essential skills and insights needed for production-ready applications. $199 All Courses, Become an AI Engineer\n\nBeginner Python for AI Engineering\nCourse • 38 lessons 5.0 average rating (4 reviews) (For everyone) A Python course for the LLM era! Build a foundation for developing your own LLM apps with Python, covering API integration, open-source model usage, fundamental training/testing skills, and more. $149 All Courses\n\nTowards AI Mentorship\nBundle • 3 learning products AI career support and production mentorship from the AI engineering team at Towards AI. Resume teardowns, async help on any AI-related topic, architecture reviews, and industry Q&A to land and succeed in AI roles. $99 / month All Courses, Become AI-First at Work",
+          "text": "Products\nSearch All Courses, Become an AI Engineer\n\nFull Stack AI Engineering\nCourse • 123 lessons 5.0 average rating (46 reviews) (Python requirement) Build a working full-stack advanced LLM product and master the skills companies need. Learn Context Engineering (Prompting, RAG, Data Collection), Fine-Tuning, Agents, Deployment and more! $349 All Courses, Become an AI Engineer\n\nAgent Engineering: Building Multi-Agent Systems\nCourse • 52 lessons 5.0 average rating (26 reviews) This course is for computer science students, ML engineers, and full-stack developers tasked with integrating autonomous features. You'll leave fully prepared to design, build, evaluate, and deploy sophisticated, production-grade AI agents. $499 All Courses, Become an AI Engineer\n\n10-Hours LLM Fundamentals (Video)\nCourse • 13 lessons 5.0 average rating (7 reviews) Transform your ideas into AI-powered solutions. Master LLMs from prompts to deployment with essential skills and insights needed for production-ready applications. $199 All Courses, Become an AI Engineer\n\nBeginner Python for AI Engineering\nCourse • 38 lessons 5.0 average rating (4 reviews) (For everyone) A Python course for the LLM era! Build a foundation for developing your own LLM apps with Python, covering API integration, open-source model usage, fundamental training/testing skills, and more. $149 All Courses\n\nTowards AI Mentorship\nBundle • 3 learning products AI career support and production mentorship from the AI engineering team at Towards AI. Resume teardowns, async help on any AI-related topic, architecture reviews, and industry Q&A to land and succeed in AI roles. $99 / month All Courses, Become AI-First at Work",
           "heading": "Agent Engineering: Building Multi-Agent Systems",
           "index": 0,
           "evidence_spans": [
@@ -548,8 +548,8 @@
               "text": "All Courses, Become an AI Engineer"
             },
             {
-              "span_id": "span-5e52e79f5febcca59b44ddfc",
-              "text": "Course • 124 lessons 5.0 average rating (46 reviews)"
+              "span_id": "span-8d068aca227db07ee1657193",
+              "text": "Course • 123 lessons 5.0 average rating (46 reviews)"
             },
             {
               "span_id": "span-48b94fef4be0260706bcda47",
@@ -678,20 +678,20 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T11:26:44.299348+00:00",
-      "content_sha256": "5e6d2e0fa9d650aabb8dccdac52bfbd48f92be8c8145dbb5a035f9e33c9f5592",
-      "content_hash": "5e6d2e0fa9d650aabb8dccdac52bfbd48f92be8c8145dbb5a035f9e33c9f5592",
+      "fetched_at": "2026-11-26T12:27:58.261966+00:00",
+      "content_sha256": "5165ba9398c1c929cca3c162314b62fea5df3e07763780b12a406f8391fb2282",
+      "content_hash": "5165ba9398c1c929cca3c162314b62fea5df3e07763780b12a406f8391fb2282",
       "authority": "official_academy",
       "status": "excluded",
       "retrieval_eligible": false,
       "http_status": 200,
-      "lastmod": "2026-11-25T11:26:47Z",
+      "lastmod": "2026-11-26T12:28:02Z",
       "sitemap_url": "https://academy.towardsai.net/sitemap.xml",
       "redirect_chain": [
         "https://academy.towardsai.net/collections"
       ],
       "excluded_reason": "catalog summary can lag behind canonical offer detail pages",
-      "evidence_hash": "5696dd283715aed76de2d01d7f9cfac2870d188fe2dbd4f591639381393aa385"
+      "evidence_hash": "89147689a3dcaac1b4475750c49b4da77e71f1b144b0d78146f5a870df7354c3"
     },
     {
       "discovered_url": "https://academy.towardsai.net/collections/products",
@@ -719,10 +719,10 @@
         "From Non-Coder to AI Engineer",
         "From Developer to Advanced AI Engineer"
       ],
-      "text": "Products\nSearch All Courses, Become an AI Engineer\n\nFull Stack AI Engineering\nCourse • 124 lessons 5.0 average rating (46 reviews) (Python requirement) Build a working full-stack advanced LLM product and master the skills companies need. Learn Context Engineering (Prompting, RAG, Data Collection), Fine-Tuning, Agents, Deployment and more! $349 All Courses, Become an AI Engineer\n\nAgent Engineering: Building Multi-Agent Systems\nCourse • 52 lessons 5.0 average rating (26 reviews) This course is for computer science students, ML engineers, and full-stack developers tasked with integrating autonomous features. You'll leave fully prepared to design, build, evaluate, and deploy sophisticated, production-grade AI agents. $499 All Courses, Become an AI Engineer\n\n10-Hours LLM Fundamentals (Video)\nCourse • 13 lessons 5.0 average rating (7 reviews) Transform your ideas into AI-powered solutions. Master LLMs from prompts to deployment with essential skills and insights needed for production-ready applications. $199 All Courses, Become an AI Engineer\n\nBeginner Python for AI Engineering\nCourse • 38 lessons 5.0 average rating (4 reviews) (For everyone) A Python course for the LLM era! Build a foundation for developing your own LLM apps with Python, covering API integration, open-source model usage, fundamental training/testing skills, and more. $149 All Courses\n\nTowards AI Mentorship\nBundle • 3 learning products AI career support and production mentorship from the AI engineering team at Towards AI. Resume teardowns, async help on any AI-related topic, architecture reviews, and industry Q&A to land and succeed in AI roles. $99 / month All Courses, Become AI-First at Work\n\nMaster AI for Work\nCourse • 98 lessons 5.0 average rating (2 reviews) (For anyone) who want to achieve AI productivity and capability benefits across real work tasks. For leaders and managers to bring AI into their company and team. Not satisfied after the first section? Get a 100% refund within 30 days. $399\n\nBundles\nGet your personalized offer at the best price!\n\nGet it all! From Novice to Expert\nBundle • 6 learning products (For everyone) It is a complete curriculum for ANYONE to learn Python, focusing on working with LLMs and becoming proficient in building with them (with our 10-hour video, business, AI engineering & agent engineering courses). $1,349 Purchase\n\nFrom Non-Coder to AI Engineer\nBundle • 4 learning products (For everyone) This bundle combines our Python introduction, 10-hour video and LLM developer courses to create a complete curriculum for ANYONE to learn Python based on working with LLMs and becoming proficient with LLMs leveraging Python. $599\n\nFrom Developer to Advanced AI Engineer\nBundle • 4 learning products (For developers) to become an expert LLM developer. Start with our 10-hour boot camp and follow up with our 60-hour beginner to advanced LLM Developer course for tons of insights, practice, guidance, and a valuable final project. $948 View more products",
+      "text": "Products\nSearch All Courses, Become an AI Engineer\n\nFull Stack AI Engineering\nCourse • 123 lessons 5.0 average rating (46 reviews) (Python requirement) Build a working full-stack advanced LLM product and master the skills companies need. Learn Context Engineering (Prompting, RAG, Data Collection), Fine-Tuning, Agents, Deployment and more! $349 All Courses, Become an AI Engineer\n\nAgent Engineering: Building Multi-Agent Systems\nCourse • 52 lessons 5.0 average rating (26 reviews) This course is for computer science students, ML engineers, and full-stack developers tasked with integrating autonomous features. You'll leave fully prepared to design, build, evaluate, and deploy sophisticated, production-grade AI agents. $499 All Courses, Become an AI Engineer\n\n10-Hours LLM Fundamentals (Video)\nCourse • 13 lessons 5.0 average rating (7 reviews) Transform your ideas into AI-powered solutions. Master LLMs from prompts to deployment with essential skills and insights needed for production-ready applications. $199 All Courses, Become an AI Engineer\n\nBeginner Python for AI Engineering\nCourse • 38 lessons 5.0 average rating (4 reviews) (For everyone) A Python course for the LLM era! Build a foundation for developing your own LLM apps with Python, covering API integration, open-source model usage, fundamental training/testing skills, and more. $149 All Courses\n\nTowards AI Mentorship\nBundle • 3 learning products AI career support and production mentorship from the AI engineering team at Towards AI. Resume teardowns, async help on any AI-related topic, architecture reviews, and industry Q&A to land and succeed in AI roles. $99 / month All Courses, Become AI-First at Work\n\nMaster AI for Work\nCourse • 98 lessons 5.0 average rating (2 reviews) (For anyone) who want to achieve AI productivity and capability benefits across real work tasks. For leaders and managers to bring AI into their company and team. Not satisfied after the first section? Get a 100% refund within 30 days. $399\n\nBundles\nGet your personalized offer at the best price!\n\nGet it all! From Novice to Expert\nBundle • 6 learning products (For everyone) It is a complete curriculum for ANYONE to learn Python, focusing on working with LLMs and becoming proficient in building with them (with our 10-hour video, business, AI engineering & agent engineering courses). $1,349 Purchase\n\nFrom Non-Coder to AI Engineer\nBundle • 4 learning products (For everyone) This bundle combines our Python introduction, 10-hour video and LLM developer courses to create a complete curriculum for ANYONE to learn Python based on working with LLMs and becoming proficient with LLMs leveraging Python. $599\n\nFrom Developer to Advanced AI Engineer\nBundle • 4 learning products (For developers) to become an expert LLM developer. Start with our 10-hour boot camp and follow up with our 60-hour beginner to advanced LLM Developer course for tons of insights, practice, guidance, and a valuable final project. $948 View more products",
       "links": [
         {
-          "text": "All Courses, Become an AI Engineer Course • 124 lessons 5.0 average rating (46 reviews) (Python requirement) Build a working full-stack advanced LLM product and master the skills companies need. Learn Context Engineering (Prompting, RAG, Data Collection), Fine-Tuning, Agents, Deployment and more! $349",
+          "text": "All Courses, Become an AI Engineer Course • 123 lessons 5.0 average rating (46 reviews) (Python requirement) Build a working full-stack advanced LLM product and master the skills companies need. Learn Context Engineering (Prompting, RAG, Data Collection), Fine-Tuning, Agents, Deployment and more! $349",
           "url": "https://academy.towardsai.net/courses/beginner-to-advanced-llm-dev"
         },
         {
@@ -773,7 +773,7 @@
       "chunks": [
         {
           "chunk_id": "tai-0a579f8db364a2b38b8ecac8",
-          "text": "Products\nSearch All Courses, Become an AI Engineer\n\nFull Stack AI Engineering\nCourse • 124 lessons 5.0 average rating (46 reviews) (Python requirement) Build a working full-stack advanced LLM product and master the skills companies need. Learn Context Engineering (Prompting, RAG, Data Collection), Fine-Tuning, Agents, Deployment and more! $349 All Courses, Become an AI Engineer\n\nAgent Engineering: Building Multi-Agent Systems\nCourse • 52 lessons 5.0 average rating (26 reviews) This course is for computer science students, ML engineers, and full-stack developers tasked with integrating autonomous features. You'll leave fully prepared to design, build, evaluate, and deploy sophisticated, production-grade AI agents. $499 All Courses, Become an AI Engineer\n\n10-Hours LLM Fundamentals (Video)\nCourse • 13 lessons 5.0 average rating (7 reviews) Transform your ideas into AI-powered solutions. Master LLMs from prompts to deployment with essential skills and insights needed for production-ready applications. $199 All Courses, Become an AI Engineer\n\nBeginner Python for AI Engineering\nCourse • 38 lessons 5.0 average rating (4 reviews) (For everyone) A Python course for the LLM era! Build a foundation for developing your own LLM apps with Python, covering API integration, open-source model usage, fundamental training/testing skills, and more. $149 All Courses\n\nTowards AI Mentorship\nBundle • 3 learning products AI career support and production mentorship from the AI engineering team at Towards AI. Resume teardowns, async help on any AI-related topic, architecture reviews, and industry Q&A to land and succeed in AI roles. $99 / month All Courses, Become AI-First at Work",
+          "text": "Products\nSearch All Courses, Become an AI Engineer\n\nFull Stack AI Engineering\nCourse • 123 lessons 5.0 average rating (46 reviews) (Python requirement) Build a working full-stack advanced LLM product and master the skills companies need. Learn Context Engineering (Prompting, RAG, Data Collection), Fine-Tuning, Agents, Deployment and more! $349 All Courses, Become an AI Engineer\n\nAgent Engineering: Building Multi-Agent Systems\nCourse • 52 lessons 5.0 average rating (26 reviews) This course is for computer science students, ML engineers, and full-stack developers tasked with integrating autonomous features. You'll leave fully prepared to design, build, evaluate, and deploy sophisticated, production-grade AI agents. $499 All Courses, Become an AI Engineer\n\n10-Hours LLM Fundamentals (Video)\nCourse • 13 lessons 5.0 average rating (7 reviews) Transform your ideas into AI-powered solutions. Master LLMs from prompts to deployment with essential skills and insights needed for production-ready applications. $199 All Courses, Become an AI Engineer\n\nBeginner Python for AI Engineering\nCourse • 38 lessons 5.0 average rating (4 reviews) (For everyone) A Python course for the LLM era! Build a foundation for developing your own LLM apps with Python, covering API integration, open-source model usage, fundamental training/testing skills, and more. $149 All Courses\n\nTowards AI Mentorship\nBundle • 3 learning products AI career support and production mentorship from the AI engineering team at Towards AI. Resume teardowns, async help on any AI-related topic, architecture reviews, and industry Q&A to land and succeed in AI roles. $99 / month All Courses, Become AI-First at Work",
           "heading": "Agent Engineering: Building Multi-Agent Systems",
           "index": 0,
           "evidence_spans": [
@@ -782,8 +782,8 @@
               "text": "All Courses, Become an AI Engineer"
             },
             {
-              "span_id": "span-c4518e7448a9110d0761899d",
-              "text": "Course • 124 lessons 5.0 average rating (46 reviews)"
+              "span_id": "span-664f47421b3910421061dab9",
+              "text": "Course • 123 lessons 5.0 average rating (46 reviews)"
             },
             {
               "span_id": "span-2dadb3bc711e149eaecba4d1",
@@ -912,9 +912,9 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T11:26:44.299348+00:00",
-      "content_sha256": "5e6d2e0fa9d650aabb8dccdac52bfbd48f92be8c8145dbb5a035f9e33c9f5592",
-      "content_hash": "5e6d2e0fa9d650aabb8dccdac52bfbd48f92be8c8145dbb5a035f9e33c9f5592",
+      "fetched_at": "2026-11-26T12:27:58.261966+00:00",
+      "content_sha256": "5165ba9398c1c929cca3c162314b62fea5df3e07763780b12a406f8391fb2282",
+      "content_hash": "5165ba9398c1c929cca3c162314b62fea5df3e07763780b12a406f8391fb2282",
       "authority": "official_academy",
       "status": "excluded",
       "retrieval_eligible": false,
@@ -925,7 +925,7 @@
         "https://academy.towardsai.net/collections/products"
       ],
       "excluded_reason": "catalog summary can lag behind canonical offer detail pages",
-      "evidence_hash": "e6c848e6f2dd3ea614cb608d112852d0b2b827a8d99f7f6d7626a8d6f51e3a87"
+      "evidence_hash": "77a5bab55b9873890df4b7f02e9f2093c0293fb82f57d092d47b8b1b63f483e8"
     },
     {
       "discovered_url": "https://academy.towardsai.net/collections/developers",
@@ -952,10 +952,10 @@
         "From Non-Coder to AI Engineer",
         "From Developer to Advanced AI Engineer"
       ],
-      "text": "Products\nSearch All Courses, Become an AI Engineer\n\nFull Stack AI Engineering\nCourse • 124 lessons 5.0 average rating (46 reviews) (Python requirement) Build a working full-stack advanced LLM product and master the skills companies need. Learn Context Engineering (Prompting, RAG, Data Collection), Fine-Tuning, Agents, Deployment and more! $349 All Courses, Become an AI Engineer\n\nAgent Engineering: Building Multi-Agent Systems\nCourse • 52 lessons 5.0 average rating (26 reviews) This course is for computer science students, ML engineers, and full-stack developers tasked with integrating autonomous features. You'll leave fully prepared to design, build, evaluate, and deploy sophisticated, production-grade AI agents. $499 All Courses, Become an AI Engineer\n\n10-Hours LLM Fundamentals (Video)\nCourse • 13 lessons 5.0 average rating (7 reviews) Transform your ideas into AI-powered solutions. Master LLMs from prompts to deployment with essential skills and insights needed for production-ready applications. $199 All Courses, Become an AI Engineer\n\nBeginner Python for AI Engineering\nCourse • 38 lessons 5.0 average rating (4 reviews) (For everyone) A Python course for the LLM era! Build a foundation for developing your own LLM apps with Python, covering API integration, open-source model usage, fundamental training/testing skills, and more. $149 All Courses, Become an AI Engineer\n\nBuilding LLMs for Production\nCourse • 84 lessons 5.0 average rating (26 reviews) (Python requirement) This book breaks down techniques that are scalable for enterprise-level workflows, helping both independent developers and small companies with limited resources create sellable AI products. $29.99\n\nBundles\nGet your personalized offer at the best price!\n\nGet it all! From Novice to Expert\nBundle • 6 learning products (For everyone) It is a complete curriculum for ANYONE to learn Python, focusing on working with LLMs and becoming proficient in building with them (with our 10-hour video, business, AI engineering & agent engineering courses). $1,349 Purchase\n\nFrom Non-Coder to AI Engineer\nBundle • 4 learning products (For everyone) This bundle combines our Python introduction, 10-hour video and LLM developer courses to create a complete curriculum for ANYONE to learn Python based on working with LLMs and becoming proficient with LLMs leveraging Python. $599\n\nFrom Developer to Advanced AI Engineer\nBundle • 4 learning products (For developers) to become an expert LLM developer. Start with our 10-hour boot camp and follow up with our 60-hour beginner to advanced LLM Developer course for tons of insights, practice, guidance, and a valuable final project. $948 View more products",
+      "text": "Products\nSearch All Courses, Become an AI Engineer\n\nFull Stack AI Engineering\nCourse • 123 lessons 5.0 average rating (46 reviews) (Python requirement) Build a working full-stack advanced LLM product and master the skills companies need. Learn Context Engineering (Prompting, RAG, Data Collection), Fine-Tuning, Agents, Deployment and more! $349 All Courses, Become an AI Engineer\n\nAgent Engineering: Building Multi-Agent Systems\nCourse • 52 lessons 5.0 average rating (26 reviews) This course is for computer science students, ML engineers, and full-stack developers tasked with integrating autonomous features. You'll leave fully prepared to design, build, evaluate, and deploy sophisticated, production-grade AI agents. $499 All Courses, Become an AI Engineer\n\n10-Hours LLM Fundamentals (Video)\nCourse • 13 lessons 5.0 average rating (7 reviews) Transform your ideas into AI-powered solutions. Master LLMs from prompts to deployment with essential skills and insights needed for production-ready applications. $199 All Courses, Become an AI Engineer\n\nBeginner Python for AI Engineering\nCourse • 38 lessons 5.0 average rating (4 reviews) (For everyone) A Python course for the LLM era! Build a foundation for developing your own LLM apps with Python, covering API integration, open-source model usage, fundamental training/testing skills, and more. $149 All Courses, Become an AI Engineer\n\nBuilding LLMs for Production\nCourse • 84 lessons 5.0 average rating (26 reviews) (Python requirement) This book breaks down techniques that are scalable for enterprise-level workflows, helping both independent developers and small companies with limited resources create sellable AI products. $29.99\n\nBundles\nGet your personalized offer at the best price!\n\nGet it all! From Novice to Expert\nBundle • 6 learning products (For everyone) It is a complete curriculum for ANYONE to learn Python, focusing on working with LLMs and becoming proficient in building with them (with our 10-hour video, business, AI engineering & agent engineering courses). $1,349 Purchase\n\nFrom Non-Coder to AI Engineer\nBundle • 4 learning products (For everyone) This bundle combines our Python introduction, 10-hour video and LLM developer courses to create a complete curriculum for ANYONE to learn Python based on working with LLMs and becoming proficient with LLMs leveraging Python. $599\n\nFrom Developer to Advanced AI Engineer\nBundle • 4 learning products (For developers) to become an expert LLM developer. Start with our 10-hour boot camp and follow up with our 60-hour beginner to advanced LLM Developer course for tons of insights, practice, guidance, and a valuable final project. $948 View more products",
       "links": [
         {
-          "text": "All Courses, Become an AI Engineer Course • 124 lessons 5.0 average rating (46 reviews) (Python requirement) Build a working full-stack advanced LLM product and master the skills companies need. Learn Context Engineering (Prompting, RAG, Data Collection), Fine-Tuning, Agents, Deployment and more! $349",
+          "text": "All Courses, Become an AI Engineer Course • 123 lessons 5.0 average rating (46 reviews) (Python requirement) Build a working full-stack advanced LLM product and master the skills companies need. Learn Context Engineering (Prompting, RAG, Data Collection), Fine-Tuning, Agents, Deployment and more! $349",
           "url": "https://academy.towardsai.net/courses/beginner-to-advanced-llm-dev"
         },
         {
@@ -1002,7 +1002,7 @@
       "chunks": [
         {
           "chunk_id": "tai-88729061cb47ac879c25bc1c",
-          "text": "Products\nSearch All Courses, Become an AI Engineer\n\nFull Stack AI Engineering\nCourse • 124 lessons 5.0 average rating (46 reviews) (Python requirement) Build a working full-stack advanced LLM product and master the skills companies need. Learn Context Engineering (Prompting, RAG, Data Collection), Fine-Tuning, Agents, Deployment and more! $349 All Courses, Become an AI Engineer\n\nAgent Engineering: Building Multi-Agent Systems\nCourse • 52 lessons 5.0 average rating (26 reviews) This course is for computer science students, ML engineers, and full-stack developers tasked with integrating autonomous features. You'll leave fully prepared to design, build, evaluate, and deploy sophisticated, production-grade AI agents. $499 All Courses, Become an AI Engineer\n\n10-Hours LLM Fundamentals (Video)\nCourse • 13 lessons 5.0 average rating (7 reviews) Transform your ideas into AI-powered solutions. Master LLMs from prompts to deployment with essential skills and insights needed for production-ready applications. $199 All Courses, Become an AI Engineer\n\nBeginner Python for AI Engineering\nCourse • 38 lessons 5.0 average rating (4 reviews) (For everyone) A Python course for the LLM era! Build a foundation for developing your own LLM apps with Python, covering API integration, open-source model usage, fundamental training/testing skills, and more. $149 All Courses, Become an AI Engineer\n\nBuilding LLMs for Production\nCourse • 84 lessons 5.0 average rating (26 reviews) (Python requirement) This book breaks down techniques that are scalable for enterprise-level workflows, helping both independent developers and small companies with limited resources create sellable AI products. $29.99",
+          "text": "Products\nSearch All Courses, Become an AI Engineer\n\nFull Stack AI Engineering\nCourse • 123 lessons 5.0 average rating (46 reviews) (Python requirement) Build a working full-stack advanced LLM product and master the skills companies need. Learn Context Engineering (Prompting, RAG, Data Collection), Fine-Tuning, Agents, Deployment and more! $349 All Courses, Become an AI Engineer\n\nAgent Engineering: Building Multi-Agent Systems\nCourse • 52 lessons 5.0 average rating (26 reviews) This course is for computer science students, ML engineers, and full-stack developers tasked with integrating autonomous features. You'll leave fully prepared to design, build, evaluate, and deploy sophisticated, production-grade AI agents. $499 All Courses, Become an AI Engineer\n\n10-Hours LLM Fundamentals (Video)\nCourse • 13 lessons 5.0 average rating (7 reviews) Transform your ideas into AI-powered solutions. Master LLMs from prompts to deployment with essential skills and insights needed for production-ready applications. $199 All Courses, Become an AI Engineer\n\nBeginner Python for AI Engineering\nCourse • 38 lessons 5.0 average rating (4 reviews) (For everyone) A Python course for the LLM era! Build a foundation for developing your own LLM apps with Python, covering API integration, open-source model usage, fundamental training/testing skills, and more. $149 All Courses, Become an AI Engineer\n\nBuilding LLMs for Production\nCourse • 84 lessons 5.0 average rating (26 reviews) (Python requirement) This book breaks down techniques that are scalable for enterprise-level workflows, helping both independent developers and small companies with limited resources create sellable AI products. $29.99",
           "heading": "Agent Engineering: Building Multi-Agent Systems",
           "index": 0,
           "evidence_spans": [
@@ -1011,8 +1011,8 @@
               "text": "All Courses, Become an AI Engineer"
             },
             {
-              "span_id": "span-6b1253b3f247f55996b14369",
-              "text": "Course • 124 lessons 5.0 average rating (46 reviews)"
+              "span_id": "span-88a58f137311d09fcec9c38d",
+              "text": "Course • 123 lessons 5.0 average rating (46 reviews)"
             },
             {
               "span_id": "span-cb4424d1ca1c708d4c879482",
@@ -1113,9 +1113,9 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T11:26:44.299348+00:00",
-      "content_sha256": "482196d661f13899ddd9bc5f4aee9d0b868e33dcd13687d69575454644363308",
-      "content_hash": "482196d661f13899ddd9bc5f4aee9d0b868e33dcd13687d69575454644363308",
+      "fetched_at": "2026-11-26T12:27:58.261966+00:00",
+      "content_sha256": "5d00cd5409bb6d82e5b849a92c609955c0633a46574b6686efaff46a4f3e87e0",
+      "content_hash": "5d00cd5409bb6d82e5b849a92c609955c0633a46574b6686efaff46a4f3e87e0",
       "authority": "official_academy",
       "status": "excluded",
       "retrieval_eligible": false,
@@ -1126,7 +1126,7 @@
         "https://academy.towardsai.net/collections/developers"
       ],
       "excluded_reason": "catalog summary can lag behind canonical offer detail pages",
-      "evidence_hash": "148308db8d2a74f349dbd129b4660c8f5468ba786dd8a8f6bfd88813db5c85d3"
+      "evidence_hash": "ca5dc3032a993d74271c6c57948f3eee072424039faf6624e8846bd914828d0e"
     },
     {
       "discovered_url": "https://academy.towardsai.net/collections/professionals",
@@ -1242,7 +1242,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T11:26:44.299348+00:00",
+      "fetched_at": "2026-11-26T12:27:58.261966+00:00",
       "content_sha256": "f9ff096b5a472ef12beadce432db206b9a098f3de7e83eb231956e20d7c649bc",
       "content_hash": "f9ff096b5a472ef12beadce432db206b9a098f3de7e83eb231956e20d7c649bc",
       "authority": "official_academy",
@@ -1255,7 +1255,7 @@
         "https://academy.towardsai.net/collections/professionals"
       ],
       "excluded_reason": "catalog summary can lag behind canonical offer detail pages",
-      "evidence_hash": "2ed8f4fc2e0b7241a2bfd67e31f05e08eb4e233b74f68cf65358a4c5589887bd"
+      "evidence_hash": "7f0b0e33fea202c6c98d83d5226eafb6a22719d94aaf67af7fb652129e6d8632"
     },
     {
       "discovered_url": "https://academy.towardsai.net/courses/beginner-to-advanced-llm-dev",
@@ -1309,7 +1309,7 @@
         "Who Is This Course For?",
         "Course Curriculum",
         "Course Introduction and Understanding LLMs (9 Lessons)",
-        "Part 1: Building our RAG AI Tutor - Using LLMs (11 Lessons)",
+        "Part 1: Building our RAG AI Tutor - Using LLMs (10 Lessons)",
         "Part 1: Building our RAG AI Tutor - RAG Basics (6 Lessons)",
         "Part 1: Building our RAG AI Tutor - RAG with Llamaindex (7 Lessons)",
         "Part 1: Building our RAG AI Tutor - Using other LLMs and Embedding Models (6 Lessons)",
@@ -1330,7 +1330,7 @@
         "FAQ",
         "Brought to you by"
       ],
-      "text": "Become a Full Stack AI Engineer\nAnd position yourself for the roles, projects, and opportunities that AI is creating right now. Unlock Lifetime Access for $349 (join 1000+ AI engineers) Watch Intro Video\n\nIndustry Leaders on the Course\n“This is the most comprehensive textbook to date on building LLM applications, and helps learners understand everything from fundamentals to the simple-to-advanced building blocks of constructing LLM applications. The application topics include prompting, RAG, agents, fine-tuning, and deployment - all essential topics in an AI Engineer's toolkit.” Jerry Liu, Co-founder and CEO of LlamaIndex “A truly wonderful resource that develops understanding of LLMs from the ground up, from theory to code and modern frameworks. Grounds your knowledge in research trends and frameworks that develop your intuition around what's coming. Highly recommend.” -Pete Huang, Co-founder of The Neuron “An incredible survey of all the real-world problems one encounters when trying to productionize an LLM, as well as multiple solutions to each roadblock. Highly recommend this!” Nick Singh, Founder of DataLemur.com & Author of Ace the Data Science Interview “A comprehensive and well-rounded resource that covers all the fundamentals of LLMs with a well-struck balance between theory and code[…]” Tina Huang, Founder of Lonely Octopus, YouTuber, Ex-Meta “It covers the foundational aspects of LLMs as well as advanced use-cases like finetuning LLMs, Retrieval Augmented Generation and Agents. This will be valuable to anyone looking to dive into the field quickly and efficiently.” Jeremy Pinto, Senior Applied Research Scientist at Mila\n\nThe Gaps Between Developer and AI Engineer\nWe close them with real projects, proven frameworks, and the exact skills companies are hiring for.\n\nSoftware Engineering ≠ LLM Engineering\nLearn to engineer around probabilistic systems This course teaches you to design reliable systems on top of unpredictable models, using prompt engineering, context engineering, and RAG to control what the model knows, and fine-tuning to control how it behaves.\n\nThe Talent Gap Is Your Opportunity\nGet trained in exactly what the role demands The AI engineering role is only 2-3 years old; the window to get in early is still open. Master the full stack: from choosing the right models and architectures to evaluating, optimizing, and deploying production-grade AI systems at scale.\n\nDemos ≠ Production Systems\nShip real, deployable LLM products Move beyond notebooks and build something that gives you a competitive edge in the job market, launches your startup idea, or drives a new product at your company.\n\nExperience the Course Before You Commit\nExplore the First 6 Lessons Free Unlock Free Preview\n\nWhat You'll Build\nA production-grade AI tutor and a complete LLM toolkit through hands-on capstone projects.\n\nRAG AI Tutor\nBuild a fully deployed AI tutor from scratch across 60+ lessons. You'll implement: Prompt engineering: system prompts and iterative evaluation Data pipeline: scrape, parse, and clean data using Firecrawl, LlamaParse, and web APIs RAG pipeline: build from scratch then scale with LlamaIndex and vector databases Advanced retrieval: hybrid search, re-ranking, metadata filtering, and query augmentation Fine-tuning: optimize GPT-4o Mini and embedding models for your use case Production deployment: FastAPI, Gradio UI, and Hugging Face Spaces\n\nFull LLM Toolkit\nExpand beyond the AI tutor with the broader skills the role demands. You'll implement: Agent architecture: tool use, LLM pipelines, and autonomous task execution Framework fluency: LangChain, LlamaIndex, and OpenAI Assistants side by side Multi-modal capabilities: image generation, speech, and diffusion models Observability: production tracing with Langsmith, Phoenix, and Langfuse LLM optimization: quantization, pruning, distillation, and speculative decoding\n\nYour Own LLM Product\nApply everything to build and ship your own LLM application. You'll implement: Product strategy: 175 project ideas, niche selection, and defensibility frameworks Business context: learn from real products like Perplexity, Harvey AI, and Consensus Custom RAG application: your own idea, fully built and deployed on Hugging Face Certified delivery: reviewed by our team and portfolio-ready for jobs, MVPs, or pitches Incubation opportunity: standout projects get direct support to find work or launch\n\nBuild Your First LLM Product This Week\n󠁯•󠁏 A fully deployed LLM application, production-ready 󠁯•󠁏 Gain portfolio-ready skills with certification 󠁯•󠁏 Master fundamentals that outlast trends Self-paced learning • Regular updates • Risk-free enrollment Enroll Now\n\nHear From the Engineers Who Took the Leap\n5 star rating\n\nLove it\n\nPaul Iusztin\nIf you are interested in AI Engineering, this course is one of the few within the AI space worth your time and money. I have closely worked with the Towards AI team and totally vouch for their deep expertise, passion and educational skills. Also, ... Read More If you are interested in AI Engineering, this course is one of the few within the AI space worth your time and money. I have closely worked with the Towards AI team and totally vouch for their deep expertise, passion and educational skills. Also, love their approach to teaching engineering, where instead of many small projects, they walk you through a larger project, from end-to-end, reflecting what you actually encounter within the industry. Read Less 5 star rating\n\nExcellent course\n\nMartin Ballard\nThe course covers an immense amount of information. I feel like I really learned a ton about working with LLMs and how to develop and deploy my own applications. The course covers an immense amount of information. I feel like I really learned a ton about working with LLMs and how to develop and deploy my own applications. Read Less 5 star rating\n\nFrom Beginner to Advanced LLM Developer\n\nBoonchiat Tan\n\"This course is fantastic! The content is well-curated, making it easier to learn the techniques quickly. Great job! Thanks again!\" \"This course is fantastic! The content is well-curated, making it easier to learn the techniques quickly. Great job! Thanks again!\" Read Less 5 star rating\n\nHighly Recommend This Course\n\nFarhad Dalirani\nThis course is highly valuable. You can learn a lot about different critical aspects of LLMs and RAG. Before taking it, I used to wander through endless resources, most of which were, in fact, low quality. The course is fantastic, and I highly rec... Read More This course is highly valuable. You can learn a lot about different critical aspects of LLMs and RAG. Before taking it, I used to wander through endless resources, most of which were, in fact, low quality. The course is fantastic, and I highly recommend it to everyone. One of the things I love about the course is that it’s not just a series of video lectures; it includes many code notebooks with detailed explanations, allowing you to learn by coding and engaging, which is the best approach. In order to create a good generative AI app with LLMs, a person should be knowledgeable about various topics, such as effective prompting, choosing the right tools, data collection and curation, working with various modalities, vector databases, query engines, building RAG systems for different needs, creating agents with tools like internet search, understanding various cloud and API providers, working with local LLMs, evaluation methods, deploying efficiently using techniques like quantization and caching, among many other related topics. This course covers ALL of them. Moreover, the support of creators have been great, I noticed a few minor issues in the code examples, which were fixed when I pointed them out! Read Less 5 star rating\n\nUnderstanding the basics of LLMs without math\n\nTiamiyu Hamzat\nTo be honest, this course is completely different from other courses on LLM I have seen out there. This course is fully packed with lots of knowledge, advanced techniques and skills to build a successful LLM project. I am glad I did not hesitate t... Read More To be honest, this course is completely different from other courses on LLM I have seen out there. This course is fully packed with lots of knowledge, advanced techniques and skills to build a successful LLM project. I am glad I did not hesitate to purchase this course. Read Less 5 star rating\n\ngreat course\n\nDanny Vaks\nRead Less 5 star rating\n\nThe most comprehensive LLM / AI engineering course out there\n\nCarlo Casorzo\nI am amazed about the thoroughness and clarity of this TowardsAI course. It really covers the whole spectrum of LLM engineering end-to-end, starting from the very basics and reaching a very deep level. 100% recommended I am amazed about the thoroughness and clarity of this TowardsAI course. It really covers the whole spectrum of LLM engineering end-to-end, starting from the very basics and reaching a very deep level. 100% recommended Read Less 5 star rating\n\nExceptional course with in-depth resources\n\nVitor Ramos\nThis course stands out for its exceptional structure and quality of references that truly deepen the learning experience. The materials are carefully curated and provide a comprehensive foundation that encourages further exploration of the topics ... Read More This course stands out for its exceptional structure and quality of references that truly deepen the learning experience. The materials are carefully curated and provide a comprehensive foundation that encourages further exploration of the topics covered. Each reference not only supports the lessons but also enriches understanding, making complex concepts accessible and engaging. The overall course design is well-organized, ensuring that learners can easily navigate through the content and achieve their learning goals. Highly recommended for anyone looking to expand their knowledge with quality resources. Read Less 5 star rating\n\nA must have book and training course for LLM Developers and Data Science Students\n\nBadshah Mukherjee\nI find the book and training videos a must-have for anyone interested in learning about LLMs and developing a career in them. I have recommended them to my students in Data Science and AI to accelerate their understanding and build MVPs. I find the book and training videos a must-have for anyone interested in learning about LLMs and developing a career in them. I have recommended them to my students in Data Science and AI to accelerate their understanding and build MVPs. Read Less 5 star rating\n\nTruly practical from engineering perspective\n\nVictor Palomares\nGreat tutorial. It is building concepts from the ground up. From an engineering perspective going through the code and running the examples helps to grasp a deep understanding. I find this is very practical and equips you with the tooling to face ... Read More Great tutorial. It is building concepts from the ground up. From an engineering perspective going through the code and running the examples helps to grasp a deep understanding. I find this is very practical and equips you with the tooling to face real world use cases. Read Less 5 star rating\n\nComplete and practical\n\nMikhail Rybalchenko\nI really enjoy the course. It's super comprehensive and strikes a good balance between theory and hands-on. It also way more affordable than many other options out there. What makes the course stand out is that it doesn't stop at the basics, it ac... Read More I really enjoy the course. It's super comprehensive and strikes a good balance between theory and hands-on. It also way more affordable than many other options out there. What makes the course stand out is that it doesn't stop at the basics, it actually goes into design, deployment and optimization. A great choice to master AI engineering. Read Less\n\nWho Is This Course For?\nThis certification is for software developers, machine learning engineers, data scientists and AI students transitioning into AI engineering The Developer Going All-In on AI: Ready to make AI your primary skill set. Build a portfolio, earn certification, and walk into high-demand LLM and AI engineering roles with proof you can deliver. The Engineer Leading AI at Their Company: You see AI transforming your industry. Gain the hands-on experience to lead initiatives, deploy real solutions, and drive innovation from the inside. The Developer With a Product Idea: You have an idea and the technical chops to build it. Turn it into a deployed, production-grade LLM application, all within 50+ hours of focused learning.\n\nCourse Curriculum\n\nCourse Introduction and Understanding LLMs (9 Lessons)\nFrom Beginner to Advanced LLM Developer | The Towards AI Academy FREE PREVIEW Course Introduction and Logistics FREE PREVIEW Syllabus In-Depth FREE PREVIEW How to use LLMs via API FREE PREVIEW An LLM Developer’s Role is to Address AI’s Weaknesses and Increase its Capabilities FREE PREVIEW Why Prompt Engineering, RAG, Tools, and Fine-tuning? FREE PREVIEW Understanding AI and Large Language Models without Math or Code Alien Intelligence Leads to Unintuitive Mistakes Course Tools Guide\n\nPart 1: Building our RAG AI Tutor - Using LLMs (11 Lessons)\nPart 1: Section Overview: Building Our RAG AI Tutor; Introduction to Using LLMs To use a LLM or to not use it? Choosing your LLM Part 1: Open vs Closed Source and Key Comparison Metrics Choosing your LLM Part 2: Key Benchmarks and Leaderboards Choosing your LLM Part 3: The Leading Open and Closed LLMs Today What is Prompting? Talking with AI Models... Prompting 101 What is Prompt Injection? Can you Hack a Prompt? Building our AI Tutor System Prompt. Introducing Prompt Injection and Hacking Evaluating and Iterating Prompts Quiz\n\nPart 1: Building our RAG AI Tutor - RAG Basics (6 Lessons)\nPart 1: Section Overview: Building Our RAG AI Tutor; Using Basic RAG for Our Project What is RAG? RAG 101 Building your Knowledge Base for RAG Building a basic RAG pipeline from scratch Build an OpenAI GPT with our AI blog data Quiz\n\nPart 1: Building our RAG AI Tutor - RAG with Llamaindex (7 Lessons)\nPart 1: Section Overview: Building Our RAG AI Tutor; Developing a RAG AI Tutor With LLamaIndex Basic RAG with LlamaIndex How vector DBs work and when to use one Using a Vector Database Improving Data Sources and Prompts RAG Evaluations Evaluating your RAG Pipeline Quiz\n\nPart 1: Building our RAG AI Tutor - Using other LLMs and Embedding Models (6 Lessons)\nPart 1: Section Overview: Building Our RAG AI Tutor; Using Other LLMs and Embedding Models Security, Privacy & Cost; Comparing 5 key ways to access LLMs Using Llama 3.1 70B on Together.ai and comparing RAG performance Ollama Tutorial: Running Deepseek Distill Locally Multimodal LLMs and Their Role in RAG Pipelines How to Select the Right Embedding Model for Your Use Case? Quiz\n\nPart 1: Building our RAG AI Tutor - Collecting, Filtering and Cleaning Data (8 Lessons)\nPart 1: Section Overview: Building Our RAG AI Tutor; Collecting, Filtering, and Cleaning Data for RAG and LLM Pipelines Scraping Data from Websites Scraping via API with Firecrawl Perplexity Web API Web Search API Structuring Your Data: OpenAI Structured JSON Outputs Parsing Data with LlamaParse Choosing Data Sources and Building our AI Tutor Dataset Quiz\n\nPart 1: Building our RAG AI Tutor - Advanced RAG (10 Lessons)\nPart 1: Section Overview: Building our RAG AI Tutor; Advanced RAG; How we Find and Use the Most Relevant Data! Larger Context Window; More Chunks LLM as a judge; Ranking Chunks Search with Metadata Filtering Advanced Search Techniques: From Keywords to Graphs Hybrid search Query Variation and Augmentation Re-Ranking What is Indexing? Indexing Methods for Vector Retrieval Advanced Retrieval Quiz\n\nPart 1: Building our RAG AI Tutor - Fine-Tuning (6 Lessons)\nPart 1: Section Overview: Building Our RAG AI Tutor; Fine-Tuning Optimizing the model - inference and fine-tuning Fine-tuning 101 GPT4o-Mini Fine Tuning in our project Is fine-tuning an embedding model worth? When should you do it? Why? What is it? Fine-Tuning Embedding Models with LlamaIndex Quiz\n\nPart 1: Building our RAG AI Tutor - Expanded RAG Toolkit (10 Lessons)\nPart 1: Section Overview: Building Our RAG AI Tutor; Expanded RAG Toolkit Non-Technical Skills for Effective LLM Development Adding Question Validation and Routing An Introduction to Reasoning Language Models Reinforcement Fine-Tuning for OpenAI Enabling Conversational Memory in LLMs Adding Speech with GPT-4o Audio Long Context LLMs vs. RAG Long Context LLMs & Context Caching vs RAG Graph ML and GraphRAG Quiz\n\nPart 1: Building our RAG AI Tutor - APIs, UI and Deployment (5 Lessons)\nPart 1: Section Overview: Building and Deploying the Final RAG Chatbot Bringing it all together: Building the final AI Tutor How to make an API? Building and Deploying a Gradio UI on Hugging Face Spaces Quick Tips for Improving LLM Apps Once in Production Quiz\n\nPart 2: Expanding Your Toolkit Beyond our AI Tutor - More LLM Capabilities and Useful AI Models (4 Lessons)\nPart 2 Intro; Introducing more tools, models & frameworks for LLM projects Part 2: Section Overview: More LLM Capabilities & Other Useful AI Models Image Generation (Diffusion) and Speech models Generating and Editing Images via the OpenAI API LLM Agents: LLM Pipelines and Tool Use for Complex Tasks Quiz\n\nPart 2: More LLM Frameworks and Tools (9 Lessons)\nPart 2: Section Overview: More LLM Frameworks and Tools More LLM framework options; LangChain vs. LlamaIndex vs. OpenAI Assistants LangChain Introduction 101 Access More AI Models with Hugging Face’s APIs Building Agents with OpenAI Assistants LangChain OpenGPT Extending LLM Capabilities with Anthropic's Model Context Protocol (MCP) Observability or tracing in production; Langsmith, Phoenix and Langfuse More APIs and tools Quiz\n\nPart 2: LLM Optimization (6 Lessons)\nPart 2: Section Overview: LLM Optimizations for Deployment Best tips for Pruning and Distillation (Minitron Paper) Model Distillation and Teacher-Student Models LLM Deployment Optimisation; Quantization, Pruning, Speculative Decoding Deploying a Quantized LLM on CPU on Google Cloud Platform (GCP) Deploying an LLM Using Latitude.sh Quiz\n\nPart 3: LLM Ecosystem Economics; Choose the Right Niche and Business Strategy for your LLM Pipeline (9 Lessons)\nPart 3 Intro (optional); Deciding which LLM RAG project to build yourself What will drive Enterprise adoption of Generative AI? Who are the Generative AI Winners? How will Adoption Reshape the Economy? Impact of Large Language Models on Different Job Categories 175 LLM Project ideas; Choosing your industry, niche, primary function and target users What Makes a Defensible Product Built with Foundation LLMs? AI LLM/RAG deep dive; Perplexity LLM/RAG deep dive; Consensus AI/LLM Deep dive; Harvey AI Quiz\n\nPart 4: Project + Extra tools\nPart 4; Building Your Own advanced LLM + RAG Project to receive certification Project Submission AI Tutor - Ask any question! Staying Ahead of AI Developments Share your success and showcase your new skills! Show more\n\nCourse Highlights\n$1000 $349 92 Lessons Monthly Payment Plan Option\n\nRisk-Free Learning: 30-Day Money-Back Guarantee\nLLM development isn’t for everyone. If you explore the early part of the course and feel it’s not what you need, you can request a refund within 30 days. We’d rather you invest your time where it matters most. Start Risk-Free\n\nHow It Works\nProject-based learning designed for working professionals—self-paced with live instructor support. Self-Paced + Live Introductory Cohort Calls: Learn on your schedule with lifetime access. Join introductory cohort calls with instructors and fellow course takers. Learn by Building: Hands-on projects from day one. Build a production LLM system from scratch, not toy examples or follow-along tutorials. Active Discord Community: Get unstuck fast. Connect with fellow builders, share progress, and collaborate on projects in an active engineering community. Certificate Upon Completion: Prove you built and deployed production AI. Graduate with certification backed by two real systems—portfolio-ready proof you ship. Lifetime Access + Updates: All current content plus future updates as AI evolves. Your investment stays valuable. Money-Back Guarantee: 30-day full refund, no questions asked. Risk-free enrollment.\n\nCourse Prerequisite\nTo truly maximize the learning experience, a technical foundation is essential for this course due to the hands-on nature of the projects. Intermediate Python knowledge Basic knowledge of GitHub Necessary libraries for code implementations Compatible device to setup a coding environment At least 50 hours to gain the full benefit of the course Build Your First Scalable Product with LLMs, Prompting, RAG, Tool Use, and Fine-Tuning. $133/month for 3 months, or $349 one-time for the lowest total. Unlock Access for $349 Pay Monthly\n\nFAQ\nWill I get a certificate upon completion? Yes, you will receive a Towards AI certificate upon completion. What projects will I work on? You’ll work on building your own AI tutor, create RAG pipelines, and build your advanced LLM MVP. Each project is designed to solve real-world problems, ensuring you gain practical, hands-on experience. What are the course prerequisites? Intermediate Python, basic GitHub knowledge, and a device you can set up a coding environment on. No prior AI or LLM experience needed. When was this course created? Is it still up to date? The course was originally launched in 2025, but we update it every single week with new lessons, tools, and techniques as the AI landscape evolves. You’re not just buying a static course—you’re getting a living resource designed to keep you ahead. How is this course different from other AI courses? Unlike many theoretical courses, this one is fully hands-on, project-based, and focused on the skills top companies are hiring for right now. We guide you through every step, ensuring you not only understand the concepts but can also apply them immediately. How does this course compare to your \"Agentic AI Engineering\" course? The Agents course is a deep dive into building production-grade autonomous systems. Full Stack AI Engineering is broader. You build a complete LLM product from data collection to RAG, fine-tuning, deployment, and business positioning, with agents as one component of the stack. If Agents is about mastering autonomy, Full Stack is about mastering the full AI product lifecycle. Do you have a referral or affiliate program? Yes. Towards AI offers an Affiliate Program and Referral Program, enabling you to earn money (up to $70 per course & $180 for a bundle) and free access to our courses by promoting our top courses and the \"Building LLMs for Production\" eBook. Check the 'Affiliate' page linked in the header. Can I get a discount? Yes, there are three ways to receive a discount on our courses. If you're a student, we offer a 50% discount on all courses. Additionally, if you've previously purchased our book or another course, you're eligible for a discount. We also provide a bundle discount for groups of two or more people. For further details or to claim your discount, please email Louis-François at [email protected] for a follow-up. Can I take this course within my company? Yes! We offer both course bundles and custom training solutions tailored specifically for companies. For more information on company packages or to discuss a customized training plan, reach out to Louis at [email protected] .\n\nBrought to you by\nNEW Agentic AI Engineering Guide : The 6 mistakes breaking production agents and how to fix them.",
+      "text": "Become a Full Stack AI Engineer\nAnd position yourself for the roles, projects, and opportunities that AI is creating right now. Unlock Lifetime Access for $349 (join 1000+ AI engineers) Watch Intro Video\n\nIndustry Leaders on the Course\n“This is the most comprehensive textbook to date on building LLM applications, and helps learners understand everything from fundamentals to the simple-to-advanced building blocks of constructing LLM applications. The application topics include prompting, RAG, agents, fine-tuning, and deployment - all essential topics in an AI Engineer's toolkit.” Jerry Liu, Co-founder and CEO of LlamaIndex “A truly wonderful resource that develops understanding of LLMs from the ground up, from theory to code and modern frameworks. Grounds your knowledge in research trends and frameworks that develop your intuition around what's coming. Highly recommend.” -Pete Huang, Co-founder of The Neuron “An incredible survey of all the real-world problems one encounters when trying to productionize an LLM, as well as multiple solutions to each roadblock. Highly recommend this!” Nick Singh, Founder of DataLemur.com & Author of Ace the Data Science Interview “A comprehensive and well-rounded resource that covers all the fundamentals of LLMs with a well-struck balance between theory and code[…]” Tina Huang, Founder of Lonely Octopus, YouTuber, Ex-Meta “It covers the foundational aspects of LLMs as well as advanced use-cases like finetuning LLMs, Retrieval Augmented Generation and Agents. This will be valuable to anyone looking to dive into the field quickly and efficiently.” Jeremy Pinto, Senior Applied Research Scientist at Mila\n\nThe Gaps Between Developer and AI Engineer\nWe close them with real projects, proven frameworks, and the exact skills companies are hiring for.\n\nSoftware Engineering ≠ LLM Engineering\nLearn to engineer around probabilistic systems This course teaches you to design reliable systems on top of unpredictable models, using prompt engineering, context engineering, and RAG to control what the model knows, and fine-tuning to control how it behaves.\n\nThe Talent Gap Is Your Opportunity\nGet trained in exactly what the role demands The AI engineering role is only 2-3 years old; the window to get in early is still open. Master the full stack: from choosing the right models and architectures to evaluating, optimizing, and deploying production-grade AI systems at scale.\n\nDemos ≠ Production Systems\nShip real, deployable LLM products Move beyond notebooks and build something that gives you a competitive edge in the job market, launches your startup idea, or drives a new product at your company.\n\nExperience the Course Before You Commit\nExplore the First 6 Lessons Free Unlock Free Preview\n\nWhat You'll Build\nA production-grade AI tutor and a complete LLM toolkit through hands-on capstone projects.\n\nRAG AI Tutor\nBuild a fully deployed AI tutor from scratch across 60+ lessons. You'll implement: Prompt engineering: system prompts and iterative evaluation Data pipeline: scrape, parse, and clean data using Firecrawl, LlamaParse, and web APIs RAG pipeline: build from scratch then scale with LlamaIndex and vector databases Advanced retrieval: hybrid search, re-ranking, metadata filtering, and query augmentation Fine-tuning: optimize GPT-4o Mini and embedding models for your use case Production deployment: FastAPI, Gradio UI, and Hugging Face Spaces\n\nFull LLM Toolkit\nExpand beyond the AI tutor with the broader skills the role demands. You'll implement: Agent architecture: tool use, LLM pipelines, and autonomous task execution Framework fluency: LangChain, LlamaIndex, and OpenAI Assistants side by side Multi-modal capabilities: image generation, speech, and diffusion models Observability: production tracing with Langsmith, Phoenix, and Langfuse LLM optimization: quantization, pruning, distillation, and speculative decoding\n\nYour Own LLM Product\nApply everything to build and ship your own LLM application. You'll implement: Product strategy: 175 project ideas, niche selection, and defensibility frameworks Business context: learn from real products like Perplexity, Harvey AI, and Consensus Custom RAG application: your own idea, fully built and deployed on Hugging Face Certified delivery: reviewed by our team and portfolio-ready for jobs, MVPs, or pitches Incubation opportunity: standout projects get direct support to find work or launch\n\nBuild Your First LLM Product This Week\n󠁯•󠁏 A fully deployed LLM application, production-ready 󠁯•󠁏 Gain portfolio-ready skills with certification 󠁯•󠁏 Master fundamentals that outlast trends Self-paced learning • Regular updates • Risk-free enrollment Enroll Now\n\nHear From the Engineers Who Took the Leap\n5 star rating\n\nLove it\n\nPaul Iusztin\nIf you are interested in AI Engineering, this course is one of the few within the AI space worth your time and money. I have closely worked with the Towards AI team and totally vouch for their deep expertise, passion and educational skills. Also, ... Read More If you are interested in AI Engineering, this course is one of the few within the AI space worth your time and money. I have closely worked with the Towards AI team and totally vouch for their deep expertise, passion and educational skills. Also, love their approach to teaching engineering, where instead of many small projects, they walk you through a larger project, from end-to-end, reflecting what you actually encounter within the industry. Read Less 5 star rating\n\nExcellent course\n\nMartin Ballard\nThe course covers an immense amount of information. I feel like I really learned a ton about working with LLMs and how to develop and deploy my own applications. The course covers an immense amount of information. I feel like I really learned a ton about working with LLMs and how to develop and deploy my own applications. Read Less 5 star rating\n\nFrom Beginner to Advanced LLM Developer\n\nBoonchiat Tan\n\"This course is fantastic! The content is well-curated, making it easier to learn the techniques quickly. Great job! Thanks again!\" \"This course is fantastic! The content is well-curated, making it easier to learn the techniques quickly. Great job! Thanks again!\" Read Less 5 star rating\n\nHighly Recommend This Course\n\nFarhad Dalirani\nThis course is highly valuable. You can learn a lot about different critical aspects of LLMs and RAG. Before taking it, I used to wander through endless resources, most of which were, in fact, low quality. The course is fantastic, and I highly rec... Read More This course is highly valuable. You can learn a lot about different critical aspects of LLMs and RAG. Before taking it, I used to wander through endless resources, most of which were, in fact, low quality. The course is fantastic, and I highly recommend it to everyone. One of the things I love about the course is that it’s not just a series of video lectures; it includes many code notebooks with detailed explanations, allowing you to learn by coding and engaging, which is the best approach. In order to create a good generative AI app with LLMs, a person should be knowledgeable about various topics, such as effective prompting, choosing the right tools, data collection and curation, working with various modalities, vector databases, query engines, building RAG systems for different needs, creating agents with tools like internet search, understanding various cloud and API providers, working with local LLMs, evaluation methods, deploying efficiently using techniques like quantization and caching, among many other related topics. This course covers ALL of them. Moreover, the support of creators have been great, I noticed a few minor issues in the code examples, which were fixed when I pointed them out! Read Less 5 star rating\n\nUnderstanding the basics of LLMs without math\n\nTiamiyu Hamzat\nTo be honest, this course is completely different from other courses on LLM I have seen out there. This course is fully packed with lots of knowledge, advanced techniques and skills to build a successful LLM project. I am glad I did not hesitate t... Read More To be honest, this course is completely different from other courses on LLM I have seen out there. This course is fully packed with lots of knowledge, advanced techniques and skills to build a successful LLM project. I am glad I did not hesitate to purchase this course. Read Less 5 star rating\n\ngreat course\n\nDanny Vaks\nRead Less 5 star rating\n\nThe most comprehensive LLM / AI engineering course out there\n\nCarlo Casorzo\nI am amazed about the thoroughness and clarity of this TowardsAI course. It really covers the whole spectrum of LLM engineering end-to-end, starting from the very basics and reaching a very deep level. 100% recommended I am amazed about the thoroughness and clarity of this TowardsAI course. It really covers the whole spectrum of LLM engineering end-to-end, starting from the very basics and reaching a very deep level. 100% recommended Read Less 5 star rating\n\nExceptional course with in-depth resources\n\nVitor Ramos\nThis course stands out for its exceptional structure and quality of references that truly deepen the learning experience. The materials are carefully curated and provide a comprehensive foundation that encourages further exploration of the topics ... Read More This course stands out for its exceptional structure and quality of references that truly deepen the learning experience. The materials are carefully curated and provide a comprehensive foundation that encourages further exploration of the topics covered. Each reference not only supports the lessons but also enriches understanding, making complex concepts accessible and engaging. The overall course design is well-organized, ensuring that learners can easily navigate through the content and achieve their learning goals. Highly recommended for anyone looking to expand their knowledge with quality resources. Read Less 5 star rating\n\nA must have book and training course for LLM Developers and Data Science Students\n\nBadshah Mukherjee\nI find the book and training videos a must-have for anyone interested in learning about LLMs and developing a career in them. I have recommended them to my students in Data Science and AI to accelerate their understanding and build MVPs. I find the book and training videos a must-have for anyone interested in learning about LLMs and developing a career in them. I have recommended them to my students in Data Science and AI to accelerate their understanding and build MVPs. Read Less 5 star rating\n\nTruly practical from engineering perspective\n\nVictor Palomares\nGreat tutorial. It is building concepts from the ground up. From an engineering perspective going through the code and running the examples helps to grasp a deep understanding. I find this is very practical and equips you with the tooling to face ... Read More Great tutorial. It is building concepts from the ground up. From an engineering perspective going through the code and running the examples helps to grasp a deep understanding. I find this is very practical and equips you with the tooling to face real world use cases. Read Less 5 star rating\n\nComplete and practical\n\nMikhail Rybalchenko\nI really enjoy the course. It's super comprehensive and strikes a good balance between theory and hands-on. It also way more affordable than many other options out there. What makes the course stand out is that it doesn't stop at the basics, it ac... Read More I really enjoy the course. It's super comprehensive and strikes a good balance between theory and hands-on. It also way more affordable than many other options out there. What makes the course stand out is that it doesn't stop at the basics, it actually goes into design, deployment and optimization. A great choice to master AI engineering. Read Less\n\nWho Is This Course For?\nThis certification is for software developers, machine learning engineers, data scientists and AI students transitioning into AI engineering The Developer Going All-In on AI: Ready to make AI your primary skill set. Build a portfolio, earn certification, and walk into high-demand LLM and AI engineering roles with proof you can deliver. The Engineer Leading AI at Their Company: You see AI transforming your industry. Gain the hands-on experience to lead initiatives, deploy real solutions, and drive innovation from the inside. The Developer With a Product Idea: You have an idea and the technical chops to build it. Turn it into a deployed, production-grade LLM application, all within 50+ hours of focused learning.\n\nCourse Curriculum\n\nCourse Introduction and Understanding LLMs (9 Lessons)\nFrom Beginner to Advanced LLM Developer | The Towards AI Academy FREE PREVIEW Course Introduction and Logistics FREE PREVIEW Syllabus In-Depth FREE PREVIEW How to use LLMs via API FREE PREVIEW An LLM Developer’s Role is to Address AI’s Weaknesses and Increase its Capabilities FREE PREVIEW Why Prompt Engineering, RAG, Tools, and Fine-tuning? FREE PREVIEW Understanding AI and Large Language Models without Math or Code Alien Intelligence Leads to Unintuitive Mistakes Course Tools Guide\n\nPart 1: Building our RAG AI Tutor - Using LLMs (10 Lessons)\nPart 1: Section Overview: Building Our RAG AI Tutor; Introduction to Using LLMs To use a LLM or to not use it? Choosing your LLM Part 1: Open vs Closed Source and Key Comparison Metrics Choosing your LLM Part 2: Key Benchmarks and Leaderboards What is Prompting? Talking with AI Models... Prompting 101 What is Prompt Injection? Can you Hack a Prompt? Building our AI Tutor System Prompt. Introducing Prompt Injection and Hacking Evaluating and Iterating Prompts Quiz\n\nPart 1: Building our RAG AI Tutor - RAG Basics (6 Lessons)\nPart 1: Section Overview: Building Our RAG AI Tutor; Using Basic RAG for Our Project What is RAG? RAG 101 Building your Knowledge Base for RAG Building a basic RAG pipeline from scratch Build an OpenAI GPT with our AI blog data Quiz\n\nPart 1: Building our RAG AI Tutor - RAG with Llamaindex (7 Lessons)\nPart 1: Section Overview: Building Our RAG AI Tutor; Developing a RAG AI Tutor With LLamaIndex Basic RAG with LlamaIndex How vector DBs work and when to use one Using a Vector Database Improving Data Sources and Prompts RAG Evaluations Evaluating your RAG Pipeline Quiz\n\nPart 1: Building our RAG AI Tutor - Using other LLMs and Embedding Models (6 Lessons)\nPart 1: Section Overview: Building Our RAG AI Tutor; Using Other LLMs and Embedding Models Security, Privacy & Cost; Comparing 5 key ways to access LLMs Using Llama 3.1 70B on Together.ai and comparing RAG performance Ollama Tutorial: Running Deepseek Distill Locally Multimodal LLMs and Their Role in RAG Pipelines How to Select the Right Embedding Model for Your Use Case? Quiz\n\nPart 1: Building our RAG AI Tutor - Collecting, Filtering and Cleaning Data (8 Lessons)\nPart 1: Section Overview: Building Our RAG AI Tutor; Collecting, Filtering, and Cleaning Data for RAG and LLM Pipelines Scraping Data from Websites Scraping via API with Firecrawl Perplexity Web API Web Search API Structuring Your Data: OpenAI Structured JSON Outputs Parsing Data with LlamaParse Choosing Data Sources and Building our AI Tutor Dataset Quiz\n\nPart 1: Building our RAG AI Tutor - Advanced RAG (10 Lessons)\nPart 1: Section Overview: Building our RAG AI Tutor; Advanced RAG; How we Find and Use the Most Relevant Data! Larger Context Window; More Chunks LLM as a judge; Ranking Chunks Search with Metadata Filtering Advanced Search Techniques: From Keywords to Graphs Hybrid search Query Variation and Augmentation Re-Ranking What is Indexing? Indexing Methods for Vector Retrieval Advanced Retrieval Quiz\n\nPart 1: Building our RAG AI Tutor - Fine-Tuning (6 Lessons)\nPart 1: Section Overview: Building Our RAG AI Tutor; Fine-Tuning Optimizing the model - inference and fine-tuning Fine-tuning 101 GPT4o-Mini Fine Tuning in our project Is fine-tuning an embedding model worth? When should you do it? Why? What is it? Fine-Tuning Embedding Models with LlamaIndex Quiz\n\nPart 1: Building our RAG AI Tutor - Expanded RAG Toolkit (10 Lessons)\nPart 1: Section Overview: Building Our RAG AI Tutor; Expanded RAG Toolkit Non-Technical Skills for Effective LLM Development Adding Question Validation and Routing An Introduction to Reasoning Language Models Reinforcement Fine-Tuning for OpenAI Enabling Conversational Memory in LLMs Adding Speech with GPT-4o Audio Long Context LLMs vs. RAG Long Context LLMs & Context Caching vs RAG Graph ML and GraphRAG Quiz\n\nPart 1: Building our RAG AI Tutor - APIs, UI and Deployment (5 Lessons)\nPart 1: Section Overview: Building and Deploying the Final RAG Chatbot Bringing it all together: Building the final AI Tutor How to make an API? Building and Deploying a Gradio UI on Hugging Face Spaces Quick Tips for Improving LLM Apps Once in Production Quiz\n\nPart 2: Expanding Your Toolkit Beyond our AI Tutor - More LLM Capabilities and Useful AI Models (4 Lessons)\nPart 2 Intro; Introducing more tools, models & frameworks for LLM projects Part 2: Section Overview: More LLM Capabilities & Other Useful AI Models Image Generation (Diffusion) and Speech models Generating and Editing Images via the OpenAI API LLM Agents: LLM Pipelines and Tool Use for Complex Tasks Quiz\n\nPart 2: More LLM Frameworks and Tools (9 Lessons)\nPart 2: Section Overview: More LLM Frameworks and Tools More LLM framework options; LangChain vs. LlamaIndex vs. OpenAI Assistants LangChain Introduction 101 Access More AI Models with Hugging Face’s APIs Building Agents with OpenAI Assistants LangChain OpenGPT Extending LLM Capabilities with Anthropic's Model Context Protocol (MCP) Observability or tracing in production; Langsmith, Phoenix and Langfuse More APIs and tools Quiz\n\nPart 2: LLM Optimization (6 Lessons)\nPart 2: Section Overview: LLM Optimizations for Deployment Best tips for Pruning and Distillation (Minitron Paper) Model Distillation and Teacher-Student Models LLM Deployment Optimisation; Quantization, Pruning, Speculative Decoding Deploying a Quantized LLM on CPU on Google Cloud Platform (GCP) Deploying an LLM Using Latitude.sh Quiz\n\nPart 3: LLM Ecosystem Economics; Choose the Right Niche and Business Strategy for your LLM Pipeline (9 Lessons)\nPart 3 Intro (optional); Deciding which LLM RAG project to build yourself What will drive Enterprise adoption of Generative AI? Who are the Generative AI Winners? How will Adoption Reshape the Economy? Impact of Large Language Models on Different Job Categories 175 LLM Project ideas; Choosing your industry, niche, primary function and target users What Makes a Defensible Product Built with Foundation LLMs? AI LLM/RAG deep dive; Perplexity LLM/RAG deep dive; Consensus AI/LLM Deep dive; Harvey AI Quiz\n\nPart 4: Project + Extra tools\nPart 4; Building Your Own advanced LLM + RAG Project to receive certification Project Submission AI Tutor - Ask any question! Staying Ahead of AI Developments Share your success and showcase your new skills! Show more\n\nCourse Highlights\n$1000 $349 92 Lessons Monthly Payment Plan Option\n\nRisk-Free Learning: 30-Day Money-Back Guarantee\nLLM development isn’t for everyone. If you explore the early part of the course and feel it’s not what you need, you can request a refund within 30 days. We’d rather you invest your time where it matters most. Start Risk-Free\n\nHow It Works\nProject-based learning designed for working professionals—self-paced with live instructor support. Self-Paced + Live Introductory Cohort Calls: Learn on your schedule with lifetime access. Join introductory cohort calls with instructors and fellow course takers. Learn by Building: Hands-on projects from day one. Build a production LLM system from scratch, not toy examples or follow-along tutorials. Active Discord Community: Get unstuck fast. Connect with fellow builders, share progress, and collaborate on projects in an active engineering community. Certificate Upon Completion: Prove you built and deployed production AI. Graduate with certification backed by two real systems—portfolio-ready proof you ship. Lifetime Access + Updates: All current content plus future updates as AI evolves. Your investment stays valuable. Money-Back Guarantee: 30-day full refund, no questions asked. Risk-free enrollment.\n\nCourse Prerequisite\nTo truly maximize the learning experience, a technical foundation is essential for this course due to the hands-on nature of the projects. Intermediate Python knowledge Basic knowledge of GitHub Necessary libraries for code implementations Compatible device to setup a coding environment At least 50 hours to gain the full benefit of the course Build Your First Scalable Product with LLMs, Prompting, RAG, Tool Use, and Fine-Tuning. $133/month for 3 months, or $349 one-time for the lowest total. Unlock Access for $349 Pay Monthly\n\nFAQ\nWill I get a certificate upon completion? Yes, you will receive a Towards AI certificate upon completion. What projects will I work on? You’ll work on building your own AI tutor, create RAG pipelines, and build your advanced LLM MVP. Each project is designed to solve real-world problems, ensuring you gain practical, hands-on experience. What are the course prerequisites? Intermediate Python, basic GitHub knowledge, and a device you can set up a coding environment on. No prior AI or LLM experience needed. When was this course created? Is it still up to date? The course was originally launched in 2025, but we update it every single week with new lessons, tools, and techniques as the AI landscape evolves. You’re not just buying a static course—you’re getting a living resource designed to keep you ahead. How is this course different from other AI courses? Unlike many theoretical courses, this one is fully hands-on, project-based, and focused on the skills top companies are hiring for right now. We guide you through every step, ensuring you not only understand the concepts but can also apply them immediately. How does this course compare to your \"Agentic AI Engineering\" course? The Agents course is a deep dive into building production-grade autonomous systems. Full Stack AI Engineering is broader. You build a complete LLM product from data collection to RAG, fine-tuning, deployment, and business positioning, with agents as one component of the stack. If Agents is about mastering autonomy, Full Stack is about mastering the full AI product lifecycle. Do you have a referral or affiliate program? Yes. Towards AI offers an Affiliate Program and Referral Program, enabling you to earn money (up to $70 per course & $180 for a bundle) and free access to our courses by promoting our top courses and the \"Building LLMs for Production\" eBook. Check the 'Affiliate' page linked in the header. Can I get a discount? Yes, there are three ways to receive a discount on our courses. If you're a student, we offer a 50% discount on all courses. Additionally, if you've previously purchased our book or another course, you're eligible for a discount. We also provide a bundle discount for groups of two or more people. For further details or to claim your discount, please email Louis-François at [email protected] for a follow-up. Can I take this course within my company? Yes! We offer both course bundles and custom training solutions tailored specifically for companies. For more information on company packages or to discuss a customized training plan, reach out to Louis at [email protected] .\n\nBrought to you by\nNEW Agentic AI Engineering Guide : The 6 mistakes breaking production agents and how to fix them.",
       "links": [
         {
           "text": "Unlock Lifetime Access for $349 (join 1000+ AI engineers)",
@@ -2036,13 +2036,13 @@
         },
         {
           "chunk_id": "tai-3d7f3bfa0c22e21ee0d7efe2",
-          "text": "Part 1: Building our RAG AI Tutor - Using LLMs (11 Lessons)\nPart 1: Section Overview: Building Our RAG AI Tutor; Introduction to Using LLMs To use a LLM or to not use it? Choosing your LLM Part 1: Open vs Closed Source and Key Comparison Metrics Choosing your LLM Part 2: Key Benchmarks and Leaderboards Choosing your LLM Part 3: The Leading Open and Closed LLMs Today What is Prompting? Talking with AI Models... Prompting 101 What is Prompt Injection? Can you Hack a Prompt? Building our AI Tutor System Prompt. Introducing Prompt Injection and Hacking Evaluating and Iterating Prompts Quiz\n\nPart 1: Building our RAG AI Tutor - RAG Basics (6 Lessons)\nPart 1: Section Overview: Building Our RAG AI Tutor; Using Basic RAG for Our Project What is RAG? RAG 101 Building your Knowledge Base for RAG Building a basic RAG pipeline from scratch Build an OpenAI GPT with our AI blog data Quiz\n\nPart 1: Building our RAG AI Tutor - RAG with Llamaindex (7 Lessons)\nPart 1: Section Overview: Building Our RAG AI Tutor; Developing a RAG AI Tutor With LLamaIndex Basic RAG with LlamaIndex How vector DBs work and when to use one Using a Vector Database Improving Data Sources and Prompts RAG Evaluations Evaluating your RAG Pipeline Quiz\n\nPart 1: Building our RAG AI Tutor - Using other LLMs and Embedding Models (6 Lessons)\nPart 1: Section Overview: Building Our RAG AI Tutor; Using Other LLMs and Embedding Models Security, Privacy & Cost; Comparing 5 key ways to access LLMs Using Llama 3.1 70B on Together.ai and comparing RAG performance Ollama Tutorial: Running Deepseek Distill Locally Multimodal LLMs and Their Role in RAG Pipelines How to Select the Right Embedding Model for Your Use Case? Quiz",
-          "heading": "Part 1: Building our RAG AI Tutor - Using LLMs (11 Lessons)",
+          "text": "Part 1: Building our RAG AI Tutor - Using LLMs (10 Lessons)\nPart 1: Section Overview: Building Our RAG AI Tutor; Introduction to Using LLMs To use a LLM or to not use it? Choosing your LLM Part 1: Open vs Closed Source and Key Comparison Metrics Choosing your LLM Part 2: Key Benchmarks and Leaderboards What is Prompting? Talking with AI Models... Prompting 101 What is Prompt Injection? Can you Hack a Prompt? Building our AI Tutor System Prompt. Introducing Prompt Injection and Hacking Evaluating and Iterating Prompts Quiz\n\nPart 1: Building our RAG AI Tutor - RAG Basics (6 Lessons)\nPart 1: Section Overview: Building Our RAG AI Tutor; Using Basic RAG for Our Project What is RAG? RAG 101 Building your Knowledge Base for RAG Building a basic RAG pipeline from scratch Build an OpenAI GPT with our AI blog data Quiz\n\nPart 1: Building our RAG AI Tutor - RAG with Llamaindex (7 Lessons)\nPart 1: Section Overview: Building Our RAG AI Tutor; Developing a RAG AI Tutor With LLamaIndex Basic RAG with LlamaIndex How vector DBs work and when to use one Using a Vector Database Improving Data Sources and Prompts RAG Evaluations Evaluating your RAG Pipeline Quiz\n\nPart 1: Building our RAG AI Tutor - Using other LLMs and Embedding Models (6 Lessons)\nPart 1: Section Overview: Building Our RAG AI Tutor; Using Other LLMs and Embedding Models Security, Privacy & Cost; Comparing 5 key ways to access LLMs Using Llama 3.1 70B on Together.ai and comparing RAG performance Ollama Tutorial: Running Deepseek Distill Locally Multimodal LLMs and Their Role in RAG Pipelines How to Select the Right Embedding Model for Your Use Case? Quiz",
+          "heading": "Part 1: Building our RAG AI Tutor - Using LLMs (10 Lessons)",
           "index": 9,
           "evidence_spans": [
             {
-              "span_id": "span-87b5abe645ac3cd5893d5551",
-              "text": "Part 1: Building our RAG AI Tutor - Using LLMs (11 Lessons)"
+              "span_id": "span-1e9796ba1cd1c035ef3b9f72",
+              "text": "Part 1: Building our RAG AI Tutor - Using LLMs (10 Lessons)"
             },
             {
               "span_id": "span-7a3bf78eba37297b23243f03",
@@ -2059,10 +2059,6 @@
             {
               "span_id": "span-45fb4de976f310a9449fa7d7",
               "text": "Choosing your LLM Part 2: Key Benchmarks and Leaderboards"
-            },
-            {
-              "span_id": "span-d993aa45d6edcce4631e036f",
-              "text": "Choosing your LLM Part 3: The Leading Open and Closed LLMs Today"
             },
             {
               "span_id": "span-cab1b345787d843310d5ad0a",
@@ -2847,19 +2843,19 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T11:26:44.299348+00:00",
-      "content_sha256": "403056bec2783bea338b6529b8f53be252221bf677604178c65050679e062747",
-      "content_hash": "403056bec2783bea338b6529b8f53be252221bf677604178c65050679e062747",
+      "fetched_at": "2026-11-26T12:27:58.261966+00:00",
+      "content_sha256": "6cf314130aebb5400bf3b61b7dcb01d9126122e08bb776892594e236c44209f7",
+      "content_hash": "6cf314130aebb5400bf3b61b7dcb01d9126122e08bb776892594e236c44209f7",
       "authority": "official_academy",
       "status": "included",
       "retrieval_eligible": true,
       "http_status": 200,
-      "lastmod": "2026-08-13T16:36:00Z",
+      "lastmod": "2026-11-25T23:00:10Z",
       "sitemap_url": "https://academy.towardsai.net/sitemap.xml",
       "redirect_chain": [
         "https://academy.towardsai.net/courses/beginner-to-advanced-llm-dev"
       ],
-      "evidence_hash": "dcab9ae6b72c695084d5efccf8f3ce67a9d25eb3ca18914c03fa032b288e6c7e"
+      "evidence_hash": "8985be3ff8db57564694e8f7f7d483425b7a12a7cee04f11afb6afc78c3f260c"
     },
     {
       "discovered_url": "https://academy.towardsai.net/courses/agent-engineering",
@@ -4439,7 +4435,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T11:26:44.299348+00:00",
+      "fetched_at": "2026-11-26T12:27:58.261966+00:00",
       "content_sha256": "77fbb9ce3cc4e38d02747631e1cb6ba852db591202daa6491b19150c98e4ba07",
       "content_hash": "77fbb9ce3cc4e38d02747631e1cb6ba852db591202daa6491b19150c98e4ba07",
       "authority": "official_academy",
@@ -4451,7 +4447,7 @@
       "redirect_chain": [
         "https://academy.towardsai.net/courses/agent-engineering"
       ],
-      "evidence_hash": "49b881dab184186f24be0a37e2dd9b9164d5e8a0cd00c6d92b44cb3f75390c37"
+      "evidence_hash": "65efaa61646d696e4cd2abcd386853f8d642c28576313320a1e03dcf98724985"
     },
     {
       "discovered_url": "https://academy.towardsai.net/courses/llm-primer",
@@ -5165,7 +5161,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T11:26:44.299348+00:00",
+      "fetched_at": "2026-11-26T12:27:58.261966+00:00",
       "content_sha256": "ea0982643ddc081118e78a990fe1723b78b4ee141f233bc09bc83e6c50f90a28",
       "content_hash": "ea0982643ddc081118e78a990fe1723b78b4ee141f233bc09bc83e6c50f90a28",
       "authority": "official_academy",
@@ -5177,7 +5173,7 @@
       "redirect_chain": [
         "https://academy.towardsai.net/courses/llm-primer"
       ],
-      "evidence_hash": "cef0eb1961ccb988521e9a2e02c09b1407198a450335ab369f390f9a3d491150"
+      "evidence_hash": "5c109588ac2b398364d185e0d008a3d2ef190056cc20455cec8efcd66324612b"
     },
     {
       "discovered_url": "https://academy.towardsai.net/courses/python-for-genai",
@@ -6007,7 +6003,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T11:26:44.299348+00:00",
+      "fetched_at": "2026-11-26T12:27:58.261966+00:00",
       "content_sha256": "690732659c6db9a3c36d9935daf9803d4fac77f60de2ed9edefd0d4df7bf4e2c",
       "content_hash": "690732659c6db9a3c36d9935daf9803d4fac77f60de2ed9edefd0d4df7bf4e2c",
       "authority": "official_academy",
@@ -6019,7 +6015,7 @@
       "redirect_chain": [
         "https://academy.towardsai.net/courses/python-for-genai"
       ],
-      "evidence_hash": "9c57f3216039573988d7bf24f6140f9c73c43139cda83a708676dff570eaeaaf"
+      "evidence_hash": "a4e4b5db227df01a0d7d2711fc97a765834d1273e43ad890546f9ba3b66c0631"
     },
     {
       "discovered_url": "https://academy.towardsai.net/bundles/tai-mentorship",
@@ -6845,7 +6841,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T11:26:44.299348+00:00",
+      "fetched_at": "2026-11-26T12:27:58.261966+00:00",
       "content_sha256": "24ab607523dfb53910e3cdce57b3414e19395784be382d6e742ed2a3c4402435",
       "content_hash": "24ab607523dfb53910e3cdce57b3414e19395784be382d6e742ed2a3c4402435",
       "authority": "official_academy",
@@ -6857,7 +6853,7 @@
       "redirect_chain": [
         "https://academy.towardsai.net/bundles/tai-mentorship"
       ],
-      "evidence_hash": "5452ca6540b8f476ba3991baa671b7e2b9a4d723a78e5a2d99ff086f156fa339"
+      "evidence_hash": "160073145876ea49ac84de58b1dcfb84c051ebbb1d02e0a22f85d679d97562d5"
     },
     {
       "discovered_url": "https://academy.towardsai.net/courses/ai-business-professionals",
@@ -7830,7 +7826,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T11:26:44.299348+00:00",
+      "fetched_at": "2026-11-26T12:27:58.261966+00:00",
       "content_sha256": "e4aee1f4dbb47d19da1c487f95291782f42ec147ad6ca34a2aa717f990ac33ae",
       "content_hash": "e4aee1f4dbb47d19da1c487f95291782f42ec147ad6ca34a2aa717f990ac33ae",
       "authority": "official_academy",
@@ -7842,7 +7838,7 @@
       "redirect_chain": [
         "https://academy.towardsai.net/courses/ai-business-professionals"
       ],
-      "evidence_hash": "e53c5b4c2f44032df50c5bcdbb635fe643ff5c49bdabcf5717e3238510426153"
+      "evidence_hash": "19441111ade53bd13fbf758cd55bdc053dbfa424492230d9560d28000a572650"
     },
     {
       "discovered_url": "https://academy.towardsai.net/products/digital_downloads/agents-cheatsheet",
@@ -8099,7 +8095,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T11:26:44.299348+00:00",
+      "fetched_at": "2026-11-26T12:27:58.261966+00:00",
       "content_sha256": "5d48b33c53396e51aea4efaad2d54a38f308ae5a90792113d1fb5a8f7a963cfa",
       "content_hash": "5d48b33c53396e51aea4efaad2d54a38f308ae5a90792113d1fb5a8f7a963cfa",
       "authority": "official_academy",
@@ -8111,7 +8107,7 @@
       "redirect_chain": [
         "https://academy.towardsai.net/products/digital_downloads/agents-cheatsheet"
       ],
-      "evidence_hash": "e03b9751244cc3d13b1d30831a24885d5c3ee8d37d3b33ce9e24c87227d2e9ff"
+      "evidence_hash": "06a4bbf5b3c8f41ae103adbc7881d159656e4efd72fc06abaa64eb3fb5355d85"
     },
     {
       "discovered_url": "https://academy.towardsai.net/products/digital_downloads/anti-slop-framework",
@@ -8272,7 +8268,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T11:26:44.299348+00:00",
+      "fetched_at": "2026-11-26T12:27:58.261966+00:00",
       "content_sha256": "fd9657a0e685c388a00e11933f1a996e0afab500f7c35c1afc153d1fbef7c245",
       "content_hash": "fd9657a0e685c388a00e11933f1a996e0afab500f7c35c1afc153d1fbef7c245",
       "authority": "official_academy",
@@ -8284,7 +8280,7 @@
       "redirect_chain": [
         "https://academy.towardsai.net/products/digital_downloads/anti-slop-framework"
       ],
-      "evidence_hash": "4883c0d1885185335d82dbf3a05cbb5c65ad5915e4854cbe8246c15756c0130f"
+      "evidence_hash": "91811ce1bdc9534c6349a15fde4fc248cfe8400bd12ef9d1e3208374b220cade"
     },
     {
       "discovered_url": "https://academy.towardsai.net/bundles/get-it-all",
@@ -8616,7 +8612,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T11:26:44.299348+00:00",
+      "fetched_at": "2026-11-26T12:27:58.261966+00:00",
       "content_sha256": "d194dc98ab2d94efbcba2d920aaaded5d459d89a3c4adbf3b0ff7db5ad33f902",
       "content_hash": "d194dc98ab2d94efbcba2d920aaaded5d459d89a3c4adbf3b0ff7db5ad33f902",
       "authority": "official_academy",
@@ -8628,7 +8624,7 @@
       "redirect_chain": [
         "https://academy.towardsai.net/bundles/get-it-all"
       ],
-      "evidence_hash": "a1ec27eb94699f2db5f3715c47f44aa980884cf0b52d47c26811d23449c49714"
+      "evidence_hash": "b2d32ea31b96d5be13015f93687327e940d0de5d56af9aa2718af43e2311d33d"
     },
     {
       "discovered_url": "https://academy.towardsai.net/courses/buildingllmsforproduction",
@@ -9869,7 +9865,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T11:26:44.299348+00:00",
+      "fetched_at": "2026-11-26T12:27:58.261966+00:00",
       "content_sha256": "e57d75ea753295f10240b50c56a038ddb826cf765887c9345c936686a33f98da",
       "content_hash": "e57d75ea753295f10240b50c56a038ddb826cf765887c9345c936686a33f98da",
       "authority": "official_academy",
@@ -9881,7 +9877,7 @@
       "redirect_chain": [
         "https://academy.towardsai.net/courses/buildingllmsforproduction"
       ],
-      "evidence_hash": "fe81de4b64ae9f4b5ad1db947c090da0cc3de1a5247d959c1be8aaf3304fe58d"
+      "evidence_hash": "ac7e7414e8afa05941ca878b061d09e7976d5c1054f3008671d45f5493e3e8ed"
     },
     {
       "discovered_url": "https://academy.towardsai.net/bundles/10-hour-crash-course-into-llm-developer-expert",
@@ -10218,7 +10214,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T11:26:44.299348+00:00",
+      "fetched_at": "2026-11-26T12:27:58.261966+00:00",
       "content_sha256": "2f52ed125e2b89c07de077e0b5e52394de45827717e898afa673e8e3d7a6c164",
       "content_hash": "2f52ed125e2b89c07de077e0b5e52394de45827717e898afa673e8e3d7a6c164",
       "authority": "official_academy",
@@ -10230,7 +10226,7 @@
       "redirect_chain": [
         "https://academy.towardsai.net/bundles/10-hour-crash-course-into-llm-developer-expert"
       ],
-      "evidence_hash": "a5a27d7603cf4e7dc31678cf532e8359827f8ddab5a14c7b791c16261caee70a"
+      "evidence_hash": "cc63e0f4b7d1c683c868db799049deb20970d53223d93e3d9304966ca0465bd4"
     },
     {
       "discovered_url": "https://academy.towardsai.net/bundles/from-coding-novice-to-advanced-llm-developer",
@@ -10686,7 +10682,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T11:26:44.299348+00:00",
+      "fetched_at": "2026-11-26T12:27:58.261966+00:00",
       "content_sha256": "ce9710a2e522e19675f07287fb0da2c5bcc806c139c1dbbc92ba4e21b09ee932",
       "content_hash": "ce9710a2e522e19675f07287fb0da2c5bcc806c139c1dbbc92ba4e21b09ee932",
       "authority": "official_academy",
@@ -10698,7 +10694,7 @@
       "redirect_chain": [
         "https://academy.towardsai.net/bundles/from-coding-novice-to-advanced-llm-developer"
       ],
-      "evidence_hash": "4b64068a7c6d53b0e963157f10119065f15d4092cf5340158362aeac634b451b"
+      "evidence_hash": "dfba2e2348256d78db94ff49787c269f98e4fa3337a95f43eb6c9186fb234916"
     },
     {
       "discovered_url": "https://academy.towardsai.net/pages/agent-engineering-free-preview",
@@ -10772,7 +10768,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T11:26:44.299348+00:00",
+      "fetched_at": "2026-11-26T12:27:58.261966+00:00",
       "content_sha256": "04e260a75ed8a909053af6e967dba21efb7f33c19f47baff29be5150362a4081",
       "content_hash": "04e260a75ed8a909053af6e967dba21efb7f33c19f47baff29be5150362a4081",
       "authority": "official_academy",
@@ -10784,7 +10780,7 @@
       "redirect_chain": [
         "https://academy.towardsai.net/pages/agent-engineering-free-preview"
       ],
-      "evidence_hash": "f2dc9f5cb231f02da72004342d17ce08895a75dd04b6fc31c94fe3b12ee5fa41"
+      "evidence_hash": "4341416c76d5edd3bdeda2c0f88373d39526371f9ba1ab1fec183aaa7fe30b01"
     },
     {
       "discovered_url": "https://academy.towardsai.net/pages/full-stack-ai-engineering-free-preview",
@@ -10839,7 +10835,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T11:26:44.299348+00:00",
+      "fetched_at": "2026-11-26T12:27:58.261966+00:00",
       "content_sha256": "8a226c428d794b56d366bec5279d254abc70f696a009826938161648c9160843",
       "content_hash": "8a226c428d794b56d366bec5279d254abc70f696a009826938161648c9160843",
       "authority": "official_academy",
@@ -10851,7 +10847,7 @@
       "redirect_chain": [
         "https://academy.towardsai.net/pages/full-stack-ai-engineering-free-preview"
       ],
-      "evidence_hash": "c89edf05857a988f624a3f074f2d1ff94b597a55504a4f4b38403a5c723a377a"
+      "evidence_hash": "c3eaae3c83b4db68445bf69c29e425cc3f835c4ff2b4efdc6f55fd41bfeab1a6"
     },
     {
       "discovered_url": "https://academy.towardsai.net/pages/agent-course-landing-page",
@@ -11983,7 +11979,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T11:26:44.299348+00:00",
+      "fetched_at": "2026-11-26T12:27:58.261966+00:00",
       "content_sha256": "42516887079c99f37040d1e1a18c0bc790e0c412ec4fc76de2dc49bbdb3375f6",
       "content_hash": "42516887079c99f37040d1e1a18c0bc790e0c412ec4fc76de2dc49bbdb3375f6",
       "authority": "official_academy",
@@ -11996,7 +11992,7 @@
         "https://academy.towardsai.net/pages/agent-course-landing-page"
       ],
       "excluded_reason": "legacy duplicate of the Agent Engineering course page",
-      "evidence_hash": "20ef3a5fa1ec9f5acc720daf85473670d686091f90bc307908c5ba392393e628"
+      "evidence_hash": "89ca0fcd82a8799d8824c987e1908dd0237e97510986b67e6925ae44a92f53f2"
     },
     {
       "discovered_url": "https://academy.towardsai.net/pages/towards-ai-insider",
@@ -12117,7 +12113,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T11:26:44.299348+00:00",
+      "fetched_at": "2026-11-26T12:27:58.261966+00:00",
       "content_sha256": "24c918273f0e5fffbb0266c57b529ab16031fef1d94bbd2933c85585dedd2196",
       "content_hash": "24c918273f0e5fffbb0266c57b529ab16031fef1d94bbd2933c85585dedd2196",
       "authority": "official_academy",
@@ -12130,7 +12126,7 @@
         "https://academy.towardsai.net/pages/towards-ai-insider"
       ],
       "excluded_reason": "unfinished template content",
-      "evidence_hash": "be2101a11e1ab3ac8d70b86fc0f37fdccce312240040b3eb4119f9472dfff3a3"
+      "evidence_hash": "5b2a9b463100a9c2b65c9d63a9ab8447461a7b3c101a6787758f429993d9e214"
     },
     {
       "discovered_url": "https://academy.towardsai.net/pages/agent-course-new-page-cro",
@@ -12831,7 +12827,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T11:26:44.299348+00:00",
+      "fetched_at": "2026-11-26T12:27:58.261966+00:00",
       "content_sha256": "98c1fd17fdcd9c45a7025bd85ad4582f2f1dd2a5aa288e31b55e4045920a364b",
       "content_hash": "98c1fd17fdcd9c45a7025bd85ad4582f2f1dd2a5aa288e31b55e4045920a364b",
       "authority": "official_academy",
@@ -12844,7 +12840,7 @@
         "https://academy.towardsai.net/pages/agent-course-new-page-cro"
       ],
       "excluded_reason": "alternate sales copy duplicates the Agent Engineering course page",
-      "evidence_hash": "04b4dc8f2d4947730592c88b435fe4cf1d400d08f7c0e00f7249d4a3262801a0"
+      "evidence_hash": "70ebfaf348d2cd124094c60fc3d597cdf6f1b5321b6f91cff1c79dc637509e01"
     },
     {
       "discovered_url": "https://academy.towardsai.net/pages/webinar",
@@ -12911,7 +12907,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T11:26:44.299348+00:00",
+      "fetched_at": "2026-11-26T12:27:58.261966+00:00",
       "content_sha256": "358d9e276a9ad3605453b7fcfbf3adc7718ec9993617616c7887f4fa02f1decd",
       "content_hash": "358d9e276a9ad3605453b7fcfbf3adc7718ec9993617616c7887f4fa02f1decd",
       "authority": "official_academy",
@@ -12924,7 +12920,7 @@
         "https://academy.towardsai.net/pages/webinar"
       ],
       "excluded_reason": "unfinished template content",
-      "evidence_hash": "395f372693388ee7738909d7ff02363a5a5e1eedabdbdfff5c146b282e86982c"
+      "evidence_hash": "0bbfbbfb335cfa33b142e83d882612b9e45f9ea1b4b8be1602b455c3c62fefda"
     },
     {
       "discovered_url": "https://academy.towardsai.net/pages/new-home-page",
@@ -13815,7 +13811,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T11:26:44.299348+00:00",
+      "fetched_at": "2026-11-26T12:27:58.261966+00:00",
       "content_sha256": "aab65325e9efc0be097f74a6f76a0611dfe3247e8920f4fccf3cef71e52edf18",
       "content_hash": "aab65325e9efc0be097f74a6f76a0611dfe3247e8920f4fccf3cef71e52edf18",
       "authority": "official_academy",
@@ -13828,7 +13824,7 @@
         "https://academy.towardsai.net/pages/new-home-page"
       ],
       "excluded_reason": "legacy duplicate of the Academy home page",
-      "evidence_hash": "cbecb2fb06d1f0a20174a393af28b3861ffd8e75b82c41b9a140e30a570def12"
+      "evidence_hash": "44e13f77c60aebdc33eb693c75fc39ed0fb74f2bd5b82a332467d0639b4e52a6"
     },
     {
       "discovered_url": "https://academy.towardsai.net/pages/landing-page-free-email-course",
@@ -13862,7 +13858,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T11:26:44.299348+00:00",
+      "fetched_at": "2026-11-26T12:27:58.261966+00:00",
       "content_sha256": "cb47c56ce8cd4d4c3e7aaf14fff58e3d55ee7b2ef0901f6c3538e9ae548cd535",
       "content_hash": "cb47c56ce8cd4d4c3e7aaf14fff58e3d55ee7b2ef0901f6c3538e9ae548cd535",
       "authority": "official_academy",
@@ -13875,7 +13871,7 @@
         "https://academy.towardsai.net/pages/landing-page-free-email-course"
       ],
       "excluded_reason": "unfinished template content",
-      "evidence_hash": "2ed86b102cb4da9b09c74d21e74fac8e14d8ee7e4bd229fa4859a8f7fc797786"
+      "evidence_hash": "980d7d01a21ca20c32b0d6f16e2b7d939a0a95fd43fe8a9c307c9d199469e3e2"
     },
     {
       "discovered_url": "https://academy.towardsai.net/pages/contact-us",
@@ -13966,7 +13962,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T11:26:44.299348+00:00",
+      "fetched_at": "2026-11-26T12:27:58.261966+00:00",
       "content_sha256": "7e9c30576db465aa1d258ad7552f2db9d5f7f71bdec84e9a2b09641a236c6cf6",
       "content_hash": "7e9c30576db465aa1d258ad7552f2db9d5f7f71bdec84e9a2b09641a236c6cf6",
       "authority": "official_academy",
@@ -13978,7 +13974,7 @@
       "redirect_chain": [
         "https://academy.towardsai.net/pages/contact-us"
       ],
-      "evidence_hash": "f5f27a8ba9c30b84a04ff6a78284c08951dd60df85a3a3b59d70ea8b62b3f534"
+      "evidence_hash": "e4bbe22c1377250111e6b14721786080602e83c5beeacd59d660bd8f2f407e01"
     },
     {
       "discovered_url": "https://academy.towardsai.net/pages/about-us",
@@ -14280,7 +14276,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T11:26:44.299348+00:00",
+      "fetched_at": "2026-11-26T12:27:58.261966+00:00",
       "content_sha256": "15d2b0b9c5fc34fcfeef2328e227139b00ab69f7aec51355dc24addb758a90ae",
       "content_hash": "15d2b0b9c5fc34fcfeef2328e227139b00ab69f7aec51355dc24addb758a90ae",
       "authority": "official_academy",
@@ -14292,7 +14288,7 @@
       "redirect_chain": [
         "https://academy.towardsai.net/pages/about-us"
       ],
-      "evidence_hash": "af91a09232360c40669f31d72c59756607aa4d83c5a43bf36fec307c0e2fcc28"
+      "evidence_hash": "e595f46e8a27fc64e96f3fda25a7868a97e835ebfa6c4dbf0faa78dabbc8988f"
     },
     {
       "discovered_url": "https://academy.towardsai.net/pages/affiliate",
@@ -14617,7 +14613,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T11:26:44.299348+00:00",
+      "fetched_at": "2026-11-26T12:27:58.261966+00:00",
       "content_sha256": "c86cf56daa5bf312134fb7db5b89b27048537cbdb24973714b1ad72bdb193359",
       "content_hash": "c86cf56daa5bf312134fb7db5b89b27048537cbdb24973714b1ad72bdb193359",
       "authority": "official_academy",
@@ -14629,7 +14625,7 @@
       "redirect_chain": [
         "https://academy.towardsai.net/pages/affiliate"
       ],
-      "evidence_hash": "965cff04c672c51817710a58e652bae80cfc060105f7a4872ac1a4ba92d7af41"
+      "evidence_hash": "ffc6423241cd3e16e37a68f5ea40a60cdf1a329f7d520da0ee607c89b24fa607"
     },
     {
       "discovered_url": "https://academy.towardsai.net/pages/choose-your-course",
@@ -14748,7 +14744,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T11:26:44.299348+00:00",
+      "fetched_at": "2026-11-26T12:27:58.261966+00:00",
       "content_sha256": "db5f355f9bd03a3d47a30ffc1639b476e66c803268c7bfd41f734161018893f4",
       "content_hash": "db5f355f9bd03a3d47a30ffc1639b476e66c803268c7bfd41f734161018893f4",
       "authority": "official_academy",
@@ -14761,7 +14757,7 @@
         "https://academy.towardsai.net/pages/choose-your-course"
       ],
       "excluded_reason": "legacy duplicate of the courses collection",
-      "evidence_hash": "deab9cc639fb109aa52fd03e17e1fbd3fc10676a84513c7aaa3360d662f30bb1"
+      "evidence_hash": "b5f1326d8090a7cc179fd889bc78fc2d28c7df70df38c5ea0e7122148532624f"
     },
     {
       "discovered_url": "https://academy.towardsai.net/pages/free-resources",
@@ -14978,7 +14974,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T11:26:44.299348+00:00",
+      "fetched_at": "2026-11-26T12:27:58.261966+00:00",
       "content_sha256": "03a45d19871c9a0cfeefa020d9ce6fc2f13c951dd4161cfe0d9bb0dbcc804bdd",
       "content_hash": "03a45d19871c9a0cfeefa020d9ce6fc2f13c951dd4161cfe0d9bb0dbcc804bdd",
       "authority": "official_academy",
@@ -14991,7 +14987,7 @@
         "https://academy.towardsai.net/pages/free-resources"
       ],
       "excluded_reason": "legacy resource summary conflicts with the current LLM Fundamentals offer",
-      "evidence_hash": "6d51474e38e2cddffad87a0bf692f92cc3dd6596d828579553db066fca35fb3a"
+      "evidence_hash": "e632852461a2ee487fc49ceebddc36950bd230f428012e8a122092e2cfada784"
     },
     {
       "discovered_url": "https://www.amazon.com/s?k=Towards+AI+Building+LLMs+for+Production",
@@ -15015,7 +15011,7 @@
         }
       ],
       "chunks": [],
-      "fetched_at": "2026-11-25T11:26:44.299348+00:00",
+      "fetched_at": "2026-11-26T12:27:58.261966+00:00",
       "content_sha256": "b1d5a4e8b2325fdff3c88789efff963602b5367567bff80ddd8ab9db20418634",
       "content_hash": "b1d5a4e8b2325fdff3c88789efff963602b5367567bff80ddd8ab9db20418634",
       "authority": "curated_external",
@@ -15026,7 +15022,7 @@
       "lastmod": "",
       "sitemap_url": "manual_allowlist",
       "redirect_chain": [],
-      "evidence_hash": "fcc7ae6745b631b8a036300333cca91dc0b35db0bb4a8cf4682e3d3ede71fecc"
+      "evidence_hash": "65f4fbdd6f65eb55e2c5f7db97a419d57465590dbfbb6e79e76b50518927382c"
     },
     {
       "discovered_url": "https://www.youtube.com/channel/UCQNjFuhOJM1YqFTPY1Q_kYQ",
@@ -15050,7 +15046,7 @@
         }
       ],
       "chunks": [],
-      "fetched_at": "2026-11-25T11:26:44.299348+00:00",
+      "fetched_at": "2026-11-26T12:27:58.261966+00:00",
       "content_sha256": "0f599f6c1d60cc11b2fb6603f85def4a8eee7d202bdae240eede6dd704eb94e4",
       "content_hash": "0f599f6c1d60cc11b2fb6603f85def4a8eee7d202bdae240eede6dd704eb94e4",
       "authority": "curated_external",
@@ -15061,7 +15057,7 @@
       "lastmod": "",
       "sitemap_url": "manual_allowlist",
       "redirect_chain": [],
-      "evidence_hash": "2edb8d2907393fcae77bc61368efe0f32f21aff416e6f03e55db8c9595aa5d35"
+      "evidence_hash": "683727c1c9f4a15accb9678e705168ab3d3e17cb4e42e5c3ee014e5230e12da5"
     }
   ]
 }
