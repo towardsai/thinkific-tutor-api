@@ -303,7 +303,8 @@ async def helper_chat(
     # public helper's retrieval, validation and provider configuration. Lesson
     # tutor routes continue to run the course-scoped tutor locally.
     guide = await asyncio.to_thread(guidance_answer, payload.query, [turn.content for turn in payload.history if turn.role == "user"])
-    if helper_settings.upstream_base_url and not guide:
+    tried_upstream = bool(helper_settings.upstream_base_url and not guide)
+    if tried_upstream:
         try:
             response = await asyncio.to_thread(
                 requests.post,
@@ -411,6 +412,9 @@ async def helper_chat(
         provider=provider,
     )
     _schedule_monitor(monitor)
+
+    if tried_upstream and error_message == "helper generation failed":
+        raise HTTPException(503, "Sales helper is temporarily unavailable.")
 
     return HelperChatResponse(
         answer=answer,
