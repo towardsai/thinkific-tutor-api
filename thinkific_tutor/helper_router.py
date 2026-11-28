@@ -41,12 +41,14 @@ def helper_healthcheck() -> dict[str, Any]:
             )
             response.raise_for_status()
             return response.json()
-        except (requests.RequestException, ValueError) as exc:
-            raise HTTPException(503, "Sales helper is temporarily unavailable.") from exc
+        except (requests.RequestException, ValueError):
+            logger.warning("Upstream health unavailable; reporting local sales catalog")
     catalog = freshness()
     return {
         "status": "ok" if catalog["fresh"] else "degraded",
         "catalog": catalog,
+        "source": "local_catalog",
+        "upstream": "unavailable" if helper_settings.upstream_base_url else "disabled",
     }
 
 
@@ -312,8 +314,12 @@ async def helper_chat(
             )
             response.raise_for_status()
             return HelperChatResponse.model_validate(response.json())
-        except (requests.RequestException, ValueError) as exc:
-            raise HTTPException(503, "Sales helper is temporarily unavailable.") from exc
+        except requests.HTTPError as exc:
+            if exc.response is not None and 400 <= exc.response.status_code < 500:
+                raise HTTPException(exc.response.status_code, "Upstream rejected this request.") from exc
+            logger.warning("Upstream sales service unavailable; using local catalog")
+        except (requests.RequestException, ValueError):
+            logger.warning("Upstream sales service unreachable; using local catalog")
 
     query = payload.query.strip()
     thread_id = payload.threadId.strip() or uuid4().hex
