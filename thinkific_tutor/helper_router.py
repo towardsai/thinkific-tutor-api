@@ -316,8 +316,17 @@ async def helper_chat(
             response.raise_for_status()
             return HelperChatResponse.model_validate(response.json())
         except requests.HTTPError as exc:
-            if exc.response is not None and 400 <= exc.response.status_code < 500:
-                raise HTTPException(exc.response.status_code, "Upstream rejected this request.") from exc
+            response = exc.response
+            if response is not None and 400 <= response.status_code < 500:
+                # The canonical FastAPI service returns a JSON detail for client limits.
+                # A hosting gateway can separately exhaust its shared inter-Space quota.
+                try:
+                    detail = response.json().get("detail")
+                except (ValueError, AttributeError):
+                    detail = None
+                if response.status_code != 429 or detail:
+                    headers = {"Retry-After": response.headers["Retry-After"]} if "Retry-After" in response.headers else None
+                    raise HTTPException(response.status_code, detail or "Upstream rejected this request.", headers=headers) from exc
             logger.warning("Upstream sales service unavailable; using local catalog")
         except (requests.RequestException, ValueError):
             logger.warning("Upstream sales service unreachable; using local catalog")
