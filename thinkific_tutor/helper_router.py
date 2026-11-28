@@ -11,6 +11,7 @@ from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import FileResponse
 
 from . import helper_llm as llm
+from .academy_guidance import guidance_answer
 from .bootstrap import repo_root
 from .helper_catalog import (
     allowed_paths_by_host,
@@ -299,7 +300,8 @@ async def helper_chat(
     # Academy embeds keep their installed API URL while sharing the canonical
     # public helper's retrieval, validation and provider configuration. Lesson
     # tutor routes continue to run the course-scoped tutor locally.
-    if helper_settings.upstream_base_url:
+    guide = await asyncio.to_thread(guidance_answer, payload.query, [turn.content for turn in payload.history if turn.role == "user"])
+    if helper_settings.upstream_base_url and not guide:
         try:
             response = await asyncio.to_thread(
                 requests.post,
@@ -325,7 +327,11 @@ async def helper_chat(
     response_status = "insufficient_evidence"
 
     try:
-        if coupon_intent(query):
+        if guide:
+            answer, links = guide
+            sources = [dict(link, kind="academy_guidance") for link in links]
+            response_status = "answered"
+        elif coupon_intent(query):
             answer = "For discount requests, please email Louis at louis@towardsai.net with the course you’re interested in."
             response_status = "policy"
         elif not in_scope(query, _history_text(payload)):

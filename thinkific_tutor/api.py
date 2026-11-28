@@ -12,6 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 
+from .academy_guidance import guidance_answer
 from .bootstrap import ensure_ai_tutor_importable, repo_root
 from .course_mapper import ResolvedLesson, build_augmented_query, resolve_lesson_context
 from .helper_router import router as helper_router
@@ -319,8 +320,9 @@ async def chat(request: Request, payload: ThinkificChatRequest) -> StreamingResp
             detail="Tutor is only available from a mapped Thinkific course lesson.",
         )
     _check_rate_limits(request, payload, resolved)
+    guide = await asyncio.to_thread(guidance_answer, payload.query, [t.content for t in payload.history if t.role == "user"])
     evidence = None
-    if settings.lesson_prefetch_enabled:
+    if not guide and settings.lesson_prefetch_enabled:
         try:
             evidence = await asyncio.to_thread(
                 retrieve_lesson_evidence, payload.query, resolved
@@ -370,12 +372,21 @@ async def chat(request: Request, payload: ThinkificChatRequest) -> StreamingResp
         referer=request.headers.get("referer", ""),
     )
 
+    async def program_events():
+        answer, links = guide
+        yield ChatEvent("thread_started", {"thread_id": chat_request.thread_id or uuid4().hex})
+        yield ChatEvent("message_started", {"message_id": uuid4().hex})
+        yield ChatEvent("text_delta", {"text": answer})
+        for link in links:
+            yield ChatEvent("source_match", {**link, "doc_id": link["url"], "source_key": "academy_guidance", "source_label": "Towards AI Academy", "score": 1.0})
+        yield ChatEvent("message_completed", {"answer": answer})
+
     async def event_stream():
         encoder = UIMessageStreamEncoder()
         slot = await _claim_thread_slot(chat_request.thread_id)
         holds_lock = False
         active_chat_request = chat_requests[0]
-        events = stream_chat(active_chat_request)
+        events = program_events() if guide else stream_chat(active_chat_request)
         next_event: asyncio.Task | None = None
         error_message = ""
         emitted_payload = False
